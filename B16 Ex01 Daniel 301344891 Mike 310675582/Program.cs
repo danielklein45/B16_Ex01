@@ -16,7 +16,7 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new LoginForm());
         }
     }
 }
