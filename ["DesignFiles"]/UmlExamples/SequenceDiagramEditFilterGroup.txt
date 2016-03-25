@@ -1,0 +1,35 @@
+@startuml
+
+title "Facebook App - Edit Filter Group - Sequence Diagram"
+
+actor User
+boundary FormMain
+
+User -> FormMain: buttonFilterSettings_Click()
+activate User
+activate FormMain
+create boundary FormFilterSettings
+FormMain -> FormFilterSettings
+FormMain -> FormFilterSettings: set PostFilterGroup
+activate FormFilterSettings
+FormMain -> FormFilterSettings: ShowDialog()
+User -> FormFilterSettings: buttonEditMarked_Click()
+create boundary FormEditFilterGroup
+FormFilterSettings -> FormEditFilterGroup
+FormFilterSettings -> FormEditFilterGroup: set FilterGroup
+activate FormEditFilterGroup
+FormFilterSettings -> FormEditFilterGroup: ShowDialog()
+activate PostFilterGroup
+loop while adding filters
+    User -> FormEditFilterGroup: buttonAddFilter_Click()
+    FormEditFilterGroup -> PostFilterGroup: PostFilters.Add()
+end
+User -> FormEditFilterGroup: buttonClose_Click()
+deactivate PostFilterGroup
+destroy FormEditFilterGroup
+User -> FormFilterSettings: buttonCancel_Click()
+destroy FormFilterSettings
+deactivate FormMain
+deactivate User
+
+@enduml

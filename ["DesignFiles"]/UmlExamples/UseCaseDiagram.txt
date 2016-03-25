@@ -1,0 +1,56 @@
+@startuml
+
+title Facebook App - Use Case Diagram
+
+rectangle "Basic Facebook Features" {
+    (Log In)
+    (Fetch News Feed)
+    (Fetch Events)
+    (Fetch Checkins)
+}
+
+rectangle "Canned Posts Festure" {
+    (Create Canned Post)
+    (Edit Canned Post)
+    (Post Canned Post)
+    (Add Category)
+    (Edit Template)
+}
+
+rectangle "Post Filtering Feature" {
+    (Create Post Filter Group)
+    (Delete Post Filter Group)
+    (Edit Post Filter Group)
+    (Add/Remove Filter Group Item)
+    (Enable/Disable Post Filter Group)
+    (Set Priority)
+}
+
+:Client: 
+
+Client ..> (Create Canned Post)
+Client ..> (Edit Canned Post)
+Client ..> (Post Canned Post)
+
+(Edit Canned Post) <-- (Add Category): <<extends>>
+(Edit Canned Post) <-- (Edit Template): <<extends>>
+(Create Canned Post) <-- (Edit Canned Post): <<extends>>
+
+Client ..> (Create Post Filter Group)
+Client ..> (Delete Post Filter Group)
+Client ..> (Edit Post Filter Group)
+Client ..> (Enable/Disable Post Filter Group)
+
+(Edit Post Filter Group) <-- (Add/Remove Filter Group Item): <<extends>>
+(Edit Post Filter Group) <-- (Set Priority): <<extends>>
+
+(Log In) <-- (Fetch Events): <<extends>>
+(Log In) <-- (Fetch Checkins): <<extends>>
+(Log In) <-- (Fetch News Feed): <<extends>>
+
+Client ..> (Log In)
+Client ..> (Fetch News Feed)
+Client ..> (Fetch Checkins)
+Client ..> (Fetch Events)
+
+@enduml
