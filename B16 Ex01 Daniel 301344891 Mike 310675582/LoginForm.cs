@@ -20,7 +20,8 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582
 
 		private readonly string[] r_RequiredPermissions = 
 		{
-			"user_about_me"
+			"user_about_me",
+            "user_posts"
 		};
 		
 		public LoginForm()
@@ -46,7 +47,6 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582
 				mainForm.Closed += (s, args) => this.Close();
 				mainForm.Show();
 			}
-		   
 		}
 
 		private string getSavedAccessToken()
