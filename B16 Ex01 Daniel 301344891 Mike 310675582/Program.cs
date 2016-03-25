@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace B16_Ex01_Daniel_301344891_Mike_310675582
+namespace FacebookSmartView
 {
     static class Program
     {

@@ -5,7 +5,7 @@ using System.Text;
 
 using FacebookWrapper.ObjectModel;
 
-namespace B16_Ex01_Daniel_301344891_Mike_310675582
+namespace FacebookSmartView
 {
     class AppUser
     {

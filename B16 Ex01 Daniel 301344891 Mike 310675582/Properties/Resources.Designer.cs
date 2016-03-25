@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace B16_Ex01_Daniel_301344891_Mike_310675582.Properties {
+namespace FacebookSmartView.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("B16_Ex01_Daniel_301344891_Mike_310675582.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FacebookSmartView.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
