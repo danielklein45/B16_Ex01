@@ -37,7 +37,7 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582
 		{
 			LoginResult result = login();
 
-			if (result != null)
+			if ((result != null) && (result.AccessToken != null))
 			{
 				MainForm mainForm = new MainForm();
 
