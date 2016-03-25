@@ -22,5 +22,17 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SavedAccessToken {
+            get {
+                return ((string)(this["SavedAccessToken"]));
+            }
+            set {
+                this["SavedAccessToken"] = value;
+            }
+        }
     }
 }
