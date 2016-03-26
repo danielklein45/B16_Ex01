@@ -22,15 +22,15 @@ namespace FacebookSmartView
 		{
 			"user_about_me",
             "user_posts",
-                "public_profile", 
-                "user_education_history",
-                "user_birthday",
-                "user_friends",
-                "publish_actions",
-                "user_likes",
-                "user_photos",
-                "user_posts",
-                "user_relationships"
+            "public_profile", 
+            "user_education_history",
+            "user_birthday",
+            "user_friends",
+            "publish_actions",
+            "user_likes",
+            "user_photos",
+            "user_posts",
+            "user_relationships"
 		};
 
         public LoginForm()

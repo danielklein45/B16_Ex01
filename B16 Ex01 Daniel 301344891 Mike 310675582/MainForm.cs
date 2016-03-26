@@ -19,7 +19,6 @@ namespace FacebookSmartView
         public MainForm()
         {
             InitializeComponent();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 10;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -30,7 +29,21 @@ namespace FacebookSmartView
 
         private void fetchUserInfo()
         {
+            fetchUserPrivateDetails();
+            fetchNewsFeed();
+        }
+
+        private void fetchNewsFeed()
+        {
             listBoxNewsFeed.DataSource = m_AppUser.GetNewsFeed();
+            listBoxNewsFeed.DisplayMember = "Message";
+            listBoxNewsFeed.ValueMember = "UpdateTime";
+        }
+
+        private void fetchUserPrivateDetails()
+        {
+            lblUserName.Text = m_AppUser.Name;
+            pbUserPicture.LoadAsync(m_AppUser.GetUserProfilePicture());
         }
 
         public User LoginUser
@@ -44,7 +57,5 @@ namespace FacebookSmartView
                
             }
         }
-
-      
     }
 }
