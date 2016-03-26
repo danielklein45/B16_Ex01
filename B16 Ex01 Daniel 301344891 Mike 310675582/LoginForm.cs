@@ -12,105 +12,114 @@ using Facebook;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
-namespace B16_Ex01_Daniel_301344891_Mike_310675582
+namespace FacebookSmartView
 {
-	public partial class LoginForm : Form
-	{
-		private const string k_AppID = "1222488951112730";
+    public partial class LoginForm : Form
+    {
+        private const string k_AppID = "1222488951112730";
 
-		private readonly string[] r_RequiredPermissions = 
+        private readonly string[] r_RequiredPermissions = 
 		{
 			"user_about_me",
-            "user_posts"
+            "user_posts",
+                "public_profile", 
+                "user_education_history",
+                "user_birthday",
+                "user_friends",
+                "publish_actions",
+                "user_likes",
+                "user_photos",
+                "user_posts",
+                "user_relationships"
 		};
-		
-		public LoginForm()
-		{
-			InitializeComponent();
-		}
 
-		private void buttonExit_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
+        public LoginForm()
+        {
+            InitializeComponent();
+        }
 
-		private void buttonLogin_Click(object sender, EventArgs e)
-		{
-			LoginResult result = login();
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
-			if ((result != null) && (result.AccessToken != null))
-			{
-				MainForm mainForm = new MainForm();
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            LoginResult result = login();
 
-				mainForm.LoginUser = result.LoggedInUser;
-				this.Hide();
-				mainForm.Closed += (s, args) => this.Close();
-				mainForm.Show();
-			}
-		}
+            if ((result != null) && (result.AccessToken != null))
+            {
+                MainForm mainForm = new MainForm();
 
-		private string getSavedAccessToken()
-		{
-			return Properties.Settings.Default.SavedAccessToken;
-		}
+                mainForm.LoginUser = result.LoggedInUser;
+                this.Hide();
+                mainForm.Closed += (s, args) => this.Close();
+                mainForm.Show();
+            }
+        }
 
-		private void saveAccessToken(string i_AccessToken)
-		{
-			Properties.Settings.Default.SavedAccessToken = i_AccessToken;
-			Properties.Settings.Default.Save();
-		}
+        private string getSavedAccessToken()
+        {
+            return Properties.Settings.Default.SavedAccessToken;
+        }
 
-		private LoginResult loginToFacbookAndSaveToken()
-		{
-			LoginResult result = FacebookService.Login(k_AppID, r_RequiredPermissions);
-			saveAccessToken(result.AccessToken);
+        private void saveAccessToken(string i_AccessToken)
+        {
+            Properties.Settings.Default.SavedAccessToken = i_AccessToken;
+            Properties.Settings.Default.Save();
+        }
 
-			return result;
-		}
+        private LoginResult loginToFacbookAndSaveToken()
+        {
+            LoginResult result = FacebookService.Login(k_AppID, r_RequiredPermissions);
+            saveAccessToken(result.AccessToken);
 
-		private LoginResult login()
-		{
-			LoginResult result = null;
-			
-			string lastAccessToken = getSavedAccessToken();
-			
-			//first login attemt
-			if (String.IsNullOrEmpty(lastAccessToken))
-			{
-				result = loginToFacbookAndSaveToken();
-			}
-			//quicklogin using saved settings
-			else
-			{
-				DialogResult loginDialogResult = MessageBox.Show
-					("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
-					MessageBoxButtons.YesNo);
+            return result;
+        }
 
-				//login as a last used user
-				if (loginDialogResult == DialogResult.Yes)
-				{
-					try 
-					{
-						result = FacebookService.Connect(lastAccessToken);
-					}
-					catch (Exception e)
-					{
-						MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-				}
-				//login as a new user
-				else
-				{
-					result = loginToFacbookAndSaveToken();
-				}
-			}
+        private LoginResult login()
+        {
+            LoginResult result = null;
 
-			if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
-			{
-				MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK ,MessageBoxIcon.Error);   
-			}
+            string lastAccessToken = getSavedAccessToken();
 
-			return result;
-		}
-	}
+            //first login attemt
+            if (String.IsNullOrEmpty(lastAccessToken))
+            {
+                result = loginToFacbookAndSaveToken();
+            }
+            //quicklogin using saved settings
+            else
+            {
+                DialogResult loginDialogResult = MessageBox.Show
+                    ("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
+                    MessageBoxButtons.YesNo);
+
+                //login as a last used user
+                if (loginDialogResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        result = FacebookService.Connect(lastAccessToken);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                //login as a new user
+                else
+                {
+                    result = loginToFacbookAndSaveToken();
+                }
+            }
+
+            if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
+            {
+                MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return result;
+        }
+    }
 }

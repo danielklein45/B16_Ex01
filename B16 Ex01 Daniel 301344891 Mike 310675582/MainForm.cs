@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using FacebookWrapper.ObjectModel;
 
-namespace B16_Ex01_Daniel_301344891_Mike_310675582
+namespace FacebookSmartView
 {
     public partial class MainForm : Form
     {
@@ -44,5 +44,7 @@ namespace B16_Ex01_Daniel_301344891_Mike_310675582
                
             }
         }
+
+      
     }
 }
