@@ -10,11 +10,18 @@ namespace FacebookSmartView
     class AppUser
     {
         private User m_FacebookUser;
+        private int m_userAge;
+        private string m_userLastEduStudyPlace;
+        private string m_userLivesIn;
 
         public AppUser(User i_FacebookUser)
         {
             FacebookWrapper.FacebookService.s_CollectionLimit = 500;
             m_FacebookUser = i_FacebookUser;
+
+            m_userAge = calcUserAge(m_FacebookUser.Birthday);
+            m_userLastEduStudyPlace = getLastEdu(m_FacebookUser.Educations);
+            m_userLivesIn = getUserLivePlace(m_FacebookUser.Location);
         }
 
         public FacebookObjectCollection<Post> GetNewsFeed()
@@ -29,6 +36,48 @@ namespace FacebookSmartView
             }
 
             return mostUpdatedPost;
+        }
+        private string getLastEdu(Education[] i_eduForUser)
+        {
+
+            string strSchool;
+            try
+            {
+                strSchool = i_eduForUser.Last<Education>().School.Name;
+            }
+            catch
+            {
+                strSchool = "";
+            }
+
+            return strSchool;
+        }
+
+
+        private string getUserLivePlace(City i_userLoc)
+        {
+
+            string strLocation;
+            try
+            {
+                strLocation = m_FacebookUser.Location.Name;
+            }
+            catch
+            {
+                strLocation = "";
+            }
+
+            return strLocation;
+        }
+
+
+
+        private int calcUserAge(string i_strBirthday)
+        {
+            DateTime dtCurrentDay = DateTime.Today;
+            DateTime dtUserBirthday = Convert.ToDateTime(i_strBirthday);
+
+            return dtCurrentDay.Year - dtUserBirthday.Year;
         }
 
         public string GetUserProfilePicture()
@@ -48,7 +97,7 @@ namespace FacebookSmartView
 
             return statusMessage;
         }
-            
+
         public string Name
         {
             get
@@ -71,6 +120,29 @@ namespace FacebookSmartView
             {
                 return m_FacebookUser.Gender.ToString();
             }
+        }
+        public int Age
+        {
+            get
+            {
+                return m_userAge;
+            }
+        }
+        public string UserLivesIn
+        {
+            get
+            {
+
+                return (m_FacebookUser.Location.Name != null) ? m_FacebookUser.Location.Name : "";
+            }
+        }
+        public string LastEducationStudyPlace
+        {
+            get
+            {
+                return m_userLastEduStudyPlace;
+            }
+
         }
     }
 }
