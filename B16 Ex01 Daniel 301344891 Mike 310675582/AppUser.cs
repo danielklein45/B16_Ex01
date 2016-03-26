@@ -35,12 +35,41 @@ namespace FacebookSmartView
         {
             return m_FacebookUser.PictureNormalURL;
         }
+
+        public string Post(string i_PostText)
+        {
+            string statusMessage = string.Empty;
+
+            if (!string.IsNullOrEmpty(i_PostText))
+            {
+                Status status = m_FacebookUser.PostStatus(i_PostText);
+                statusMessage = "Status Posted! ID: " + status.Id;
+            }
+
+            return statusMessage;
+        }
             
         public string Name
         {
             get
             {
                 return m_FacebookUser.Name;
+            }
+        }
+
+        public string Birthay
+        {
+            get
+            {
+                return m_FacebookUser.Birthday;
+            }
+        }
+
+        public string Gender
+        {
+            get
+            {
+                return m_FacebookUser.Gender.ToString();
             }
         }
     }

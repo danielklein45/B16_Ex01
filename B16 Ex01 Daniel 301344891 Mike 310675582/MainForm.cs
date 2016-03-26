@@ -43,7 +43,15 @@ namespace FacebookSmartView
         private void fetchUserPrivateDetails()
         {
             lblUserName.Text = m_AppUser.Name;
+            lblBirthdayValue.Text = m_AppUser.Birthay;
+            lblGenderValue.Text = m_AppUser.Gender;
             pbUserPicture.LoadAsync(m_AppUser.GetUserProfilePicture());
+        }
+
+        private void buttonPostQuickStatus_Click(object sender, EventArgs e)
+        {
+            string statusMessage = m_AppUser.Post(textBoxPostMessage.Text);
+            MessageBox.Show(statusMessage);
         }
 
         public User LoginUser
