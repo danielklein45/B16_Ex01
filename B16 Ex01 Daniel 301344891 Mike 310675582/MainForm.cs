@@ -15,6 +15,7 @@ namespace FacebookSmartView
     public partial class MainForm : Form
     {
         private AppUser m_AppUser;
+        private string m_aboutString = "";
 
         public MainForm()
         {
@@ -42,10 +43,32 @@ namespace FacebookSmartView
 
         private void fetchUserPrivateDetails()
         {
-            lblUserName.Text = m_AppUser.Name;
-            lblBirthdayValue.Text = m_AppUser.Birthay;
-            lblGenderValue.Text = m_AppUser.Gender;
+            lblUserName.Text = m_AppUser.Name + "!";
+            lblPersonalInfo.Text = buildUserPrivateAbout();
             pbUserPicture.LoadAsync(m_AppUser.GetUserProfilePicture());
+            
+        }
+
+        private string buildUserPrivateAbout()
+        {
+            string k_firstPart = "You are a " + m_AppUser.Age + " years old" + m_AppUser.Gender;
+            string str_secondPart = "";
+            string str_thirdPart = "";
+
+            if(m_AppUser.UserLivesIn != ""){
+                str_secondPart = " that lives in " +m_AppUser.UserLivesIn + ".";
+            }
+            else{
+                str_secondPart =".";
+            }
+
+            if(m_AppUser.LastEducationStudyPlace != ""){
+                str_thirdPart += "You studied at " + m_AppUser.LastEducationStudyPlace + ".";
+            }
+            else
+                str_thirdPart += "You should add more information about yourself...";
+
+            return k_firstPart + str_secondPart + str_thirdPart;
         }
 
         private void buttonPostQuickStatus_Click(object sender, EventArgs e)

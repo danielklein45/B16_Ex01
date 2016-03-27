@@ -24,13 +24,15 @@ namespace FacebookSmartView
 			"user_posts",
 			"public_profile", 
 			"user_education_history",
+            "user_work_history",
 			"user_birthday",
 			"user_friends",
 			"publish_actions",
 			"user_likes",
 			"user_photos",
 			"user_posts",
-			"user_relationships"
+			"user_relationships",
+            "user_location"
 		};
 
 		public LoginForm()
@@ -43,19 +45,25 @@ namespace FacebookSmartView
 			this.Close();
 		}
 
+        private void LoginFunction(Boolean i_bAutoLogin)
+        {
+            LoginResult result = login(i_bAutoLogin);
+
+            if ((result != null) && (result.AccessToken != null))
+            {
+                saveRememberBox(cbRememberMe.Checked);
+                MainForm mainForm = new MainForm();
+
+                mainForm.LoginUser = result.LoggedInUser;
+                this.Hide();
+                mainForm.Closed += (s, args) => this.Close();
+                mainForm.Show();
+            }
+        }
+
 		private void buttonLogin_Click(object sender, EventArgs e)
 		{
-			LoginResult result = login();
-
-			if ((result != null) && (result.AccessToken != null))
-			{
-				MainForm mainForm = new MainForm();
-
-				mainForm.LoginUser = result.LoggedInUser;
-				this.Hide();
-				mainForm.Closed += (s, args) => this.Close();
-				mainForm.Show();
-			}
+            LoginFunction(false);
 		}
 
 		private string getSavedAccessToken()
@@ -68,6 +76,11 @@ namespace FacebookSmartView
 			Properties.Settings.Default.SavedAccessToken = i_AccessToken;
 			Properties.Settings.Default.Save();
 		}
+        private void saveRememberBox(bool i_bCheckBoxValue)
+        {
+            Properties.Settings.Default.RememberMe = i_bCheckBoxValue;
+            Properties.Settings.Default.Save();
+        }
 
 		private LoginResult loginToFacbookAndSaveToken()
 		{
@@ -77,7 +90,12 @@ namespace FacebookSmartView
 			return result;
 		}
 
-		private LoginResult login()
+        private LoginResult preformAutoLogin()
+        {
+            return FacebookService.Login(k_AppID, r_RequiredPermissions);
+        }
+
+		private LoginResult login(Boolean i_bautoLogin)
 		{
 			LoginResult result = null;
 
@@ -91,27 +109,34 @@ namespace FacebookSmartView
 			//quicklogin using saved settings
 			else
 			{
-				DialogResult loginDialogResult = MessageBox.Show
-					("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
-					MessageBoxButtons.YesNo);
+                if (!i_bautoLogin)
+                {
+                    DialogResult loginDialogResult = MessageBox.Show
+                        ("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
+                        MessageBoxButtons.YesNo);
 
-				//login as a last used user
-				if (loginDialogResult == DialogResult.Yes)
-				{
-					try
-					{
-						result = FacebookService.Connect(lastAccessToken);
-					}
-					catch (Exception e)
-					{
-						MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-				}
-				//login as a new user
-				else
-				{
-					result = loginToFacbookAndSaveToken();
-				}
+                    //login as a last used user
+                    if (loginDialogResult == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            result = FacebookService.Connect(lastAccessToken);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    //login as a new user
+                    else
+                    {
+                        result = loginToFacbookAndSaveToken();
+                    }
+                }
+                else
+                {
+                    result = preformAutoLogin();
+                }
 			}
 
 			if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
@@ -121,5 +146,13 @@ namespace FacebookSmartView
 
 			return result;
 		}
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.RememberMe == true)
+            {
+                LoginFunction(Properties.Settings.Default.RememberMe);
+            }
+        }
 	}
 }

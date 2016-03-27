@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.listBoxNewsFeed = new System.Windows.Forms.ListBox();
             this.textBoxPostMessage = new System.Windows.Forms.TextBox();
             this.pbUserPicture = new System.Windows.Forms.PictureBox();
@@ -56,18 +57,16 @@
             this.lblPopularityGroup1 = new System.Windows.Forms.Label();
             this.pictureBoxGroup1 = new System.Windows.Forms.PictureBox();
             this.panelBriefNews = new System.Windows.Forms.Panel();
-            this.lblTopHeaderTopPhotos = new System.Windows.Forms.Label();
             this.lblTopHeaderEvents = new System.Windows.Forms.Label();
+            this.lblTopHeaderTopPhotos = new System.Windows.Forms.Label();
             this.lblHeaderSomeFriends = new System.Windows.Forms.Label();
             this.panelRandomFriends = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureFriend2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxInListFriendsOne = new System.Windows.Forms.PictureBox();
-            this.lblGender = new System.Windows.Forms.Label();
-            this.lblGenderValue = new System.Windows.Forms.Label();
-            this.lblBirthday = new System.Windows.Forms.Label();
-            this.lblBirthdayValue = new System.Windows.Forms.Label();
             this.panelPost = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.lblPersonalInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).BeginInit();
             this.panelMostPopular.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -85,24 +84,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureFriend2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInListFriendsOne)).BeginInit();
             this.panelPost.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBoxNewsFeed
             // 
             this.listBoxNewsFeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxNewsFeed.FormattingEnabled = true;
-            this.listBoxNewsFeed.Location = new System.Drawing.Point(0, 44);
+            this.listBoxNewsFeed.Location = new System.Drawing.Point(3, 32);
             this.listBoxNewsFeed.Name = "listBoxNewsFeed";
-            this.listBoxNewsFeed.Size = new System.Drawing.Size(392, 251);
+            this.listBoxNewsFeed.Size = new System.Drawing.Size(428, 225);
             this.listBoxNewsFeed.TabIndex = 0;
             // 
             // textBoxPostMessage
             // 
             this.textBoxPostMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPostMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPostMessage.Location = new System.Drawing.Point(170, 14);
+            this.textBoxPostMessage.Location = new System.Drawing.Point(7, 11);
             this.textBoxPostMessage.Name = "textBoxPostMessage";
-            this.textBoxPostMessage.Size = new System.Drawing.Size(314, 26);
+            this.textBoxPostMessage.Size = new System.Drawing.Size(334, 26);
             this.textBoxPostMessage.TabIndex = 3;
             this.textBoxPostMessage.Text = "Hmm what\'s on your mind...";
             // 
@@ -110,7 +110,8 @@
             // 
             this.pbUserPicture.Location = new System.Drawing.Point(12, 12);
             this.pbUserPicture.Name = "pbUserPicture";
-            this.pbUserPicture.Size = new System.Drawing.Size(179, 160);
+            this.pbUserPicture.Size = new System.Drawing.Size(179, 178);
+            this.pbUserPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbUserPicture.TabIndex = 4;
             this.pbUserPicture.TabStop = false;
             // 
@@ -127,30 +128,32 @@
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.Location = new System.Drawing.Point(231, 12);
             this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(107, 20);
+            this.lblUserName.Size = new System.Drawing.Size(118, 20);
             this.lblUserName.TabIndex = 6;
             this.lblUserName.Text = "<User Name>";
             // 
             // lblBasicInfo
             // 
             this.lblBasicInfo.AutoSize = true;
-            this.lblBasicInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBasicInfo.Location = new System.Drawing.Point(197, 49);
+            this.lblBasicInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblBasicInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBasicInfo.Location = new System.Drawing.Point(197, 36);
             this.lblBasicInfo.Name = "lblBasicInfo";
-            this.lblBasicInfo.Size = new System.Drawing.Size(80, 20);
+            this.lblBasicInfo.Size = new System.Drawing.Size(155, 20);
             this.lblBasicInfo.TabIndex = 7;
-            this.lblBasicInfo.Text = "Basic Info";
+            this.lblBasicInfo.Text = "Some introduction";
             // 
             // buttonPostQuickStatus
             // 
-            this.buttonPostQuickStatus.Location = new System.Drawing.Point(23, 14);
+            this.buttonPostQuickStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPostQuickStatus.Location = new System.Drawing.Point(356, 11);
             this.buttonPostQuickStatus.Name = "buttonPostQuickStatus";
-            this.buttonPostQuickStatus.Size = new System.Drawing.Size(126, 23);
+            this.buttonPostQuickStatus.Size = new System.Drawing.Size(83, 26);
             this.buttonPostQuickStatus.TabIndex = 8;
-            this.buttonPostQuickStatus.Text = "Post Quick Status";
+            this.buttonPostQuickStatus.Text = "Post!";
             this.buttonPostQuickStatus.UseVisualStyleBackColor = true;
             this.buttonPostQuickStatus.Click += new System.EventHandler(this.buttonPostQuickStatus_Click);
             // 
@@ -354,11 +357,21 @@
             // 
             this.panelBriefNews.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBriefNews.Controls.Add(this.listBoxNewsFeed);
-            this.panelBriefNews.Controls.Add(this.lblTopHeaderEvents);
-            this.panelBriefNews.Location = new System.Drawing.Point(495, 273);
+            this.panelBriefNews.Location = new System.Drawing.Point(416, 215);
             this.panelBriefNews.Name = "panelBriefNews";
-            this.panelBriefNews.Size = new System.Drawing.Size(395, 256);
+            this.panelBriefNews.Size = new System.Drawing.Size(434, 276);
             this.panelBriefNews.TabIndex = 10;
+            // 
+            // lblTopHeaderEvents
+            // 
+            this.lblTopHeaderEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTopHeaderEvents.AutoSize = true;
+            this.lblTopHeaderEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTopHeaderEvents.Location = new System.Drawing.Point(415, 192);
+            this.lblTopHeaderEvents.Name = "lblTopHeaderEvents";
+            this.lblTopHeaderEvents.Size = new System.Drawing.Size(240, 20);
+            this.lblTopHeaderEvents.TabIndex = 12;
+            this.lblTopHeaderEvents.Text = "Here is a brief of your news feed:";
             // 
             // lblTopHeaderTopPhotos
             // 
@@ -370,22 +383,11 @@
             this.lblTopHeaderTopPhotos.TabIndex = 11;
             this.lblTopHeaderTopPhotos.Text = "These are the top 4 most popular photos of you:";
             // 
-            // lblTopHeaderEvents
-            // 
-            this.lblTopHeaderEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTopHeaderEvents.AutoSize = true;
-            this.lblTopHeaderEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTopHeaderEvents.Location = new System.Drawing.Point(3, 9);
-            this.lblTopHeaderEvents.Name = "lblTopHeaderEvents";
-            this.lblTopHeaderEvents.Size = new System.Drawing.Size(240, 20);
-            this.lblTopHeaderEvents.TabIndex = 12;
-            this.lblTopHeaderEvents.Text = "Here is a brief of your news feed:";
-            // 
             // lblHeaderSomeFriends
             // 
             this.lblHeaderSomeFriends.AutoSize = true;
             this.lblHeaderSomeFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderSomeFriends.Location = new System.Drawing.Point(494, 96);
+            this.lblHeaderSomeFriends.Location = new System.Drawing.Point(412, 69);
             this.lblHeaderSomeFriends.Name = "lblHeaderSomeFriends";
             this.lblHeaderSomeFriends.Size = new System.Drawing.Size(218, 20);
             this.lblHeaderSomeFriends.TabIndex = 13;
@@ -396,9 +398,9 @@
             this.panelRandomFriends.Controls.Add(this.pictureBox2);
             this.panelRandomFriends.Controls.Add(this.pictureFriend2);
             this.panelRandomFriends.Controls.Add(this.pictureBoxInListFriendsOne);
-            this.panelRandomFriends.Location = new System.Drawing.Point(495, 124);
+            this.panelRandomFriends.Location = new System.Drawing.Point(413, 97);
             this.panelRandomFriends.Name = "panelRandomFriends";
-            this.panelRandomFriends.Size = new System.Drawing.Size(446, 116);
+            this.panelRandomFriends.Size = new System.Drawing.Size(434, 93);
             this.panelRandomFriends.TabIndex = 14;
             // 
             // pictureBox2
@@ -425,63 +427,43 @@
             this.pictureBoxInListFriendsOne.TabIndex = 15;
             this.pictureBoxInListFriendsOne.TabStop = false;
             // 
-            // lblGender
-            // 
-            this.lblGender.AutoSize = true;
-            this.lblGender.Location = new System.Drawing.Point(199, 76);
-            this.lblGender.Name = "lblGender";
-            this.lblGender.Size = new System.Drawing.Size(45, 13);
-            this.lblGender.TabIndex = 15;
-            this.lblGender.Text = "Gender:";
-            // 
-            // lblGenderValue
-            // 
-            this.lblGenderValue.AutoSize = true;
-            this.lblGenderValue.Location = new System.Drawing.Point(250, 76);
-            this.lblGenderValue.Name = "lblGenderValue";
-            this.lblGenderValue.Size = new System.Drawing.Size(81, 13);
-            this.lblGenderValue.TabIndex = 16;
-            this.lblGenderValue.Text = "<GenderValue>";
-            // 
-            // lblBirthday
-            // 
-            this.lblBirthday.AutoSize = true;
-            this.lblBirthday.Location = new System.Drawing.Point(199, 104);
-            this.lblBirthday.Name = "lblBirthday";
-            this.lblBirthday.Size = new System.Drawing.Size(48, 13);
-            this.lblBirthday.TabIndex = 17;
-            this.lblBirthday.Text = "Birthday:";
-            // 
-            // lblBirthdayValue
-            // 
-            this.lblBirthdayValue.AutoSize = true;
-            this.lblBirthdayValue.Location = new System.Drawing.Point(250, 104);
-            this.lblBirthdayValue.Name = "lblBirthdayValue";
-            this.lblBirthdayValue.Size = new System.Drawing.Size(84, 13);
-            this.lblBirthdayValue.TabIndex = 18;
-            this.lblBirthdayValue.Text = "<BirthdayValue>";
-            // 
             // panelPost
             // 
             this.panelPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelPost.Controls.Add(this.textBoxPostMessage);
             this.panelPost.Controls.Add(this.buttonPostQuickStatus);
-            this.panelPost.Location = new System.Drawing.Point(505, 12);
+            this.panelPost.Location = new System.Drawing.Point(413, 12);
             this.panelPost.Name = "panelPost";
-            this.panelPost.Size = new System.Drawing.Size(501, 57);
+            this.panelPost.Size = new System.Drawing.Size(437, 44);
             this.panelPost.TabIndex = 19;
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.lblPersonalInfo);
+            this.panel5.Location = new System.Drawing.Point(197, 59);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(213, 131);
+            this.panel5.TabIndex = 20;
+            // 
+            // lblPersonalInfo
+            // 
+            this.lblPersonalInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPersonalInfo.Location = new System.Drawing.Point(4, 9);
+            this.lblPersonalInfo.Name = "lblPersonalInfo";
+            this.lblPersonalInfo.Size = new System.Drawing.Size(205, 120);
+            this.lblPersonalInfo.TabIndex = 0;
+            this.lblPersonalInfo.Text = "label2";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1023, 593);
+            this.ClientSize = new System.Drawing.Size(855, 520);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panelPost);
-            this.Controls.Add(this.lblBirthdayValue);
-            this.Controls.Add(this.lblBirthday);
-            this.Controls.Add(this.lblGenderValue);
-            this.Controls.Add(this.lblGender);
+            this.Controls.Add(this.lblTopHeaderEvents);
             this.Controls.Add(this.panelRandomFriends);
             this.Controls.Add(this.lblHeaderSomeFriends);
             this.Controls.Add(this.lblTopHeaderTopPhotos);
@@ -491,10 +473,12 @@
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.lblHello);
             this.Controls.Add(this.pbUserPicture);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Facebook";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Text = "Facebook Smart View";
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).EndInit();
             this.panelMostPopular.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -512,13 +496,13 @@
             this.gpPopular1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroup1)).EndInit();
             this.panelBriefNews.ResumeLayout(false);
-            this.panelBriefNews.PerformLayout();
             this.panelRandomFriends.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFriend2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInListFriendsOne)).EndInit();
             this.panelPost.ResumeLayout(false);
             this.panelPost.PerformLayout();
+            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -561,11 +545,9 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Label lblGender;
-        private System.Windows.Forms.Label lblGenderValue;
-        private System.Windows.Forms.Label lblBirthday;
-        private System.Windows.Forms.Label lblBirthdayValue;
         private System.Windows.Forms.Panel panelPost;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label lblPersonalInfo;
     }
 }
 
