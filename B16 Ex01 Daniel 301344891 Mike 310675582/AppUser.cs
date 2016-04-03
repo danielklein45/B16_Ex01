@@ -70,7 +70,10 @@ namespace FacebookSmartView
             return strLocation;
         }
 
-
+        public FacebookObjectCollection<Album> getUserAlbums()
+        {
+                return m_FacebookUser.Albums;
+        }
 
         private int calcUserAge(string i_strBirthday)
         {
@@ -121,6 +124,7 @@ namespace FacebookSmartView
                 return m_FacebookUser.Gender.ToString();
             }
         }
+       
         public int Age
         {
             get
@@ -128,6 +132,7 @@ namespace FacebookSmartView
                 return m_userAge;
             }
         }
+       
         public string UserLivesIn
         {
             get
@@ -136,6 +141,7 @@ namespace FacebookSmartView
                 return (m_FacebookUser.Location.Name != null) ? m_FacebookUser.Location.Name : "";
             }
         }
+      
         public string LastEducationStudyPlace
         {
             get

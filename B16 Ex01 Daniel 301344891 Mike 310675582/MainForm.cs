@@ -15,17 +15,34 @@ namespace FacebookSmartView
     public partial class MainForm : Form
     {
         private AppUser m_AppUser;
-        private string m_aboutString = "";
+        private TopPhotosFeature m_TopPhotosFeature;
+        private PopularPanelMgt m_PopPanelMgt;
 
         public MainForm()
         {
             InitializeComponent();
+            m_PopPanelMgt = new PopularPanelMgt();
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+            //SpecialPictureBox spBox = new SpecialPictureBox(panelMostPopular);
+            // TODO: CHANGE TO FACTORY DP
+            //m_LstPictureBoxFromForm.Add(new PictureObject("", 0, 0, 0, "", pictureBoxGroup1, lblPopularityGroup1));
+            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.tryAddToPanel(new PictureObject("", 0, 0, 0, "", pictureBoxGroup4, lblPopularityGroup2));
+            m_PopPanelMgt.tryAddToPanel(new PictureObject("", 0, 0, 0, "", pictureBoxGroup2, lblPopularityGroup3));
+            m_PopPanelMgt.tryAddToPanel(new PictureObject("", 0, 0, 0, "", pictureBoxGroup3, lblPopularityGroup4));
+
+            m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, m_PopPanelMgt.PictureObjectList);
+
+
             fetchUserInfo();
+            m_TopPhotosFeature.rankUserPhotos();
+            m_TopPhotosFeature.loadTopPhotos();
+
         }
 
         private void fetchUserInfo()
@@ -88,5 +105,6 @@ namespace FacebookSmartView
                
             }
         }
+
     }
 }

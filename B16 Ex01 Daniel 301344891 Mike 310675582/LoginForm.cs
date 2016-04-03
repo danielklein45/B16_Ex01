@@ -14,113 +14,72 @@ using FacebookWrapper.ObjectModel;
 
 namespace FacebookSmartView
 {
-	public partial class LoginForm : Form
-	{
-		private const string k_AppID = "1222488951112730";
+    public partial class LoginForm : Form
+    {
 
-		private readonly string[] r_RequiredPermissions = 
-		{
-			"user_about_me",
-			"user_posts",
-			"public_profile", 
-			"user_education_history",
-            "user_work_history",
-			"user_birthday",
-			"user_friends",
-			"publish_actions",
-			"user_likes",
-			"user_photos",
-			"user_posts",
-			"user_relationships",
-            "user_location"
-		};
+        // Private variables
+        private LoginLogic llFunctions; // Class To handle login form 
 
-		public LoginForm()
-		{
-			InitializeComponent();
-		}
+        public LoginForm()
+        {
+            InitializeComponent();
+            llFunctions = new LoginLogic();
+            cbRememberMe.Checked = llFunctions.getRememberBoxCheckedValue();
+        }
 
-		private void buttonExit_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            LoginFunction(false);
+        }
 
         private void LoginFunction(Boolean i_bAutoLogin)
         {
             LoginResult result = login(i_bAutoLogin);
 
-            if ((result != null) && (result.AccessToken != null))
+            if ((result != GeneralVars.k_NULL) && (result.AccessToken != GeneralVars.k_NULL))
             {
-                saveRememberBox(cbRememberMe.Checked);
+                llFunctions.saveRememberBox(cbRememberMe.Checked);
                 MainForm mainForm = new MainForm();
 
-                mainForm.LoginUser = result.LoggedInUser;
                 this.Hide();
+                mainForm.LoginUser = result.LoggedInUser;
                 mainForm.Closed += (s, args) => this.Close();
                 mainForm.Show();
             }
         }
 
-		private void buttonLogin_Click(object sender, EventArgs e)
-		{
-            LoginFunction(false);
-		}
-
-		private string getSavedAccessToken()
-		{
-			return Properties.Settings.Default.SavedAccessToken;
-		}
-
-		private void saveAccessToken(string i_AccessToken)
-		{
-			Properties.Settings.Default.SavedAccessToken = i_AccessToken;
-			Properties.Settings.Default.Save();
-		}
-        private void saveRememberBox(bool i_bCheckBoxValue)
+        private LoginResult login(Boolean i_bautoLogin)
         {
-            Properties.Settings.Default.RememberMe = i_bCheckBoxValue;
-            Properties.Settings.Default.Save();
-        }
+            LoginResult result = null;
 
-		private LoginResult loginToFacbookAndSaveToken()
-		{
-			LoginResult result = FacebookService.Login(k_AppID, r_RequiredPermissions);
-			saveAccessToken(result.AccessToken);
+            string lastAccessToken = llFunctions.getSavedAccessToken();
 
-			return result;
-		}
+            //first login attemt
+            if (String.IsNullOrEmpty(lastAccessToken))
+            {
+                result = llFunctions.loginToFacbookAndSaveToken();
+            }
+            //quicklogin using saved settings
+            else
+            {
 
-        private LoginResult preformAutoLogin()
-        {
-            return FacebookService.Login(k_AppID, r_RequiredPermissions);
-        }
-
-		private LoginResult login(Boolean i_bautoLogin)
-		{
-			LoginResult result = null;
-
-			string lastAccessToken = getSavedAccessToken();
-
-			//first login attemt
-			if (String.IsNullOrEmpty(lastAccessToken))
-			{
-				result = loginToFacbookAndSaveToken();
-			}
-			//quicklogin using saved settings
-			else
-			{
                 if (!i_bautoLogin)
                 {
                     DialogResult loginDialogResult = MessageBox.Show
-                        ("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
-                        MessageBoxButtons.YesNo);
+                       ("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
+                       MessageBoxButtons.YesNo);
 
                     //login as a last used user
                     if (loginDialogResult == DialogResult.Yes)
                     {
                         try
                         {
-                            result = FacebookService.Connect(lastAccessToken);
+                            result = llFunctions.connectToFacebook(lastAccessToken);
                         }
                         catch (Exception e)
                         {
@@ -130,29 +89,32 @@ namespace FacebookSmartView
                     //login as a new user
                     else
                     {
-                        result = loginToFacbookAndSaveToken();
+                        result = llFunctions.loginToFacbookAndSaveToken();
                     }
                 }
                 else
                 {
-                    result = preformAutoLogin();
+                    result = llFunctions.loginToFacebook();
                 }
-			}
+            }
 
-			if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
-			{
-				MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+            if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
+            {
+                MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-			return result;
-		}
+            return result;
+        }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.RememberMe == true)
+            if (Properties.Settings.Default.RememberMe == GeneralVars.k_TRUE)
             {
-                LoginFunction(Properties.Settings.Default.RememberMe);
+             //   LoginFunction(GeneralVars.k_TRUE);
+              //  this.Opacity = 0;
             }
         }
-	}
+        
+        
+    }
 }
