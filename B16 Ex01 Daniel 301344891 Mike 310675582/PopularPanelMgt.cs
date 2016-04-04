@@ -3,22 +3,59 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace FacebookSmartView
 {
     class PopularPanelMgt
     {
         private const int MAX_PANEL = 4;
-        private static Point m_lastEndOfPicture;
+        private static Point m_NextFreePoint;
+        private Size m_roSurface;
+        private List<SpecialPictureBox> m_LstPictureBoxFromForm;
+        private Label m_InformationLabel;
+        private TextBox m_InformationCommentTextbox;
 
-        private List<PictureObject> m_LstPictureBoxFromForm;
-        public PopularPanelMgt()
+        private static PopularPanelMgt m_currentInstance;
+        private static Object m_LockOnMgt = new Object();
+        
+        private string m_currentSelectedObjectId;
+
+        public string CurrentObjectID         {            get { return m_currentSelectedObjectId; }            set { m_currentSelectedObjectId = value; }        }
+        public Label InformationLabel        {            get { return m_InformationLabel; }            set { m_InformationLabel = value; }        }
+        public TextBox InformationTextbox        {            get { return m_InformationCommentTextbox; }            set { m_InformationCommentTextbox = value; }
+        }
+        
+        private PopularPanelMgt()
         {
-            m_LstPictureBoxFromForm = new List<PictureObject>();
-            m_lastEndOfPicture = new Point(0, 0);
+            m_LstPictureBoxFromForm = new List<SpecialPictureBox>();
+            m_NextFreePoint = new Point(GeneralVars.k_SPACER, GeneralVars.k_SPACER);
+            m_currentSelectedObjectId = "";
         }
 
-        public List<PictureObject> PictureObjectList
+        public static PopularPanelMgt Instance
+        {
+            get
+            {
+                if(m_currentInstance == null){
+                    lock (m_LockOnMgt)
+                    {
+                        if (m_currentInstance == null)
+                        {
+                            m_currentInstance = new PopularPanelMgt();
+                        }
+                    }
+                }
+                return m_currentInstance;
+            }
+        }
+        public void setPanels(Panel i_OuterPanel, Panel i_InnerPanel)
+        {
+            m_roSurface = new Size(i_OuterPanel.Size.Width - GeneralVars.k_SPACER,
+                                   i_OuterPanel.Size.Height - i_InnerPanel.Size.Height - GeneralVars.k_SPACER );
+        }
+
+        public List<SpecialPictureBox> PictureObjectList
         {
             get
             {
@@ -30,32 +67,31 @@ namespace FacebookSmartView
         {
             if (m_LstPictureBoxFromForm.Count < MAX_PANEL)
             {
-                m_LstPictureBoxFromForm.Add(new PictureObject("", 0, 0, 0, "", i_poNew, i_poNew.PicLabel));
-                return true;
+                Point pNewPointForPicture;
+                
+                if (getNextFreeLocationInContainer(SpecialPictureBox.PictureBoxTopPhotosSize, out pNewPointForPicture))
+                {
+                    i_poNew.PictureObject = new PictureObject("", 0, 0, 0, "", "", i_poNew, i_poNew.PicLabel);
+                    i_poNew.ObjectLocation = pNewPointForPicture;
+
+                    m_LstPictureBoxFromForm.Add(i_poNew);
+            
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
-        }
-        public bool tryAddToPanel(PictureObject i_poNew)
-        {
-            if (m_LstPictureBoxFromForm.Count < MAX_PANEL)
-            {
-                m_LstPictureBoxFromForm.Add(i_poNew);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            i_poNew.removeObjectFromPanel();
+            i_poNew = null;
+            return false;
         }
 
-        public static bool getNextFreeLocationInContainer(Point i_MaxPoint, out Point o_NewPoint)
+        private bool getNextFreeLocationInContainer(Size i_PanelSize, out Point o_NewPoint)
         {
-            if (m_lastEndOfPicture.X < i_MaxPoint.X && m_lastEndOfPicture.Y < i_MaxPoint.Y)
+            if (m_NextFreePoint.X + i_PanelSize.Width < m_roSurface.Width &&
+                m_NextFreePoint.Y + i_PanelSize.Height < m_roSurface.Height )
             {
-                o_NewPoint = new Point(m_lastEndOfPicture.X + 10, m_lastEndOfPicture.Y);
+                o_NewPoint = m_NextFreePoint;
+                m_NextFreePoint = new Point(m_NextFreePoint.X + i_PanelSize.Width + GeneralVars.k_SPACER, m_NextFreePoint.Y);
                 return true;
             }
             else
@@ -65,5 +101,6 @@ namespace FacebookSmartView
             }
                 
         }
+
     }
 }
