@@ -21,22 +21,23 @@ namespace FacebookSmartView
         public MainForm()
         {
             InitializeComponent();
-            m_PopPanelMgt = new PopularPanelMgt();
+            m_PopPanelMgt = PopularPanelMgt.Instance;
+            PopularPanelMgt.Instance.setPanels(panelMostPopular, gpTopPhotosInfoBox);
+            m_PopPanelMgt.InformationLabel = lblMetaDataAboutPicture;
+            m_PopPanelMgt.InformationTextbox = txtPostCommentOnPhoto;
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            //SpecialPictureBox spBox = new SpecialPictureBox(panelMostPopular);
-            // TODO: CHANGE TO FACTORY DP
-            //m_LstPictureBoxFromForm.Add(new PictureObject("", 0, 0, 0, "", pictureBoxGroup1, lblPopularityGroup1));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
-            m_PopPanelMgt.tryAddToPanel(new PictureObject("", 0, 0, 0, "", pictureBoxGroup4, lblPopularityGroup2));
-            m_PopPanelMgt.tryAddToPanel(new PictureObject("", 0, 0, 0, "", pictureBoxGroup2, lblPopularityGroup3));
-            m_PopPanelMgt.tryAddToPanel(new PictureObject("", 0, 0, 0, "", pictureBoxGroup3, lblPopularityGroup4));
+            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
 
-            m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, m_PopPanelMgt.PictureObjectList);
+            List<SpecialPictureBox> lstSpBoxFromPopPanel =  m_PopPanelMgt.PictureObjectList;
+            m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
 
 
             fetchUserInfo();
@@ -68,7 +69,7 @@ namespace FacebookSmartView
 
         private string buildUserPrivateAbout()
         {
-            string k_firstPart = "You are a " + m_AppUser.Age + " years old" + m_AppUser.Gender;
+            string k_firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender;
             string str_secondPart = "";
             string str_thirdPart = "";
 

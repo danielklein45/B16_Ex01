@@ -16,9 +16,9 @@ namespace FacebookSmartView
         
 
 
-        public PictureObject(string i_ObjectId, int i_NumberOfLikes, int i_NumberOfComments, int i_Score, string i_PictureUrl,
+        public PictureObject(string i_ObjectId, int i_NumberOfLikes, int i_NumberOfComments, int i_Score, string i_PictureUrl, string  i_DateCreated, 
                             PictureBox i_PictureBox, Label i_InfoLableBottom)
-                            :base(i_ObjectId, i_NumberOfLikes, i_NumberOfComments, i_Score, i_PictureUrl)
+            : base(i_ObjectId, i_NumberOfLikes, i_NumberOfComments, i_Score, i_PictureUrl, i_DateCreated)
         {
             this.m_PictureBox = i_PictureBox;
             this.m_BottomLable = i_InfoLableBottom;
@@ -29,19 +29,6 @@ namespace FacebookSmartView
             this.m_PictureBox.LoadAsync(this.PictureUrl);
             this.m_BottomLable.Text = String.Format("{0} L + {1} C = {2} Score", this.NumberOfLikes, this.NumberOfComment, this.Score);
         }
-
-        public void makeProfilePicture()
-        {
-
-        }
-
-       
-
-        public void calcScore()
-        {
-
-        }
-        
         
     }
 }

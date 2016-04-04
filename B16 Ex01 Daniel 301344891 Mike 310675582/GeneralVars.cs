@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -10,8 +11,7 @@ namespace FacebookSmartView
         public const Boolean k_TRUE = true;
         public const Boolean k_FALSE = false;
         public const Object k_NULL = null;
-    
-        public const int k_PictureBoxTopPhotosWidth = 127;
-        public const int k_PictureBoxTopPhotosHeight = 109;
+
+        public const int k_SPACER = 5;
     }
 }

@@ -12,18 +12,17 @@ namespace FacebookSmartView
         private AppUser m_AppUser;
         private List<string> m_ListOfObjectIDSortedByFromTopScore;
         private SortedDictionary<string, PictureObjectBasic> m_SortedDicAllPhotosByObjectID;
-        private List<PictureObject> m_PictureObejctsOnForm;
+        private List<SpecialPictureBox> m_PictureObejctsOnForm;
 
         private int intLastIndexInDic = 0;
         private int intLastIndexInDicList = 0;
         private int intCurrentIndex = 0;
 
-        public TopPhotosFeature(AppUser i_AppUser, List<PictureObject> i_PictureBoxArray)
+        public TopPhotosFeature(AppUser i_AppUser, ref List<SpecialPictureBox> i_PictureBoxArray)
         {
-            m_PictureObejctsOnForm = new List<PictureObject>();
+            m_PictureObejctsOnForm = i_PictureBoxArray;
             m_ListOfObjectIDSortedByFromTopScore = new List<string>();
             m_SortedDicAllPhotosByObjectID = new SortedDictionary<string, PictureObjectBasic>();
-            m_PictureObejctsOnForm.AddRange(i_PictureBoxArray);
             m_AppUser = i_AppUser;
         }
 
@@ -46,16 +45,17 @@ namespace FacebookSmartView
                     currentScore = calcPhotoRank(likesCount, commentCount);
 
                     m_SortedDicAllPhotosByObjectID.Add(phCurrentPhoto.Id,
-                                 new PictureObjectBasic(phCurrentPhoto.Id, likesCount, commentCount, currentScore, phCurrentPhoto.PictureNormalURL));
+                                 new PictureObjectBasic(phCurrentPhoto.Id, likesCount, commentCount, currentScore, phCurrentPhoto.PictureNormalURL,
+                                     phCurrentPhoto.CreatedTime.ToString()));
                     sdSortedScoreDic.Add(phCurrentPhoto.Id, currentScore);
                     
                                                 //  TODO: MAKE AN ERROR PICTURE    phCurrentPhoto.PictureNormalURL != GeneralVars.k_NULL ? phCurrentPhoto.PictureNormalURL: ));
 
-                    if (++coun > 10)
+                    if (++coun > 3)
                         break;
                 }
 
-                if (coun > 10)
+                if (coun > 3)
                     break;
 
             }
@@ -69,80 +69,26 @@ namespace FacebookSmartView
             
         }
 
-        //private string getTheObjeIdByPlaceInDicAndList(int i_IndexToGetFromDic)
-        //{
-        //    int i = intLastIndexInDicList, j = intLastIndexInDic;
-        //    bool bFound = false;
-        //    List<string> lstCurr = m_SortedDicByScoreAndObjId.ElementAt(0).Value;
-        //    string strReturnString = "";
-            
-
-        //    while (intCurrentIndex <= i_IndexToGetFromDic && !bFound)
-        //    {
-        //        for (; j < m_SortedDicByScoreAndObjId.Count && !bFound; ++j)
-        //        {
-        //            lstCurr = m_SortedDicByScoreAndObjId.ElementAt(j).Value;
-
-        //            if (i_IndexToGetFromDic - intCurrentIndex <= lstCurr.Count)
-        //            {
-        //                for (; i < lstCurr.Count ; ++i)
-        //                {
-        //                    if (intCurrentIndex++ >= i_IndexToGetFromDic)
-        //                    {
-        //                        bFound = true;
-        //                        ++i;
-        //                        break;
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                i = 0;
-        //                intCurrentIndex += lstCurr.Count;
-        //            }
-        //            if (bFound)
-        //            {
-        //                if (i >= lstCurr.Count) { ++j; i = 0; }
-                            
-        //                break;
-        //            }
-        //        }
-        //    }
-
-        //    intLastIndexInDicList = i;
-        //    intLastIndexInDic = j;
-
-        //    try
-        //    {
-        //        strReturnString = lstCurr[(i == 0 ? 0 : i-1)];
-        //    }
-        //    catch
-        //    {
-        //        strReturnString = "";
-        //    }
-
-        //    return strReturnString;
-        //}
-
-        public void loadTopPhotos()
+       public void loadTopPhotos()
         {
             int indexForDictionary = 0;
             PictureObjectBasic pobCurrentObj;
             string strCurrentIndex = "";
 
-            foreach (PictureObject poCurrPicObj in m_PictureObejctsOnForm)
+            foreach (SpecialPictureBox poCurrPicObj in m_PictureObejctsOnForm)
             {
                 strCurrentIndex = m_ListOfObjectIDSortedByFromTopScore.ElementAt(indexForDictionary++);
 
                 pobCurrentObj = m_SortedDicAllPhotosByObjectID[strCurrentIndex];
 
-                poCurrPicObj.ObjectId = pobCurrentObj.ObjectId;
-                poCurrPicObj.Score = pobCurrentObj.Score;
-                poCurrPicObj.NumberOfLikes = pobCurrentObj.NumberOfLikes;
-                poCurrPicObj.NumberOfComment = pobCurrentObj.NumberOfComment;
-                poCurrPicObj.PictureUrl = pobCurrentObj.PictureUrl;
+                poCurrPicObj.PictureObject.ObjectId = pobCurrentObj.ObjectId;
+                poCurrPicObj.PictureObject.Score = pobCurrentObj.Score;
+                poCurrPicObj.PictureObject.NumberOfLikes = pobCurrentObj.NumberOfLikes;
+                poCurrPicObj.PictureObject.NumberOfComment = pobCurrentObj.NumberOfComment;
+                poCurrPicObj.PictureObject.PictureUrl = pobCurrentObj.PictureUrl;
+                poCurrPicObj.PictureObject.PostedDate = pobCurrentObj.PostedDate;
 
-                poCurrPicObj.loadInformation();
+                poCurrPicObj.PictureObject.loadInformation();
                 ;
             }
         }

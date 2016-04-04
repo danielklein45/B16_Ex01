@@ -13,14 +13,16 @@ namespace FacebookSmartView
         private int m_Score;
         private string m_ObjectId;
         private string m_PictureUrl;
+        private string m_PostedDate;
 
-        public PictureObjectBasic(string i_ObjectId, int i_NumberOfLikes, int i_NumberOfComments, int i_Score, string i_PictureUrl)
+        public PictureObjectBasic(string i_ObjectId, int i_NumberOfLikes, int i_NumberOfComments, int i_Score, string i_PictureUrl, string i_PostedDate)
         {
             this.m_NumberOfComments = i_NumberOfComments;
             this.m_NummberOfLikes = i_NumberOfLikes;
             this.m_Score = i_Score;
             this.m_ObjectId = i_ObjectId;
             this.m_PictureUrl = i_PictureUrl;
+            this.m_PostedDate = i_PostedDate;
         }
 
      
@@ -29,6 +31,12 @@ namespace FacebookSmartView
         {
             get { return m_NummberOfLikes; }
             set { m_NummberOfLikes = value; }
+        }
+
+        public string PostedDate
+        {
+            get { return m_PostedDate; }
+            set { m_PostedDate = value; }
         }
 
         public int NumberOfComment
