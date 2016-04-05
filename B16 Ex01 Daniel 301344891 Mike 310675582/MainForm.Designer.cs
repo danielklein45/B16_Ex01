@@ -67,6 +67,13 @@
             this.panelPost = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblPersonalInfo = new System.Windows.Forms.Label();
+            this.checkBoxFilterPosts = new System.Windows.Forms.CheckBox();
+            this.buttonFilterPostSettings = new System.Windows.Forms.Button();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.lblPostDate = new System.Windows.Forms.Label();
+            this.lblPostBy = new System.Windows.Forms.Label();
+            this.pictureBoxPost = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).BeginInit();
             this.panelMostPopular.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -85,6 +92,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInListFriendsOne)).BeginInit();
             this.panelPost.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
             this.SuspendLayout();
             // 
             // listBoxNewsFeed
@@ -95,6 +104,7 @@
             this.listBoxNewsFeed.Name = "listBoxNewsFeed";
             this.listBoxNewsFeed.Size = new System.Drawing.Size(428, 225);
             this.listBoxNewsFeed.TabIndex = 0;
+            this.listBoxNewsFeed.SelectedIndexChanged += new System.EventHandler(this.listBoxNewsFeed_SelectedIndexChanged);
             // 
             // textBoxPostMessage
             // 
@@ -357,7 +367,7 @@
             // 
             this.panelBriefNews.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBriefNews.Controls.Add(this.listBoxNewsFeed);
-            this.panelBriefNews.Location = new System.Drawing.Point(416, 215);
+            this.panelBriefNews.Location = new System.Drawing.Point(536, 215);
             this.panelBriefNews.Name = "panelBriefNews";
             this.panelBriefNews.Size = new System.Drawing.Size(434, 276);
             this.panelBriefNews.TabIndex = 10;
@@ -367,7 +377,7 @@
             this.lblTopHeaderEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTopHeaderEvents.AutoSize = true;
             this.lblTopHeaderEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTopHeaderEvents.Location = new System.Drawing.Point(415, 192);
+            this.lblTopHeaderEvents.Location = new System.Drawing.Point(535, 192);
             this.lblTopHeaderEvents.Name = "lblTopHeaderEvents";
             this.lblTopHeaderEvents.Size = new System.Drawing.Size(240, 20);
             this.lblTopHeaderEvents.TabIndex = 12;
@@ -432,7 +442,7 @@
             this.panelPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelPost.Controls.Add(this.textBoxPostMessage);
             this.panelPost.Controls.Add(this.buttonPostQuickStatus);
-            this.panelPost.Location = new System.Drawing.Point(413, 12);
+            this.panelPost.Location = new System.Drawing.Point(533, 12);
             this.panelPost.Name = "panelPost";
             this.panelPost.Size = new System.Drawing.Size(437, 44);
             this.panelPost.TabIndex = 19;
@@ -455,12 +465,82 @@
             this.lblPersonalInfo.TabIndex = 0;
             this.lblPersonalInfo.Text = "label2";
             // 
+            // checkBoxFilterPosts
+            // 
+            this.checkBoxFilterPosts.AutoSize = true;
+            this.checkBoxFilterPosts.Location = new System.Drawing.Point(643, 193);
+            this.checkBoxFilterPosts.Name = "checkBoxFilterPosts";
+            this.checkBoxFilterPosts.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxFilterPosts.TabIndex = 21;
+            this.checkBoxFilterPosts.Text = "Filter Posts";
+            this.checkBoxFilterPosts.UseVisualStyleBackColor = true;
+            this.checkBoxFilterPosts.CheckedChanged += new System.EventHandler(this.checkBoxFilterPosts_CheckedChanged);
+            // 
+            // buttonFilterPostSettings
+            // 
+            this.buttonFilterPostSettings.Location = new System.Drawing.Point(726, 189);
+            this.buttonFilterPostSettings.Name = "buttonFilterPostSettings";
+            this.buttonFilterPostSettings.Size = new System.Drawing.Size(148, 23);
+            this.buttonFilterPostSettings.TabIndex = 22;
+            this.buttonFilterPostSettings.Text = "Filter Posts Settings";
+            this.buttonFilterPostSettings.UseVisualStyleBackColor = true;
+            this.buttonFilterPostSettings.Click += new System.EventHandler(this.buttonFilterPostSettings_Click);
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.lblPostDate);
+            this.panel6.Controls.Add(this.lblPostBy);
+            this.panel6.Controls.Add(this.pictureBoxPost);
+            this.panel6.Controls.Add(this.label2);
+            this.panel6.Location = new System.Drawing.Point(431, 218);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(153, 217);
+            this.panel6.TabIndex = 23;
+            // 
+            // lblPostDate
+            // 
+            this.lblPostDate.AutoSize = true;
+            this.lblPostDate.Location = new System.Drawing.Point(7, 63);
+            this.lblPostDate.Name = "lblPostDate";
+            this.lblPostDate.Size = new System.Drawing.Size(61, 13);
+            this.lblPostDate.TabIndex = 3;
+            this.lblPostDate.Text = "<PostedIn>";
+            // 
+            // lblPostBy
+            // 
+            this.lblPostBy.AutoSize = true;
+            this.lblPostBy.Location = new System.Drawing.Point(6, 32);
+            this.lblPostBy.Name = "lblPostBy";
+            this.lblPostBy.Size = new System.Drawing.Size(64, 13);
+            this.lblPostBy.TabIndex = 2;
+            this.lblPostBy.Text = "<PostedBy>";
+            // 
+            // pictureBoxPost
+            // 
+            this.pictureBoxPost.Location = new System.Drawing.Point(7, 101);
+            this.pictureBoxPost.Name = "pictureBoxPost";
+            this.pictureBoxPost.Size = new System.Drawing.Size(146, 105);
+            this.pictureBoxPost.TabIndex = 1;
+            this.pictureBoxPost.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(44, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Post Details";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(855, 520);
+            this.ClientSize = new System.Drawing.Size(975, 520);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.buttonFilterPostSettings);
+            this.Controls.Add(this.checkBoxFilterPosts);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panelPost);
             this.Controls.Add(this.lblTopHeaderEvents);
@@ -503,6 +583,9 @@
             this.panelPost.ResumeLayout(false);
             this.panelPost.PerformLayout();
             this.panel5.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -548,6 +631,13 @@
         private System.Windows.Forms.Panel panelPost;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label lblPersonalInfo;
+        private System.Windows.Forms.CheckBox checkBoxFilterPosts;
+        private System.Windows.Forms.Button buttonFilterPostSettings;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label lblPostDate;
+        private System.Windows.Forms.Label lblPostBy;
+        private System.Windows.Forms.PictureBox pictureBoxPost;
+        private System.Windows.Forms.Label label2;
     }
 }
 

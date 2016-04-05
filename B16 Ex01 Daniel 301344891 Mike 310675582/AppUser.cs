@@ -24,18 +24,29 @@ namespace FacebookSmartView
             m_userLivesIn = getUserLivePlace(m_FacebookUser.Location);
         }
 
-        public FacebookObjectCollection<Post> GetNewsFeed()
+        public FacebookObjectCollection<Post> GetNewsFeed(PostFilter i_PostFilter)
         {
-            FacebookObjectCollection<Post> mostUpdatedPost = new FacebookObjectCollection<Post>();
+            FacebookObjectCollection<Post> postToDisplay = new FacebookObjectCollection<Post>();
 
-            IEnumerable<Post> queryAllPostsWithoutNullMessage = m_FacebookUser.NewsFeed.Where(post => post.Message != null);
+            IEnumerable<Post> queryPostToDisplay;
 
-            foreach (Post post in queryAllPostsWithoutNullMessage)
+            if (i_PostFilter != null)
             {
-                mostUpdatedPost.Add(post);
+                queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => !i_PostFilter.IsMatch(post) && post.Message != null);
+            }
+            else
+            {
+                queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => post.Message != null);
+            }
+            
+
+            foreach (Post post in queryPostToDisplay)
+            {
+                postToDisplay.Add(post);
             }
 
-            return mostUpdatedPost;
+            return postToDisplay;
+
         }
         private string getLastEdu(Education[] i_eduForUser)
         {
