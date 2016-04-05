@@ -50,6 +50,7 @@
             this.lblPersonalInfo = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonSignOff = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).BeginInit();
             this.panelMostPopular.SuspendLayout();
             this.gpTopPhotosInfoBox.SuspendLayout();
@@ -74,7 +75,7 @@
             this.textBoxPostMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPostMessage.Location = new System.Drawing.Point(3, 9);
             this.textBoxPostMessage.Name = "textBoxPostMessage";
-            this.textBoxPostMessage.Size = new System.Drawing.Size(587, 26);
+            this.textBoxPostMessage.Size = new System.Drawing.Size(549, 26);
             this.textBoxPostMessage.TabIndex = 3;
             this.textBoxPostMessage.Text = "Hmm what\'s on your mind...";
             // 
@@ -121,7 +122,7 @@
             // buttonPostQuickStatus
             // 
             this.buttonPostQuickStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPostQuickStatus.Location = new System.Drawing.Point(596, 10);
+            this.buttonPostQuickStatus.Location = new System.Drawing.Point(558, 10);
             this.buttonPostQuickStatus.Name = "buttonPostQuickStatus";
             this.buttonPostQuickStatus.Size = new System.Drawing.Size(83, 26);
             this.buttonPostQuickStatus.TabIndex = 8;
@@ -164,12 +165,13 @@
             // buttonLikePicture
             // 
             this.buttonLikePicture.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLikePicture.Location = new System.Drawing.Point(598, 27);
+            this.buttonLikePicture.Location = new System.Drawing.Point(598, 26);
             this.buttonLikePicture.Name = "buttonLikePicture";
             this.buttonLikePicture.Size = new System.Drawing.Size(118, 29);
             this.buttonLikePicture.TabIndex = 4;
             this.buttonLikePicture.Text = "Like";
             this.buttonLikePicture.UseVisualStyleBackColor = true;
+            this.buttonLikePicture.Click += new System.EventHandler(this.buttonLikePicture_Click);
             // 
             // buttonCommentPicture
             // 
@@ -180,6 +182,7 @@
             this.buttonCommentPicture.TabIndex = 3;
             this.buttonCommentPicture.Text = "Comment";
             this.buttonCommentPicture.UseVisualStyleBackColor = true;
+            this.buttonCommentPicture.Click += new System.EventHandler(this.buttonCommentPicture_Click);
             // 
             // txtPostCommentOnPhoto
             // 
@@ -225,9 +228,9 @@
             this.panelPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelPost.Controls.Add(this.textBoxPostMessage);
             this.panelPost.Controls.Add(this.buttonPostQuickStatus);
-            this.panelPost.Location = new System.Drawing.Point(482, 12);
+            this.panelPost.Location = new System.Drawing.Point(435, 9);
             this.panelPost.Name = "panelPost";
-            this.panelPost.Size = new System.Drawing.Size(686, 44);
+            this.panelPost.Size = new System.Drawing.Size(648, 44);
             this.panelPost.TabIndex = 19;
             // 
             // gpInfo
@@ -236,7 +239,7 @@
             this.gpInfo.Controls.Add(this.lblPersonalInfo);
             this.gpInfo.Location = new System.Drawing.Point(197, 59);
             this.gpInfo.Name = "gpInfo";
-            this.gpInfo.Size = new System.Drawing.Size(213, 131);
+            this.gpInfo.Size = new System.Drawing.Size(232, 131);
             this.gpInfo.TabIndex = 20;
             // 
             // lblPersonalInfo
@@ -244,7 +247,7 @@
             this.lblPersonalInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPersonalInfo.Location = new System.Drawing.Point(4, 9);
             this.lblPersonalInfo.Name = "lblPersonalInfo";
-            this.lblPersonalInfo.Size = new System.Drawing.Size(205, 120);
+            this.lblPersonalInfo.Size = new System.Drawing.Size(223, 120);
             this.lblPersonalInfo.TabIndex = 0;
             this.lblPersonalInfo.Text = "label2";
             // 
@@ -265,12 +268,23 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "News Feed actions";
             // 
+            // buttonSignOff
+            // 
+            this.buttonSignOff.Location = new System.Drawing.Point(1085, 18);
+            this.buttonSignOff.Name = "buttonSignOff";
+            this.buttonSignOff.Size = new System.Drawing.Size(83, 26);
+            this.buttonSignOff.TabIndex = 22;
+            this.buttonSignOff.Text = "Sign Off";
+            this.buttonSignOff.UseVisualStyleBackColor = true;
+            this.buttonSignOff.Click += new System.EventHandler(this.buttonSignOff_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1173, 498);
+            this.Controls.Add(this.buttonSignOff);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gpInfo);
             this.Controls.Add(this.panelPost);
@@ -326,6 +340,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblMetaDataAboutPicture;
+        private System.Windows.Forms.Button buttonSignOff;
     }
 }
 

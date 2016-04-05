@@ -58,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUser.cs" />
+    <Compile Include="FormLoader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoader.Designer.cs">
+      <DependentUpon>FormLoader.cs</DependentUpon>
+    </Compile>
     <Compile Include="GeneralVars.cs" />
     <Compile Include="LoginLogic.cs" />
     <Compile Include="MainForm.cs">
@@ -72,6 +78,7 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainFormLoadEventArgs.cs" />
     <Compile Include="PictureObject.cs" />
     <Compile Include="PictureObjectBasic.cs" />
     <Compile Include="PopularPanelMgt.cs" />
@@ -82,6 +89,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TopPhotosFeature.cs" />
+    <EmbeddedResource Include="FormLoader.resx">
+      <DependentUpon>FormLoader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FaceBook.ico" />
+    <None Include="gears.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

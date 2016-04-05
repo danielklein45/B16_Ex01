@@ -13,5 +13,7 @@ namespace FacebookSmartView
         public const Object k_NULL = null;
 
         public const int k_SPACER = 5;
+
+        public const string K_MessageOnTxtboxCommentPhoto = "Write a comment...";
     }
 }

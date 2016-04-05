@@ -18,13 +18,14 @@ namespace FacebookSmartView
     {
 
         // Private variables
-        private LoginLogic llFunctions; // Class To handle login form 
+        private LoginLogic m_llFunctions; // Class To handle login form 
+       
 
         public LoginForm()
         {
             InitializeComponent();
-            llFunctions = new LoginLogic();
-            cbRememberMe.Checked = llFunctions.getRememberBoxCheckedValue();
+            m_llFunctions = new LoginLogic();
+            cbRememberMe.Checked = m_llFunctions.getRememberBoxCheckedValue();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
@@ -43,43 +44,53 @@ namespace FacebookSmartView
 
             if ((result != GeneralVars.k_NULL) && (result.AccessToken != GeneralVars.k_NULL))
             {
-                llFunctions.saveRememberBox(cbRememberMe.Checked);
+                m_llFunctions.saveRememberBox(cbRememberMe.Checked);
                 MainForm mainForm = new MainForm();
 
                 this.Hide();
                 mainForm.LoginUser = result.LoggedInUser;
                 mainForm.Closed += (s, args) => this.Close();
+                
                 mainForm.Show();
+
+                mainForm.ehMainFormLoad += new EventHandler<MainFormLoadEventArgs>()
+    fnf.FirstNameUpdated += new EventHandler<NameUpdatedEventArgs>(fnf_FirstNameUpdated);
+
             }
+        }
+
+        void mainForm_ehMainFormLoad(object sender, MainFormLoadEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private LoginResult login(Boolean i_bautoLogin)
         {
             LoginResult result = null;
 
-            string lastAccessToken = llFunctions.getSavedAccessToken();
+            string lastAccessToken = m_llFunctions.getSavedAccessToken();
 
             //first login attemt
             if (String.IsNullOrEmpty(lastAccessToken))
             {
-                result = llFunctions.loginToFacbookAndSaveToken();
+                result = m_llFunctions.loginToFacbookAndSaveToken();
             }
             //quicklogin using saved settings
             else
             {
-
+                 DialogResult loginDialogResult = DialogResult.None;
                 if (!i_bautoLogin)
                 {
-                    DialogResult loginDialogResult = MessageBox.Show
+                    loginDialogResult = MessageBox.Show
                        ("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
                        MessageBoxButtons.YesNo);
-
-                    //login as a last used user
-                    if (loginDialogResult == DialogResult.Yes)
+                }
+                 //login as a last used user
+                 if (loginDialogResult == DialogResult.Yes || i_bautoLogin)
                     {
                         try
                         {
-                            result = llFunctions.connectToFacebook(lastAccessToken);
+                            result = m_llFunctions.connectToFacebook(lastAccessToken);
                         }
                         catch (Exception e)
                         {
@@ -89,14 +100,10 @@ namespace FacebookSmartView
                     //login as a new user
                     else
                     {
-                        result = llFunctions.loginToFacbookAndSaveToken();
+                        result = m_llFunctions.loginToFacbookAndSaveToken();
                     }
                 }
-                else
-                {
-                    result = llFunctions.loginToFacebook();
-                }
-            }
+                
 
             if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
             {
@@ -110,10 +117,13 @@ namespace FacebookSmartView
         {
             if (Properties.Settings.Default.RememberMe == GeneralVars.k_TRUE)
             {
-             //   LoginFunction(GeneralVars.k_TRUE);
-              //  this.Opacity = 0;
+                LoginFunction(GeneralVars.k_TRUE);
+                this.Opacity = 0;
             }
         }
+
+       
+       
         
         
     }

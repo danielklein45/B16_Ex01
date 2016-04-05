@@ -15,7 +15,7 @@ namespace FacebookSmartView
         private PictureObject m_poPictureObjectID;
 
         private static readonly Size sr_PictureBoxTopPhotosSize = new Size(175, 165);
-        private const int k_LabelHeight = 25;
+        private const int k_LabelHeight = 20;
         private const int k_LabelSpacer = 3;
 
         private readonly Size k_PictureSize = new Size(sr_PictureBoxTopPhotosSize.Width, sr_PictureBoxTopPhotosSize.Height - k_LabelHeight);
@@ -27,7 +27,7 @@ namespace FacebookSmartView
 
         private readonly Size k_PanelSize = new Size(sr_PictureBoxTopPhotosSize.Width, k_LabelHeight);
         private readonly String k_PanelName = "_Label";
-        private readonly Point k_PanelStartLoc = new Point(k_LabelSpacer * 2, sr_PictureBoxTopPhotosSize.Height - k_LabelHeight + k_LabelSpacer * 2);
+        private readonly Point k_PanelStartLoc = new Point(0, sr_PictureBoxTopPhotosSize.Height - k_LabelHeight);
 
         public SpecialPictureBox(Panel i_FatherPanel)
         {
@@ -42,7 +42,8 @@ namespace FacebookSmartView
             m_botLabel = new Label();
             m_botLabel.Size = k_PanelSize;
             m_botLabel.Location = k_PanelStartLoc;
-            m_botLabel.AutoSize = true;
+            m_botLabel.AutoSize = false;
+            m_botLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
             this.Visible = true;
 
@@ -95,9 +96,9 @@ namespace FacebookSmartView
 
         public void updateNames(int i_id)
         {
-            this.Name = m_FatherPanel.ToString() + k_PictureName.ToString() + "_" + i_id.ToString();
-            m_botLabel.Name = m_FatherPanel.ToString() + k_PanelName.ToString() + "_" + i_id.ToString();
-            m_boxPanel.Name = m_FatherPanel.ToString() + k_GeneralPanelName.ToString() + "_" + i_id.ToString();
+            this.Name = m_FatherPanel.Name.ToString() + k_PictureName.ToString() + "_" + i_id.ToString();
+            m_botLabel.Name = m_FatherPanel.Name.ToString() + k_PanelName.ToString() + "_" + i_id.ToString();
+            m_boxPanel.Name = m_FatherPanel.Name.ToString() + k_GeneralPanelName.ToString() + "_" + i_id.ToString();
         }
 
         public void removeObjectFromPanel()

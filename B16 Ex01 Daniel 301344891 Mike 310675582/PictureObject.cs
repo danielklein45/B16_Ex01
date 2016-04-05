@@ -27,7 +27,7 @@ namespace FacebookSmartView
         public void loadInformation()
         {
             this.m_PictureBox.LoadAsync(this.PictureUrl);
-            this.m_BottomLable.Text = String.Format("{0} L + {1} C = {2} Score", this.NumberOfLikes, this.NumberOfComment, this.Score);
+            this.m_BottomLable.Text = String.Format("{0} Likes + {1} Comments = {2} Score", this.NumberOfLikes, this.NumberOfComment, this.Score);
         }
         
     }

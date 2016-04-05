@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using FacebookWrapper.ObjectModel;
+using System.Threading;
 
 namespace FacebookSmartView
 {
@@ -17,7 +18,7 @@ namespace FacebookSmartView
         private AppUser m_AppUser;
         private TopPhotosFeature m_TopPhotosFeature;
         private PopularPanelMgt m_PopPanelMgt;
-
+        public event EventHandler<MainFormLoadEventArgs> ehMainFormLoad;
         public MainForm()
         {
             InitializeComponent();
@@ -25,18 +26,21 @@ namespace FacebookSmartView
             PopularPanelMgt.Instance.setPanels(panelMostPopular, gpTopPhotosInfoBox);
             m_PopPanelMgt.InformationLabel = lblMetaDataAboutPicture;
             m_PopPanelMgt.InformationTextbox = txtPostCommentOnPhoto;
+
+            txtPostCommentOnPhoto.Text = GeneralVars.K_MessageOnTxtboxCommentPhoto;
+
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
+            
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
 
-            List<SpecialPictureBox> lstSpBoxFromPopPanel =  m_PopPanelMgt.PictureObjectList;
+            List<SpecialPictureBox> lstSpBoxFromPopPanel = m_PopPanelMgt.PictureObjectList;
             m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
 
 
@@ -44,6 +48,11 @@ namespace FacebookSmartView
             m_TopPhotosFeature.rankUserPhotos();
             m_TopPhotosFeature.loadTopPhotos();
 
+
+            MainFormLoadEventArgs mflEs = new MainFormLoadEventArgs();
+            mflEs.FinishedLoading = true;
+            onMainFormLoadFinish(mflEs);
+            
         }
 
         private void fetchUserInfo()
@@ -64,23 +73,35 @@ namespace FacebookSmartView
             lblUserName.Text = m_AppUser.Name + "!";
             lblPersonalInfo.Text = buildUserPrivateAbout();
             pbUserPicture.LoadAsync(m_AppUser.GetUserProfilePicture());
-            
+
         }
 
         private string buildUserPrivateAbout()
         {
-            string k_firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender;
+            string k_firstPart;
+            if (m_AppUser.Age > 0)
+            {
+                k_firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender + ".";
+            }
+            else
+            {
+                k_firstPart = "You are a " + m_AppUser.Gender + " and were born in " + m_AppUser.Birthday + ".";
+            }
+
             string str_secondPart = "";
             string str_thirdPart = "";
 
-            if(m_AppUser.UserLivesIn != ""){
-                str_secondPart = " that lives in " +m_AppUser.UserLivesIn + ".";
+            if (m_AppUser.UserLivesIn != "")
+            {
+                str_secondPart = "You live in " + m_AppUser.UserLivesIn + ".";
             }
-            else{
-                str_secondPart =".";
+            else
+            {
+                str_secondPart = "";
             }
 
-            if(m_AppUser.LastEducationStudyPlace != ""){
+            if (m_AppUser.LastEducationStudyPlace != "")
+            {
                 str_thirdPart += "You studied at " + m_AppUser.LastEducationStudyPlace + ".";
             }
             else
@@ -91,7 +112,7 @@ namespace FacebookSmartView
 
         private void buttonPostQuickStatus_Click(object sender, EventArgs e)
         {
-            string statusMessage = m_AppUser.Post(textBoxPostMessage.Text);
+            string statusMessage = m_AppUser.PostToUserWall(textBoxPostMessage.Text);
             MessageBox.Show(statusMessage);
         }
 
@@ -101,11 +122,75 @@ namespace FacebookSmartView
             {
                 if (m_AppUser == null)
                 {
-                     m_AppUser = new AppUser(value);
+                    m_AppUser = new AppUser(value);
                 }
-               
+
             }
         }
+
+        private void buttonLikePicture_Click(object sender, EventArgs e)
+        {
+            if (m_PopPanelMgt.CurrentObjectID != "")
+            {
+                if (m_AppUser.LikePhoto(m_PopPanelMgt.CurrentObjectID))
+                {
+                    MessageBox.Show("You successfully liked that photo.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Oops, something went wrong trying to like that photo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a one of the pictures.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonCommentPicture_Click(object sender, EventArgs e)
+        {
+            if (m_PopPanelMgt.CurrentObjectID != "")
+            {
+                if (txtPostCommentOnPhoto.Text.Length > 0 && txtPostCommentOnPhoto.Text != GeneralVars.K_MessageOnTxtboxCommentPhoto)
+                {
+                    if (m_AppUser.CommentPhoto(m_PopPanelMgt.CurrentObjectID, txtPostCommentOnPhoto.Text))
+                    {
+                        MessageBox.Show("You successfully liked that photo.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Oops, something went wrong trying to comment that photo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Oops, did you forget to write a comment?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a one of the pictures.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            txtPostCommentOnPhoto.Text = GeneralVars.K_MessageOnTxtboxCommentPhoto;
+        }
+
+        private void buttonSignOff_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RememberMe = GeneralVars.k_FALSE;
+           // this.Close();
+        }
+
+        protected virtual void onMainFormLoadFinish(MainFormLoadEventArgs i_mainFormArgs)
+        {
+            if (i_mainFormArgs.FinishedLoading == true)
+            {
+                m_ehMainFormLoad(this, i_mainFormArgs);
+            }
+        }
+        
 
     }
 }
