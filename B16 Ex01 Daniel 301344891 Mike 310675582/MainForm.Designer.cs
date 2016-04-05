@@ -56,8 +56,6 @@
             this.pictureBoxPostImage = new System.Windows.Forms.PictureBox();
             this.lblPostDetails = new System.Windows.Forms.Label();
             this.lblHeaderPostDetails = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonSignOff = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).BeginInit();
             this.panelMostPopular.SuspendLayout();
@@ -376,7 +374,6 @@
             this.Controls.Add(this.panelNewsFeedActions);
             this.ClientSize = new System.Drawing.Size(1173, 498);
             this.Controls.Add(this.buttonSignOff);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.gpInfo);
             this.Controls.Add(this.panelPost);
             this.Controls.Add(this.lblTopHeaderTopPhotos);
