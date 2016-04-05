@@ -16,6 +16,7 @@ namespace FacebookSmartView
     public partial class MainForm : Form
     {
         private AppUser m_AppUser;
+		private PostFilter m_PostFilter;
         private TopPhotosFeature m_TopPhotosFeature;
         private PopularPanelMgt m_PopPanelMgt;
         public event EventHandler<MainFormLoadEventArgs> ehMainFormLoad;
@@ -30,6 +31,7 @@ namespace FacebookSmartView
 
             txtPostCommentOnPhoto.Text = GeneralVars.K_MessageOnTxtboxCommentPhoto;
 
+			m_PostFilter = new PostFilter();
         }
 
         public virtual void onMainFormUpdateStatus(MainFormLoadEventArgs i_mainFormArgs)
@@ -42,7 +44,7 @@ namespace FacebookSmartView
         public void initiateForm()
         {
             MainFormLoadEventArgs mflEs = new MainFormLoadEventArgs();
-
+            
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
@@ -73,7 +75,7 @@ namespace FacebookSmartView
             //mflEs.FinishedLoading = true;
             //mflEs.Message = "Form Loaded.";
             //onMainFormUpdateStatus(mflEs);
-
+            
         }
 
         private void fetchUserInfo()
@@ -84,7 +86,14 @@ namespace FacebookSmartView
 
         private void fetchNewsFeed()
         {
-            listBoxNewsFeed.DataSource = m_AppUser.GetNewsFeed();
+			PostFilter filter = null;
+
+			if (checkBoxFilterPosts.Checked)
+			{
+				filter = m_PostFilter;
+			}
+
+			listBoxNewsFeed.DataSource = m_AppUser.GetNewsFeed(filter);
             listBoxNewsFeed.DisplayMember = "Message";
             listBoxNewsFeed.ValueMember = "UpdateTime";
         }
@@ -145,7 +154,36 @@ namespace FacebookSmartView
                 {
                     m_AppUser = new AppUser(value);
                 }
+			   
+			}
+		}
 
+		private void buttonFilterPostSettings_Click(object sender, EventArgs e)
+		{
+			PostFilterSettingsForm filterSettingsDialog = new PostFilterSettingsForm();
+			filterSettingsDialog.PostFilter = m_PostFilter;
+			filterSettingsDialog.ShowDialog();
+			fetchNewsFeed();
+			m_PostFilter.Save();
+		}
+
+		private void checkBoxFilterPosts_CheckedChanged(object sender, EventArgs e)
+		{
+			fetchNewsFeed();
+		}
+
+		private void listBoxNewsFeed_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listBoxNewsFeed.SelectedItems.Count == 1)
+			{
+				Post selectedPost = listBoxNewsFeed.SelectedItem as Post;
+
+				if (selectedPost != null)
+				{
+					pictureBoxPostImage.LoadAsync(selectedPost.PictureURL);
+					string postDetails = string.Format("Posted by: {0}\nOn Date: {1}", selectedPost.From.Name, selectedPost.CreatedTime.ToString());
+					lblPostDetails.Text = postDetails;
+				}
             }
         }
 
@@ -156,7 +194,7 @@ namespace FacebookSmartView
                 if (m_AppUser.LikePhoto(m_PopPanelMgt.CurrentObjectID))
                 {
                     MessageBox.Show("You successfully liked that photo.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    
                 }
                 else
                 {
@@ -201,11 +239,11 @@ namespace FacebookSmartView
         private void buttonSignOff_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.RememberMe = GeneralVars.k_FALSE;
-            // this.Close();
+           // this.Close();
         }
 
 
-
+        
 
     }
 }

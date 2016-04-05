@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.listBoxNewsFeed = new System.Windows.Forms.ListBox();
             this.textBoxPostMessage = new System.Windows.Forms.TextBox();
             this.pbUserPicture = new System.Windows.Forms.PictureBox();
@@ -48,6 +47,15 @@
             this.panelPost = new System.Windows.Forms.Panel();
             this.gpInfo = new System.Windows.Forms.Panel();
             this.lblPersonalInfo = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panelNewsFeedActions = new System.Windows.Forms.Panel();
+            this.checkBoxFilterPosts = new System.Windows.Forms.CheckBox();
+            this.buttonFilterPostSettings = new System.Windows.Forms.Button();
+            this.lblNewsFeedActions = new System.Windows.Forms.Label();
+            this.panelPostDetails = new System.Windows.Forms.Panel();
+            this.pictureBoxPostImage = new System.Windows.Forms.PictureBox();
+            this.lblPostDetails = new System.Windows.Forms.Label();
+            this.lblHeaderPostDetails = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSignOff = new System.Windows.Forms.Button();
@@ -57,17 +65,22 @@
             this.panelBriefNews.SuspendLayout();
             this.panelPost.SuspendLayout();
             this.gpInfo.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelNewsFeedActions.SuspendLayout();
+            this.panelPostDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostImage)).BeginInit();
             this.SuspendLayout();
             // 
             // listBoxNewsFeed
             // 
             this.listBoxNewsFeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxNewsFeed.FormattingEnabled = true;
+            this.listBoxNewsFeed.HorizontalScrollbar = true;
             this.listBoxNewsFeed.Location = new System.Drawing.Point(3, 32);
             this.listBoxNewsFeed.Name = "listBoxNewsFeed";
+            this.listBoxNewsFeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.listBoxNewsFeed.Size = new System.Drawing.Size(428, 394);
             this.listBoxNewsFeed.TabIndex = 0;
+            this.listBoxNewsFeed.SelectedIndexChanged += new System.EventHandler(this.listBoxNewsFeed_SelectedIndexChanged);
             // 
             // textBoxPostMessage
             // 
@@ -134,7 +147,7 @@
             // 
             this.panelMostPopular.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMostPopular.Controls.Add(this.gpTopPhotosInfoBox);
-            this.panelMostPopular.Location = new System.Drawing.Point(3, 247);
+            this.panelMostPopular.Location = new System.Drawing.Point(3, 320);
             this.panelMostPopular.Name = "panelMostPopular";
             this.panelMostPopular.Size = new System.Drawing.Size(731, 239);
             this.panelMostPopular.TabIndex = 9;
@@ -197,7 +210,8 @@
             // 
             this.panelBriefNews.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBriefNews.Controls.Add(this.listBoxNewsFeed);
-            this.panelBriefNews.Location = new System.Drawing.Point(737, 62);
+            this.panelBriefNews.Controls.Add(this.lblTopHeaderEvents);
+            this.panelBriefNews.Location = new System.Drawing.Point(734, 132);
             this.panelBriefNews.Name = "panelBriefNews";
             this.panelBriefNews.Size = new System.Drawing.Size(434, 429);
             this.panelBriefNews.TabIndex = 10;
@@ -207,7 +221,7 @@
             this.lblTopHeaderEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTopHeaderEvents.AutoSize = true;
             this.lblTopHeaderEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTopHeaderEvents.Location = new System.Drawing.Point(481, 62);
+            this.lblTopHeaderEvents.Location = new System.Drawing.Point(95, 6);
             this.lblTopHeaderEvents.Name = "lblTopHeaderEvents";
             this.lblTopHeaderEvents.Size = new System.Drawing.Size(240, 20);
             this.lblTopHeaderEvents.TabIndex = 12;
@@ -217,7 +231,7 @@
             // 
             this.lblTopHeaderTopPhotos.AutoSize = true;
             this.lblTopHeaderTopPhotos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTopHeaderTopPhotos.Location = new System.Drawing.Point(8, 224);
+            this.lblTopHeaderTopPhotos.Location = new System.Drawing.Point(8, 297);
             this.lblTopHeaderTopPhotos.Name = "lblTopHeaderTopPhotos";
             this.lblTopHeaderTopPhotos.Size = new System.Drawing.Size(347, 20);
             this.lblTopHeaderTopPhotos.TabIndex = 11;
@@ -251,22 +265,96 @@
             this.lblPersonalInfo.TabIndex = 0;
             this.lblPersonalInfo.Text = "label2";
             // 
-            // panel1
+            // label2
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(435, 98);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(277, 111);
-            this.panel1.TabIndex = 21;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(44, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Post Details";
             // 
-            // label1
+            // panelNewsFeedActions
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(43, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "News Feed actions";
+            this.panelNewsFeedActions.Controls.Add(this.checkBoxFilterPosts);
+            this.panelNewsFeedActions.Controls.Add(this.buttonFilterPostSettings);
+            this.panelNewsFeedActions.Controls.Add(this.lblNewsFeedActions);
+            this.panelNewsFeedActions.Location = new System.Drawing.Point(734, 74);
+            this.panelNewsFeedActions.Name = "panelNewsFeedActions";
+            this.panelNewsFeedActions.Size = new System.Drawing.Size(434, 55);
+            this.panelNewsFeedActions.TabIndex = 21;
+            // 
+            // checkBoxFilterPosts
+            // 
+            this.checkBoxFilterPosts.AutoSize = true;
+            this.checkBoxFilterPosts.Location = new System.Drawing.Point(95, 29);
+            this.checkBoxFilterPosts.Name = "checkBoxFilterPosts";
+            this.checkBoxFilterPosts.Size = new System.Drawing.Size(105, 17);
+            this.checkBoxFilterPosts.TabIndex = 2;
+            this.checkBoxFilterPosts.Text = "Filter News Feed";
+            this.checkBoxFilterPosts.UseVisualStyleBackColor = true;
+            this.checkBoxFilterPosts.CheckedChanged += new System.EventHandler(this.checkBoxFilterPosts_CheckedChanged);
+            // 
+            // buttonFilterPostSettings
+            // 
+            this.buttonFilterPostSettings.Location = new System.Drawing.Point(220, 26);
+            this.buttonFilterPostSettings.Name = "buttonFilterPostSettings";
+            this.buttonFilterPostSettings.Size = new System.Drawing.Size(163, 23);
+            this.buttonFilterPostSettings.TabIndex = 1;
+            this.buttonFilterPostSettings.Text = "Filter Settings";
+            this.buttonFilterPostSettings.UseVisualStyleBackColor = true;
+            this.buttonFilterPostSettings.Click += new System.EventHandler(this.buttonFilterPostSettings_Click);
+            // 
+            // lblNewsFeedActions
+            // 
+            this.lblNewsFeedActions.AutoSize = true;
+            this.lblNewsFeedActions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNewsFeedActions.Location = new System.Drawing.Point(146, 6);
+            this.lblNewsFeedActions.Name = "lblNewsFeedActions";
+            this.lblNewsFeedActions.Size = new System.Drawing.Size(140, 16);
+            this.lblNewsFeedActions.TabIndex = 0;
+            this.lblNewsFeedActions.Text = "News Feed actions";
+            this.lblNewsFeedActions.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // panelPostDetails
+            // 
+            this.panelPostDetails.Controls.Add(this.lblHeaderPostDetails);
+            this.panelPostDetails.Controls.Add(this.lblPostDetails);
+            this.panelPostDetails.Controls.Add(this.pictureBoxPostImage);
+            this.panelPostDetails.Location = new System.Drawing.Point(433, 74);
+            this.panelPostDetails.Name = "panelPostDetails";
+            this.panelPostDetails.Size = new System.Drawing.Size(291, 212);
+            this.panelPostDetails.TabIndex = 22;
+            // 
+            // pictureBoxPostImage
+            // 
+            this.pictureBoxPostImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.pictureBoxPostImage.Location = new System.Drawing.Point(59, 82);
+            this.pictureBoxPostImage.Name = "pictureBoxPostImage";
+            this.pictureBoxPostImage.Size = new System.Drawing.Size(172, 119);
+            this.pictureBoxPostImage.TabIndex = 0;
+            this.pictureBoxPostImage.TabStop = false;
+            // 
+            // lblPostDetails
+            // 
+            this.lblPostDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.lblPostDetails.AutoSize = true;
+            this.lblPostDetails.Location = new System.Drawing.Point(13, 29);
+            this.lblPostDetails.Name = "lblPostDetails";
+            this.lblPostDetails.Size = new System.Drawing.Size(49, 13);
+            this.lblPostDetails.TabIndex = 1;
+            this.lblPostDetails.Text = "<details>";
+            this.lblPostDetails.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblHeaderPostDetails
+            // 
+            this.lblHeaderPostDetails.AutoSize = true;
+            this.lblHeaderPostDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderPostDetails.Location = new System.Drawing.Point(104, 6);
+            this.lblHeaderPostDetails.Name = "lblHeaderPostDetails";
+            this.lblHeaderPostDetails.Size = new System.Drawing.Size(92, 16);
+            this.lblHeaderPostDetails.TabIndex = 2;
+            this.lblHeaderPostDetails.Text = "Post Details";
             // 
             // buttonSignOff
             // 
@@ -283,12 +371,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ClientSize = new System.Drawing.Size(1173, 563);
+            this.Controls.Add(this.panelPostDetails);
+            this.Controls.Add(this.panelNewsFeedActions);
             this.ClientSize = new System.Drawing.Size(1173, 498);
             this.Controls.Add(this.buttonSignOff);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gpInfo);
             this.Controls.Add(this.panelPost);
-            this.Controls.Add(this.lblTopHeaderEvents);
             this.Controls.Add(this.lblTopHeaderTopPhotos);
             this.Controls.Add(this.panelBriefNews);
             this.Controls.Add(this.panelMostPopular);
@@ -296,7 +386,6 @@
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.lblHello);
             this.Controls.Add(this.pbUserPicture);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -307,11 +396,15 @@
             this.gpTopPhotosInfoBox.ResumeLayout(false);
             this.gpTopPhotosInfoBox.PerformLayout();
             this.panelBriefNews.ResumeLayout(false);
+            this.panelBriefNews.PerformLayout();
             this.panelPost.ResumeLayout(false);
             this.panelPost.PerformLayout();
             this.gpInfo.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelNewsFeedActions.ResumeLayout(false);
+            this.panelNewsFeedActions.PerformLayout();
+            this.panelPostDetails.ResumeLayout(false);
+            this.panelPostDetails.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,9 +430,16 @@
         private System.Windows.Forms.Panel panelPost;
         private System.Windows.Forms.Panel gpInfo;
         private System.Windows.Forms.Label lblPersonalInfo;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panelNewsFeedActions;
+        private System.Windows.Forms.Label lblNewsFeedActions;
         private System.Windows.Forms.Label lblMetaDataAboutPicture;
+        private System.Windows.Forms.Button buttonFilterPostSettings;
+        private System.Windows.Forms.CheckBox checkBoxFilterPosts;
+        private System.Windows.Forms.Panel panelPostDetails;
+        private System.Windows.Forms.PictureBox pictureBoxPostImage;
+        private System.Windows.Forms.Label lblHeaderPostDetails;
+        private System.Windows.Forms.Label lblPostDetails;
         private System.Windows.Forms.Button buttonSignOff;
     }
 }
