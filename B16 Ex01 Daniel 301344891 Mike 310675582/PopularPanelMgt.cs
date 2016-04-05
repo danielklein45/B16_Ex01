@@ -49,6 +49,7 @@ namespace FacebookSmartView
                 return m_currentInstance;
             }
         }
+
         public void setPanels(Panel i_OuterPanel, Panel i_InnerPanel)
         {
             m_roSurface = new Size(i_OuterPanel.Size.Width - GeneralVars.k_SPACER,
@@ -73,7 +74,7 @@ namespace FacebookSmartView
                 {
                     i_poNew.PictureObject = new PictureObject("", 0, 0, 0, "", "", i_poNew, i_poNew.PicLabel);
                     i_poNew.ObjectLocation = pNewPointForPicture;
-
+                    i_poNew.updateNames(m_LstPictureBoxFromForm.Count);
                     m_LstPictureBoxFromForm.Add(i_poNew);
             
                     return true;
