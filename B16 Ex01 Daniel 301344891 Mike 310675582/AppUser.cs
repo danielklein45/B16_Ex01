@@ -72,13 +72,19 @@ namespace FacebookSmartView
 
         public FacebookObjectCollection<Album> getUserAlbums()
         {
-                return m_FacebookUser.Albums;
+            return m_FacebookUser.Albums;
         }
 
         private int calcUserAge(string i_strBirthday)
         {
             DateTime dtCurrentDay = DateTime.Today;
-            DateTime dtUserBirthday = Convert.ToDateTime(i_strBirthday);
+            DateTime dtUserBirthday;
+            try
+            {
+                dtUserBirthday = Convert.ToDateTime(i_strBirthday);
+            }
+            catch { dtUserBirthday = dtCurrentDay; }
+
 
             return dtCurrentDay.Year - dtUserBirthday.Year;
         }
@@ -88,7 +94,7 @@ namespace FacebookSmartView
             return m_FacebookUser.PictureNormalURL;
         }
 
-        public string Post(string i_PostText)
+        public string PostToUserWall(string i_PostText)
         {
             string statusMessage = string.Empty;
 
@@ -101,6 +107,60 @@ namespace FacebookSmartView
             return statusMessage;
         }
 
+        public bool LikePhoto(string i_ObjectId)
+        {
+            if (i_ObjectId != "" && i_ObjectId.Length > 0)
+            {
+                Photo phTargetPhoto = null;
+                try
+                {
+                    phTargetPhoto = FacebookWrapper.FacebookService.GetObject<Photo>(i_ObjectId);
+                }
+                catch { }
+                if (phTargetPhoto != null)
+                {
+                    return phTargetPhoto.Like();
+                }
+                else
+                {
+                    return GeneralVars.k_FALSE;
+
+                }
+            }
+            return false;
+        }
+
+        public bool CommentPhoto(string i_ObjectId, string i_strCommentText)
+        {
+            if (i_ObjectId != "" && i_ObjectId.Length > 0)
+            {
+                if (i_strCommentText != "" && i_strCommentText.Length > 0)
+                {
+                    Photo phTargetPhoto = null;
+                    try
+                    {
+                        phTargetPhoto = FacebookWrapper.FacebookService.GetObject<Photo>(i_ObjectId);
+                    }
+                    catch { }
+                    if (phTargetPhoto != null)
+                    {
+                        Comment cmmToPost = phTargetPhoto.Comment(i_strCommentText);
+                        return (cmmToPost.Id.Length > 0 ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
+                    }
+                    else
+                    {
+                        return GeneralVars.k_FALSE;
+
+                    }
+
+                }
+                return false;
+
+            }
+
+            return false;
+        }
+
         public string Name
         {
             get
@@ -109,7 +169,7 @@ namespace FacebookSmartView
             }
         }
 
-        public string Birthay
+        public string Birthday
         {
             get
             {
@@ -124,7 +184,7 @@ namespace FacebookSmartView
                 return m_FacebookUser.Gender.ToString();
             }
         }
-       
+
         public int Age
         {
             get
@@ -132,7 +192,7 @@ namespace FacebookSmartView
                 return m_userAge;
             }
         }
-       
+
         public string UserLivesIn
         {
             get
@@ -141,7 +201,7 @@ namespace FacebookSmartView
                 return (m_FacebookUser.Location.Name != null) ? m_FacebookUser.Location.Name : "";
             }
         }
-      
+
         public string LastEducationStudyPlace
         {
             get
