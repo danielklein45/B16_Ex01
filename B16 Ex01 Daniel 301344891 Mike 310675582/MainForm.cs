@@ -19,6 +19,7 @@ namespace FacebookSmartView
         private TopPhotosFeature m_TopPhotosFeature;
         private PopularPanelMgt m_PopPanelMgt;
         public event EventHandler<MainFormLoadEventArgs> ehMainFormLoad;
+
         public MainForm()
         {
             InitializeComponent();
@@ -31,10 +32,17 @@ namespace FacebookSmartView
 
         }
 
-        protected override void OnLoad(EventArgs e)
+        public virtual void onMainFormUpdateStatus(MainFormLoadEventArgs i_mainFormArgs)
         {
-            base.OnLoad(e);
-            
+            if (ehMainFormLoad != null)
+            {
+                ehMainFormLoad(this, i_mainFormArgs);
+            }
+        }
+        public void initiateForm()
+        {
+            MainFormLoadEventArgs mflEs = new MainFormLoadEventArgs();
+
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
             m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
@@ -43,16 +51,29 @@ namespace FacebookSmartView
             List<SpecialPictureBox> lstSpBoxFromPopPanel = m_PopPanelMgt.PictureObjectList;
             m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
 
+            mflEs.FinishedLoading = false;
+            mflEs.Message = "Loading User info...";
+            onMainFormUpdateStatus(mflEs);
 
             fetchUserInfo();
+
+
+            //mflEs.FinishedLoading = false;
+            //mflEs.Message = "Ranking User Photos...";
+            //onMainFormUpdateStatus(mflEs);
+
             m_TopPhotosFeature.rankUserPhotos();
+
+            //mflEs.FinishedLoading = false;
+            //mflEs.Message = "Loading User Photos...";
+            //onMainFormUpdateStatus(mflEs);
+
             m_TopPhotosFeature.loadTopPhotos();
 
+            //mflEs.FinishedLoading = true;
+            //mflEs.Message = "Form Loaded.";
+            //onMainFormUpdateStatus(mflEs);
 
-            MainFormLoadEventArgs mflEs = new MainFormLoadEventArgs();
-            mflEs.FinishedLoading = true;
-            onMainFormLoadFinish(mflEs);
-            
         }
 
         private void fetchUserInfo()
@@ -135,7 +156,7 @@ namespace FacebookSmartView
                 if (m_AppUser.LikePhoto(m_PopPanelMgt.CurrentObjectID))
                 {
                     MessageBox.Show("You successfully liked that photo.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                 }
                 else
                 {
@@ -180,17 +201,11 @@ namespace FacebookSmartView
         private void buttonSignOff_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.RememberMe = GeneralVars.k_FALSE;
-           // this.Close();
+            // this.Close();
         }
 
-        protected virtual void onMainFormLoadFinish(MainFormLoadEventArgs i_mainFormArgs)
-        {
-            if (i_mainFormArgs.FinishedLoading == true)
-            {
-                m_ehMainFormLoad(this, i_mainFormArgs);
-            }
-        }
-        
+
+
 
     }
 }

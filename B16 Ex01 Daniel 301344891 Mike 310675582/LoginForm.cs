@@ -19,12 +19,15 @@ namespace FacebookSmartView
 
         // Private variables
         private LoginLogic m_llFunctions; // Class To handle login form 
-       
+        private MainForm m_MainForm;
+        private FormLoader m_FormLoader;
 
         public LoginForm()
         {
             InitializeComponent();
             m_llFunctions = new LoginLogic();
+            m_FormLoader = new FormLoader();
+            m_FormLoader.Hide();
             cbRememberMe.Checked = m_llFunctions.getRememberBoxCheckedValue();
         }
 
@@ -45,23 +48,38 @@ namespace FacebookSmartView
             if ((result != GeneralVars.k_NULL) && (result.AccessToken != GeneralVars.k_NULL))
             {
                 m_llFunctions.saveRememberBox(cbRememberMe.Checked);
-                MainForm mainForm = new MainForm();
-
-                this.Hide();
-                mainForm.LoginUser = result.LoggedInUser;
-                mainForm.Closed += (s, args) => this.Close();
                 
-                mainForm.Show();
+                m_FormLoader.Show();
+                this.Hide();
 
-                mainForm.ehMainFormLoad += new EventHandler<MainFormLoadEventArgs>()
-    fnf.FirstNameUpdated += new EventHandler<NameUpdatedEventArgs>(fnf_FirstNameUpdated);
+                m_MainForm = new MainForm();
+                
+                m_MainForm.LoginUser = result.LoggedInUser;
+                m_MainForm.Closed += (s, args) => this.Close();
 
+                m_FormLoader.Show();
+                m_MainForm.ehMainFormLoad += new EventHandler<MainFormLoadEventArgs>(mainForm_ehMainFormLoad);
+                m_MainForm.initiateForm();
+
+                
             }
         }
 
         void mainForm_ehMainFormLoad(object sender, MainFormLoadEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e != null )
+            {
+                if (e.Message.Length > 0)
+                {
+                    m_FormLoader.LoadingLabel = e.Message;
+                }
+
+                if (e.FinishedLoading == true)
+                {
+                    m_FormLoader.Close();
+                    m_MainForm.Show();
+                }
+            }
         }
 
         private LoginResult login(Boolean i_bautoLogin)
