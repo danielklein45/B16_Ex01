@@ -60,21 +60,21 @@ namespace FacebookSmartView
             fetchUserInfo();
 
 
-            //mflEs.FinishedLoading = false;
-            //mflEs.Message = "Ranking User Photos...";
-            //onMainFormUpdateStatus(mflEs);
+            mflEs.FinishedLoading = false;
+            mflEs.Message = "Ranking User Photos...";
+            onMainFormUpdateStatus(mflEs);
 
             m_TopPhotosFeature.rankUserPhotos();
 
-            //mflEs.FinishedLoading = false;
-            //mflEs.Message = "Loading User Photos...";
-            //onMainFormUpdateStatus(mflEs);
+            mflEs.FinishedLoading = false;
+            mflEs.Message = "Loading User Photos...";
+            onMainFormUpdateStatus(mflEs);
 
             m_TopPhotosFeature.loadTopPhotos();
 
-            //mflEs.FinishedLoading = true;
-            //mflEs.Message = "Form Loaded.";
-            //onMainFormUpdateStatus(mflEs);
+            mflEs.FinishedLoading = true;
+            mflEs.Message = "Form Loaded.";
+            onMainFormUpdateStatus(mflEs);
             
         }
 

@@ -53,9 +53,9 @@
             this.buttonFilterPostSettings = new System.Windows.Forms.Button();
             this.lblNewsFeedActions = new System.Windows.Forms.Label();
             this.panelPostDetails = new System.Windows.Forms.Panel();
-            this.pictureBoxPostImage = new System.Windows.Forms.PictureBox();
-            this.lblPostDetails = new System.Windows.Forms.Label();
             this.lblHeaderPostDetails = new System.Windows.Forms.Label();
+            this.lblPostDetails = new System.Windows.Forms.Label();
+            this.pictureBoxPostImage = new System.Windows.Forms.PictureBox();
             this.buttonSignOff = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).BeginInit();
             this.panelMostPopular.SuspendLayout();
@@ -92,7 +92,7 @@
             // 
             // pbUserPicture
             // 
-            this.pbUserPicture.Location = new System.Drawing.Point(12, 12);
+            this.pbUserPicture.Location = new System.Drawing.Point(12, 18);
             this.pbUserPicture.Name = "pbUserPicture";
             this.pbUserPicture.Size = new System.Drawing.Size(179, 178);
             this.pbUserPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -251,7 +251,7 @@
             this.gpInfo.Controls.Add(this.lblPersonalInfo);
             this.gpInfo.Location = new System.Drawing.Point(197, 59);
             this.gpInfo.Name = "gpInfo";
-            this.gpInfo.Size = new System.Drawing.Size(232, 131);
+            this.gpInfo.Size = new System.Drawing.Size(232, 183);
             this.gpInfo.TabIndex = 20;
             // 
             // lblPersonalInfo
@@ -259,7 +259,7 @@
             this.lblPersonalInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPersonalInfo.Location = new System.Drawing.Point(4, 9);
             this.lblPersonalInfo.Name = "lblPersonalInfo";
-            this.lblPersonalInfo.Size = new System.Drawing.Size(223, 120);
+            this.lblPersonalInfo.Size = new System.Drawing.Size(223, 158);
             this.lblPersonalInfo.TabIndex = 0;
             this.lblPersonalInfo.Text = "label2";
             // 
@@ -324,14 +324,15 @@
             this.panelPostDetails.Size = new System.Drawing.Size(291, 212);
             this.panelPostDetails.TabIndex = 22;
             // 
-            // pictureBoxPostImage
+            // lblHeaderPostDetails
             // 
-            this.pictureBoxPostImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.pictureBoxPostImage.Location = new System.Drawing.Point(59, 82);
-            this.pictureBoxPostImage.Name = "pictureBoxPostImage";
-            this.pictureBoxPostImage.Size = new System.Drawing.Size(172, 119);
-            this.pictureBoxPostImage.TabIndex = 0;
-            this.pictureBoxPostImage.TabStop = false;
+            this.lblHeaderPostDetails.AutoSize = true;
+            this.lblHeaderPostDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeaderPostDetails.Location = new System.Drawing.Point(104, 6);
+            this.lblHeaderPostDetails.Name = "lblHeaderPostDetails";
+            this.lblHeaderPostDetails.Size = new System.Drawing.Size(92, 16);
+            this.lblHeaderPostDetails.TabIndex = 2;
+            this.lblHeaderPostDetails.Text = "Post Details";
             // 
             // lblPostDetails
             // 
@@ -344,15 +345,14 @@
             this.lblPostDetails.Text = "<details>";
             this.lblPostDetails.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblHeaderPostDetails
+            // pictureBoxPostImage
             // 
-            this.lblHeaderPostDetails.AutoSize = true;
-            this.lblHeaderPostDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeaderPostDetails.Location = new System.Drawing.Point(104, 6);
-            this.lblHeaderPostDetails.Name = "lblHeaderPostDetails";
-            this.lblHeaderPostDetails.Size = new System.Drawing.Size(92, 16);
-            this.lblHeaderPostDetails.TabIndex = 2;
-            this.lblHeaderPostDetails.Text = "Post Details";
+            this.pictureBoxPostImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.pictureBoxPostImage.Location = new System.Drawing.Point(59, 82);
+            this.pictureBoxPostImage.Name = "pictureBoxPostImage";
+            this.pictureBoxPostImage.Size = new System.Drawing.Size(172, 119);
+            this.pictureBoxPostImage.TabIndex = 0;
+            this.pictureBoxPostImage.TabStop = false;
             // 
             // buttonSignOff
             // 
@@ -369,10 +369,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1173, 563);
+            this.ClientSize = new System.Drawing.Size(1173, 575);
             this.Controls.Add(this.panelPostDetails);
             this.Controls.Add(this.panelNewsFeedActions);
-            this.ClientSize = new System.Drawing.Size(1173, 498);
             this.Controls.Add(this.buttonSignOff);
             this.Controls.Add(this.gpInfo);
             this.Controls.Add(this.panelPost);
