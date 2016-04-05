@@ -16,17 +16,36 @@ namespace FacebookSmartView
 	{
 		private AppUser m_AppUser;
 		private PostFilter m_PostFilter;
+		private TopPhotosFeature m_TopPhotosFeature;
+		private PopularPanelMgt m_PopPanelMgt;
 
 		public MainForm()
 		{
 			InitializeComponent();
+			m_PopPanelMgt = PopularPanelMgt.Instance;
+			PopularPanelMgt.Instance.setPanels(panelMostPopular, gpTopPhotosInfoBox);
+			m_PopPanelMgt.InformationLabel = lblMetaDataAboutPicture;
+			m_PopPanelMgt.InformationTextbox = txtPostCommentOnPhoto;
 			m_PostFilter = new PostFilter();
 		}
 
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
+
+			m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+			m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+			m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+			m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+
+			List<SpecialPictureBox> lstSpBoxFromPopPanel =  m_PopPanelMgt.PictureObjectList;
+			m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
+
+
 			fetchUserInfo();
+			m_TopPhotosFeature.rankUserPhotos();
+			m_TopPhotosFeature.loadTopPhotos();
+
 		}
 
 		private void fetchUserInfo()
@@ -59,7 +78,7 @@ namespace FacebookSmartView
 
 		private string buildUserPrivateAbout()
 		{
-			string k_firstPart = "You are a " + m_AppUser.Age + " years old" + m_AppUser.Gender;
+			string k_firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender;
 			string str_secondPart = "";
 			string str_thirdPart = "";
 
@@ -119,11 +138,12 @@ namespace FacebookSmartView
 
 				if (selectedPost != null)
 				{
-					pictureBoxPost.LoadAsync(selectedPost.PictureURL);
-					lblPostBy.Text = selectedPost.From.Name;
-					lblPostDate.Text = selectedPost.CreatedTime.ToString();
+					pictureBoxPostImage.LoadAsync(selectedPost.PictureURL);
+                    string postDetails = string.Format("Posted by: {0}\nOn Date: {1}", selectedPost.From.Name, selectedPost.CreatedTime.ToString());
+                    lblPostDetails.Text = postDetails;
 				}
 			}
 		}
+
 	}
 }
