@@ -44,11 +44,11 @@ namespace FacebookSmartView
                     commentCount = phCurrentPhoto.Comments.Count;
                     currentScore = calcPhotoRank(likesCount, commentCount);
 
-                    m_SortedDicAllPhotosByObjectID.Add(phCurrentPhoto.Id,
-                                 new PictureObjectBasic(phCurrentPhoto.Id, likesCount, commentCount, currentScore, phCurrentPhoto.PictureNormalURL,
-                                     phCurrentPhoto.CreatedTime.ToString()));
-                    sdSortedScoreDic.Add(phCurrentPhoto.Id, currentScore);
-                    
+                        m_SortedDicAllPhotosByObjectID.Add(phCurrentPhoto.Id,
+                                     new PictureObjectBasic(phCurrentPhoto.Id, likesCount, commentCount, currentScore, phCurrentPhoto.PictureNormalURL,
+                                         phCurrentPhoto.CreatedTime.ToString()));
+
+                        sdSortedScoreDic.Add(phCurrentPhoto.Id, currentScore);
                                                 //  TODO: MAKE AN ERROR PICTURE    phCurrentPhoto.PictureNormalURL != GeneralVars.k_NULL ? phCurrentPhoto.PictureNormalURL: ));
 
                     if (++coun > 3)
@@ -97,15 +97,6 @@ namespace FacebookSmartView
         {
             return Convert.ToInt32 (Math.Ceiling(0.6 * i_PhotoLikes) + (0.4 * i_PhotoComments));
 
-        }
-        private Boolean loadFromFile()
-        {
-            return false;
-        }
-
-        private Boolean rankPicture()
-        {
-            return false;
         }
     }
 }

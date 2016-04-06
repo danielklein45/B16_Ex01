@@ -36,7 +36,7 @@ namespace FacebookSmartView
 
         public virtual void onMainFormUpdateStatus(MainFormLoadEventArgs i_mainFormArgs)
         {
-            if (ehMainFormLoad != null)
+            if (ehMainFormLoad != GeneralVars.k_NULL)
             {
                 ehMainFormLoad(this, i_mainFormArgs);
             }
@@ -53,27 +53,27 @@ namespace FacebookSmartView
             List<SpecialPictureBox> lstSpBoxFromPopPanel = m_PopPanelMgt.PictureObjectList;
             m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
 
-            mflEs.FinishedLoading = false;
-            mflEs.Message = "Loading User info...";
+            mflEs.FinishedLoading = GeneralVars.k_FALSE;
+            mflEs.Message = "Loading User info.";
             onMainFormUpdateStatus(mflEs);
 
             fetchUserInfo();
 
 
-            mflEs.FinishedLoading = false;
-            mflEs.Message = "Ranking User Photos...";
+            mflEs.FinishedLoading = GeneralVars.k_FALSE;
+            mflEs.Message = "Ranking User Photos.";
             onMainFormUpdateStatus(mflEs);
 
             m_TopPhotosFeature.rankUserPhotos();
 
-            mflEs.FinishedLoading = false;
-            mflEs.Message = "Loading User Photos...";
+            mflEs.FinishedLoading = GeneralVars.k_FALSE;
+            mflEs.Message = "Loading User Photos.";
             onMainFormUpdateStatus(mflEs);
 
             m_TopPhotosFeature.loadTopPhotos();
 
-            mflEs.FinishedLoading = true;
-            mflEs.Message = "Form Loaded.";
+            mflEs.FinishedLoading = GeneralVars.k_TRUE;
+            mflEs.Message = "";
             onMainFormUpdateStatus(mflEs);
             
         }
@@ -150,7 +150,7 @@ namespace FacebookSmartView
         {
             set
             {
-                if (m_AppUser == null)
+                if (m_AppUser == GeneralVars.k_NULL)
                 {
                     m_AppUser = new AppUser(value);
                 }
@@ -178,7 +178,7 @@ namespace FacebookSmartView
 			{
 				Post selectedPost = listBoxNewsFeed.SelectedItem as Post;
 
-				if (selectedPost != null)
+				if (selectedPost != GeneralVars.k_NULL)
 				{
 					pictureBoxPostImage.LoadAsync(selectedPost.PictureURL);
 					string postDetails = string.Format("Posted by: {0}\nOn Date: {1}", selectedPost.From.Name, selectedPost.CreatedTime.ToString());
@@ -238,12 +238,9 @@ namespace FacebookSmartView
 
         private void buttonSignOff_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.RememberMe = GeneralVars.k_FALSE;
-           // this.Close();
+            LoginForm.RememberMe = GeneralVars.k_FALSE;
+            this.Close();
         }
-
-
-        
 
     }
 }

@@ -83,10 +83,10 @@
             // textBoxPostMessage
             // 
             this.textBoxPostMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPostMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPostMessage.Location = new System.Drawing.Point(3, 9);
+            this.textBoxPostMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxPostMessage.Location = new System.Drawing.Point(3, 12);
             this.textBoxPostMessage.Name = "textBoxPostMessage";
-            this.textBoxPostMessage.Size = new System.Drawing.Size(549, 26);
+            this.textBoxPostMessage.Size = new System.Drawing.Size(531, 24);
             this.textBoxPostMessage.TabIndex = 3;
             this.textBoxPostMessage.Text = "Hmm what\'s on your mind...";
             // 
@@ -133,7 +133,7 @@
             // buttonPostQuickStatus
             // 
             this.buttonPostQuickStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPostQuickStatus.Location = new System.Drawing.Point(558, 10);
+            this.buttonPostQuickStatus.Location = new System.Drawing.Point(540, 10);
             this.buttonPostQuickStatus.Name = "buttonPostQuickStatus";
             this.buttonPostQuickStatus.Size = new System.Drawing.Size(83, 26);
             this.buttonPostQuickStatus.TabIndex = 8;
@@ -238,11 +238,12 @@
             // panelPost
             // 
             this.panelPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPost.Controls.Add(this.textBoxPostMessage);
             this.panelPost.Controls.Add(this.buttonPostQuickStatus);
             this.panelPost.Location = new System.Drawing.Point(435, 9);
             this.panelPost.Name = "panelPost";
-            this.panelPost.Size = new System.Drawing.Size(648, 44);
+            this.panelPost.Size = new System.Drawing.Size(634, 44);
             this.panelPost.TabIndex = 19;
             // 
             // gpInfo
@@ -251,7 +252,7 @@
             this.gpInfo.Controls.Add(this.lblPersonalInfo);
             this.gpInfo.Location = new System.Drawing.Point(197, 59);
             this.gpInfo.Name = "gpInfo";
-            this.gpInfo.Size = new System.Drawing.Size(232, 183);
+            this.gpInfo.Size = new System.Drawing.Size(232, 137);
             this.gpInfo.TabIndex = 20;
             // 
             // lblPersonalInfo
@@ -259,7 +260,7 @@
             this.lblPersonalInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPersonalInfo.Location = new System.Drawing.Point(4, 9);
             this.lblPersonalInfo.Name = "lblPersonalInfo";
-            this.lblPersonalInfo.Size = new System.Drawing.Size(223, 158);
+            this.lblPersonalInfo.Size = new System.Drawing.Size(223, 127);
             this.lblPersonalInfo.TabIndex = 0;
             this.lblPersonalInfo.Text = "label2";
             // 
@@ -321,7 +322,7 @@
             this.panelPostDetails.Controls.Add(this.pictureBoxPostImage);
             this.panelPostDetails.Location = new System.Drawing.Point(433, 74);
             this.panelPostDetails.Name = "panelPostDetails";
-            this.panelPostDetails.Size = new System.Drawing.Size(291, 212);
+            this.panelPostDetails.Size = new System.Drawing.Size(291, 240);
             this.panelPostDetails.TabIndex = 22;
             // 
             // lblHeaderPostDetails
@@ -337,10 +338,10 @@
             // lblPostDetails
             // 
             this.lblPostDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.lblPostDetails.AutoSize = true;
+            this.lblPostDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.lblPostDetails.Location = new System.Drawing.Point(13, 29);
             this.lblPostDetails.Name = "lblPostDetails";
-            this.lblPostDetails.Size = new System.Drawing.Size(49, 13);
+            this.lblPostDetails.Size = new System.Drawing.Size(266, 58);
             this.lblPostDetails.TabIndex = 1;
             this.lblPostDetails.Text = "<details>";
             this.lblPostDetails.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -348,15 +349,15 @@
             // pictureBoxPostImage
             // 
             this.pictureBoxPostImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.pictureBoxPostImage.Location = new System.Drawing.Point(59, 82);
+            this.pictureBoxPostImage.Location = new System.Drawing.Point(116, 90);
             this.pictureBoxPostImage.Name = "pictureBoxPostImage";
-            this.pictureBoxPostImage.Size = new System.Drawing.Size(172, 119);
+            this.pictureBoxPostImage.Size = new System.Drawing.Size(172, 147);
             this.pictureBoxPostImage.TabIndex = 0;
             this.pictureBoxPostImage.TabStop = false;
             // 
             // buttonSignOff
             // 
-            this.buttonSignOff.Location = new System.Drawing.Point(1085, 18);
+            this.buttonSignOff.Location = new System.Drawing.Point(1078, 20);
             this.buttonSignOff.Name = "buttonSignOff";
             this.buttonSignOff.Size = new System.Drawing.Size(83, 26);
             this.buttonSignOff.TabIndex = 22;

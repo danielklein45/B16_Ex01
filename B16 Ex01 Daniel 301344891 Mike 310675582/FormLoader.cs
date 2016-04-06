@@ -15,16 +15,7 @@ namespace FacebookSmartView
         public FormLoader()
         {
             InitializeComponent();
-       //     this.Opacity = 0;
-            this.pcBoxLoading.LoadAsync(@"gears.gif");
         }
 
-        public void ImageLoadingComplete(object sender, AsyncCompletedEventArgs e)
-        {
-            MessageBox.Show("sd");
-     //       this.Opacity = 100;
-        }
-
-       
     }
 }

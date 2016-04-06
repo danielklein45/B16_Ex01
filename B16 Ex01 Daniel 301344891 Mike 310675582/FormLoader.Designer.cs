@@ -36,12 +36,12 @@
             // 
             // pcBoxLoading
             // 
+            this.pcBoxLoading.Image = global::FacebookSmartView.Properties.Resources.gears;
             this.pcBoxLoading.Location = new System.Drawing.Point(12, 12);
             this.pcBoxLoading.Name = "pcBoxLoading";
             this.pcBoxLoading.Size = new System.Drawing.Size(132, 123);
             this.pcBoxLoading.TabIndex = 0;
             this.pcBoxLoading.TabStop = false;
-            this.pcBoxLoading.LoadCompleted += new System.ComponentModel.AsyncCompletedEventHandler(this.ImageLoadingComplete);
             // 
             // lblLoading
             // 
@@ -60,8 +60,11 @@
             this.ClientSize = new System.Drawing.Size(170, 169);
             this.Controls.Add(this.lblLoading);
             this.Controls.Add(this.pcBoxLoading);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormLoader";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loading";

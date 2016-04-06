@@ -42,10 +42,10 @@ namespace FacebookSmartView
             m_botLabel = new Label();
             m_botLabel.Size = k_PanelSize;
             m_botLabel.Location = k_PanelStartLoc;
-            m_botLabel.AutoSize = false;
+            m_botLabel.AutoSize = GeneralVars.k_FALSE;
             m_botLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
-            this.Visible = true;
+            this.Visible = GeneralVars.k_TRUE;
 
             m_boxPanel = new Panel();
             m_boxPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;

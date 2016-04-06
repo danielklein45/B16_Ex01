@@ -30,13 +30,13 @@ namespace FacebookSmartView
 
             IEnumerable<Post> queryPostToDisplay;
 
-            if (i_PostFilter != null)
+            if (i_PostFilter != GeneralVars.k_NULL)
             {
                 queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => !i_PostFilter.IsMatch(post) && post.Message != null);
             }
             else
             {
-                queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => post.Message != null);
+                queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => post.Message != GeneralVars.k_NULL);
             }
             
 
@@ -94,7 +94,10 @@ namespace FacebookSmartView
             {
                 dtUserBirthday = Convert.ToDateTime(i_strBirthday);
             }
-            catch { dtUserBirthday = dtCurrentDay; }
+            catch 
+            { 
+                dtUserBirthday = dtCurrentDay;
+            }
 
 
             return dtCurrentDay.Year - dtUserBirthday.Year;
@@ -128,7 +131,7 @@ namespace FacebookSmartView
                     phTargetPhoto = FacebookWrapper.FacebookService.GetObject<Photo>(i_ObjectId);
                 }
                 catch { }
-                if (phTargetPhoto != null)
+                if (phTargetPhoto != GeneralVars.k_NULL)
                 {
                     return phTargetPhoto.Like();
                 }
@@ -138,7 +141,7 @@ namespace FacebookSmartView
 
                 }
             }
-            return false;
+            return GeneralVars.k_FALSE;
         }
 
         public bool CommentPhoto(string i_ObjectId, string i_strCommentText)
@@ -153,7 +156,7 @@ namespace FacebookSmartView
                         phTargetPhoto = FacebookWrapper.FacebookService.GetObject<Photo>(i_ObjectId);
                     }
                     catch { }
-                    if (phTargetPhoto != null)
+                    if (phTargetPhoto != GeneralVars.k_NULL)
                     {
                         Comment cmmToPost = phTargetPhoto.Comment(i_strCommentText);
                         return (cmmToPost.Id.Length > 0 ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
@@ -165,11 +168,11 @@ namespace FacebookSmartView
                     }
 
                 }
-                return false;
+                return GeneralVars.k_FALSE;
 
             }
 
-            return false;
+            return GeneralVars.k_FALSE;
         }
 
         public string Name
@@ -209,7 +212,7 @@ namespace FacebookSmartView
             get
             {
 
-                return (m_FacebookUser.Location.Name != null) ? m_FacebookUser.Location.Name : "";
+                return (m_FacebookUser.Location.Name != GeneralVars.k_NULL) ? m_FacebookUser.Location.Name : "";
             }
         }
 

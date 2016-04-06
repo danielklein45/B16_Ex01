@@ -77,13 +77,13 @@ namespace FacebookSmartView
                     i_poNew.updateNames(m_LstPictureBoxFromForm.Count);
                     m_LstPictureBoxFromForm.Add(i_poNew);
             
-                    return true;
+                    return GeneralVars.k_TRUE;
                 }
             }
 
             i_poNew.removeObjectFromPanel();
             i_poNew = null;
-            return false;
+            return GeneralVars.k_FALSE;
         }
 
         private bool getNextFreeLocationInContainer(Size i_PanelSize, out Point o_NewPoint)
@@ -93,12 +93,12 @@ namespace FacebookSmartView
             {
                 o_NewPoint = m_NextFreePoint;
                 m_NextFreePoint = new Point(m_NextFreePoint.X + i_PanelSize.Width + GeneralVars.k_SPACER, m_NextFreePoint.Y);
-                return true;
+                return GeneralVars.k_TRUE;
             }
             else
             {
                 o_NewPoint = new Point(0, 0);
-                return false;
+                return GeneralVars.k_FALSE;
             }
                 
         }
