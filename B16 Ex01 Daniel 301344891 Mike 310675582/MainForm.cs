@@ -25,7 +25,7 @@ namespace FacebookSmartView
         {
             InitializeComponent();
             m_PopPanelMgt = PopularPanelMgt.Instance;
-            PopularPanelMgt.Instance.setPanels(panelMostPopular, gpTopPhotosInfoBox);
+            PopularPanelMgt.Instance.SetPanels(panelMostPopular, gpTopPhotosInfoBox);
             m_PopPanelMgt.InformationLabel = lblMetaDataAboutPicture;
             m_PopPanelMgt.InformationTextbox = txtPostCommentOnPhoto;
 
@@ -45,10 +45,10 @@ namespace FacebookSmartView
         {
             MainFormLoadEventArgs mflEs = new MainFormLoadEventArgs();
             
-            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
-            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
-            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
-            m_PopPanelMgt.tryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
+            m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
 
             List<SpecialPictureBox> lstSpBoxFromPopPanel = m_PopPanelMgt.PictureObjectList;
             m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
@@ -73,7 +73,7 @@ namespace FacebookSmartView
             m_TopPhotosFeature.loadTopPhotos();
 
             mflEs.FinishedLoading = GeneralVars.k_TRUE;
-            mflEs.Message = "";
+            mflEs.Message = GeneralVars.k_EmptyString;
             onMainFormUpdateStatus(mflEs);
             
         }
@@ -109,7 +109,7 @@ namespace FacebookSmartView
         private string buildUserPrivateAbout()
         {
             string k_firstPart;
-            if (m_AppUser.Age > 0)
+            if (m_AppUser.Age > GeneralVars.k_Zero)
             {
                 k_firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender + ".";
             }
@@ -118,19 +118,19 @@ namespace FacebookSmartView
                 k_firstPart = "You are a " + m_AppUser.Gender + " and were born in " + m_AppUser.Birthday + ".";
             }
 
-            string str_secondPart = "";
-            string str_thirdPart = "";
+            string str_secondPart = GeneralVars.k_EmptyString;
+            string str_thirdPart = GeneralVars.k_EmptyString;
 
-            if (m_AppUser.UserLivesIn != "")
+            if (m_AppUser.UserLivesIn != GeneralVars.k_EmptyString)
             {
                 str_secondPart = "You live in " + m_AppUser.UserLivesIn + ".";
             }
             else
             {
-                str_secondPart = "";
+                str_secondPart = GeneralVars.k_EmptyString;
             }
 
-            if (m_AppUser.LastEducationStudyPlace != "")
+            if (m_AppUser.LastEducationStudyPlace != GeneralVars.k_EmptyString)
             {
                 str_thirdPart += "You studied at " + m_AppUser.LastEducationStudyPlace + ".";
             }
@@ -189,7 +189,7 @@ namespace FacebookSmartView
 
         private void buttonLikePicture_Click(object sender, EventArgs e)
         {
-            if (m_PopPanelMgt.CurrentObjectID != "")
+            if (m_PopPanelMgt.CurrentObjectID != GeneralVars.k_EmptyString)
             {
                 if (m_AppUser.LikePhoto(m_PopPanelMgt.CurrentObjectID))
                 {
@@ -209,9 +209,9 @@ namespace FacebookSmartView
 
         private void buttonCommentPicture_Click(object sender, EventArgs e)
         {
-            if (m_PopPanelMgt.CurrentObjectID != "")
+            if (m_PopPanelMgt.CurrentObjectID != GeneralVars.k_EmptyString)
             {
-                if (txtPostCommentOnPhoto.Text.Length > 0 && txtPostCommentOnPhoto.Text != GeneralVars.K_MessageOnTxtboxCommentPhoto)
+                if (txtPostCommentOnPhoto.Text.Length > GeneralVars.k_Zero && txtPostCommentOnPhoto.Text != GeneralVars.K_MessageOnTxtboxCommentPhoto)
                 {
                     if (m_AppUser.CommentPhoto(m_PopPanelMgt.CurrentObjectID, txtPostCommentOnPhoto.Text))
                     {

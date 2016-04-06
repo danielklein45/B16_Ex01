@@ -10,18 +10,18 @@ namespace FacebookSmartView
     class AppUser
     {
         private User m_FacebookUser;
-        private int m_userAge;
-        private string m_userLastEduStudyPlace;
-        private string m_userLivesIn;
+        private int m_UserAge;
+        private string m_UserLastEduStudyPlace;
+        private string m_UserLivesIn;
 
         public AppUser(User i_FacebookUser)
         {
             FacebookWrapper.FacebookService.s_CollectionLimit = 500;
             m_FacebookUser = i_FacebookUser;
 
-            m_userAge = calcUserAge(m_FacebookUser.Birthday);
-            m_userLastEduStudyPlace = getLastEdu(m_FacebookUser.Educations);
-            m_userLivesIn = getUserLivePlace(m_FacebookUser.Location);
+            m_UserAge = calcUserAge(m_FacebookUser.Birthday);
+            m_UserLastEduStudyPlace = getLastEdu(m_FacebookUser.Educations);
+            m_UserLivesIn = getUserLivePlace(m_FacebookUser.Location);
         }
 
         public FacebookObjectCollection<Post> GetNewsFeed(PostFilter i_PostFilter)
@@ -48,26 +48,25 @@ namespace FacebookSmartView
             return postToDisplay;
 
         }
+       
         private string getLastEdu(Education[] i_eduForUser)
         {
-
             string strSchool;
+
             try
             {
                 strSchool = i_eduForUser.Last<Education>().School.Name;
             }
             catch
             {
-                strSchool = "";
+                strSchool = GeneralVars.k_EmptyString;
             }
 
             return strSchool;
         }
 
-
         private string getUserLivePlace(City i_userLoc)
         {
-
             string strLocation;
             try
             {
@@ -75,13 +74,13 @@ namespace FacebookSmartView
             }
             catch
             {
-                strLocation = "";
+                strLocation = GeneralVars.k_EmptyString;
             }
 
             return strLocation;
         }
 
-        public FacebookObjectCollection<Album> getUserAlbums()
+        public FacebookObjectCollection<Album> GetUserAlbums()
         {
             return m_FacebookUser.Albums;
         }
@@ -100,7 +99,7 @@ namespace FacebookSmartView
             }
 
 
-            return dtCurrentDay.Year - dtUserBirthday.Year;
+            return (dtCurrentDay.Year - dtUserBirthday.Year);
         }
 
         public string GetUserProfilePicture()
@@ -123,53 +122,51 @@ namespace FacebookSmartView
 
         public bool LikePhoto(string i_ObjectId)
         {
-            if (i_ObjectId != "" && i_ObjectId.Length > 0)
+            Photo phTargetPhoto;
+
+            if (i_ObjectId != GeneralVars.k_EmptyString && i_ObjectId.Length > GeneralVars.k_Zero)
             {
-                Photo phTargetPhoto = null;
                 try
                 {
                     phTargetPhoto = FacebookWrapper.FacebookService.GetObject<Photo>(i_ObjectId);
                 }
-                catch { }
+                catch
+                {
+                    phTargetPhoto = null;
+                }
+
                 if (phTargetPhoto != GeneralVars.k_NULL)
                 {
                     return phTargetPhoto.Like();
-                }
-                else
-                {
-                    return GeneralVars.k_FALSE;
-
                 }
             }
             return GeneralVars.k_FALSE;
         }
 
-        public bool CommentPhoto(string i_ObjectId, string i_strCommentText)
+        public bool CommentPhoto(string i_ObjectId, string i_CommentText)
         {
-            if (i_ObjectId != "" && i_ObjectId.Length > 0)
+            Photo phTargetPhoto;
+
+            if (i_ObjectId != GeneralVars.k_EmptyString && i_ObjectId.Length > GeneralVars.k_Zero)
             {
-                if (i_strCommentText != "" && i_strCommentText.Length > 0)
+                if (i_CommentText != GeneralVars.k_EmptyString && i_CommentText.Length > GeneralVars.k_Zero)
                 {
-                    Photo phTargetPhoto = null;
                     try
                     {
                         phTargetPhoto = FacebookWrapper.FacebookService.GetObject<Photo>(i_ObjectId);
                     }
-                    catch { }
+                    catch
+                    {
+                        phTargetPhoto = null;
+                    }
+
                     if (phTargetPhoto != GeneralVars.k_NULL)
                     {
-                        Comment cmmToPost = phTargetPhoto.Comment(i_strCommentText);
-                        return (cmmToPost.Id.Length > 0 ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
-                    }
-                    else
-                    {
-                        return GeneralVars.k_FALSE;
-
+                        Comment cmmToPost = phTargetPhoto.Comment(i_CommentText);
+                        return (cmmToPost.Id.Length > GeneralVars.k_Zero ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
                     }
 
                 }
-                return GeneralVars.k_FALSE;
-
             }
 
             return GeneralVars.k_FALSE;
@@ -203,7 +200,7 @@ namespace FacebookSmartView
         {
             get
             {
-                return m_userAge;
+                return m_UserAge;
             }
         }
 
@@ -212,7 +209,7 @@ namespace FacebookSmartView
             get
             {
 
-                return (m_FacebookUser.Location.Name != GeneralVars.k_NULL) ? m_FacebookUser.Location.Name : "";
+                return (m_FacebookUser.Location.Name != GeneralVars.k_NULL) ? m_FacebookUser.Location.Name : GeneralVars.k_EmptyString;
             }
         }
 
@@ -220,7 +217,7 @@ namespace FacebookSmartView
         {
             get
             {
-                return m_userLastEduStudyPlace;
+                return m_UserLastEduStudyPlace;
             }
 
         }

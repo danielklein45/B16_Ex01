@@ -26,47 +26,46 @@ namespace FacebookSmartView
 			"user_photos",
 			"user_posts",
 			"user_relationships"
-            //daniel klein
 		};
 
 		// Public Functions
 
-		public string getSavedAccessToken()
+		public string GetSavedAccessToken()
 		{
 			return Properties.Settings.Default.SavedAccessToken;
 		}
 
-		public void saveAccessToken(string i_AccessToken)
+		public void SaveAccessToken(string i_AccessToken)
 		{
 			Properties.Settings.Default.SavedAccessToken = i_AccessToken;
 			Properties.Settings.Default.Save();
 		}
 
-		public LoginResult loginToFacebook()
+		public LoginResult LoginToFacebook()
 		{
 			return FacebookService.Login(k_AppID, r_RequiredPermissions);
 		}
 
-		public LoginResult loginToFacbookAndSaveToken()
+		public LoginResult LoginToFacbookAndSaveToken()
 		{
-			LoginResult result = loginToFacebook();
-			saveAccessToken(result.AccessToken);
+			LoginResult result = LoginToFacebook();
+			SaveAccessToken(result.AccessToken);
 
 			return result;
 		}
 
-		public LoginResult connectToFacebook(string i_LastAccToken)
+		public LoginResult ConnectToFacebook(string i_LastAccToken)
 		{
 			return FacebookService.Connect(i_LastAccToken);
 		}
 
-		public void saveRememberBox(bool i_bCheckBoxValue)
+		public void SaveRememberBox(bool i_bCheckBoxValue)
 		{
 			Properties.Settings.Default.RememberMe = i_bCheckBoxValue;
 			Properties.Settings.Default.Save();
 		}
 
-		public bool getRememberBoxCheckedValue()
+		public bool GetRememberBoxCheckedValue()
 		{
 			return Properties.Settings.Default.RememberMe;
 		}

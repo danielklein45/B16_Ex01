@@ -32,7 +32,7 @@ namespace FacebookSmartView
             m_llFunctions = new LoginLogic();
             m_FormLoader = new FormLoader();
 
-            cbRememberMe.Checked = m_llFunctions.getRememberBoxCheckedValue();
+            cbRememberMe.Checked = m_llFunctions.GetRememberBoxCheckedValue();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace FacebookSmartView
 
             if ((result != GeneralVars.k_NULL) && (result.AccessToken != GeneralVars.k_NULL))
             {
-                m_llFunctions.saveRememberBox(cbRememberMe.Checked);
+                m_llFunctions.SaveRememberBox(cbRememberMe.Checked);
                 m_RememberMe = cbRememberMe.Checked;
                 
                 this.Hide();
@@ -78,7 +78,7 @@ namespace FacebookSmartView
         {
             if (e != GeneralVars.k_NULL )
             {
-                if (e.Message.Length > 0)
+                if (e.Message.Length > GeneralVars.k_Zero)
                 {
                     m_FormLoader.LoadingLabel = e.Message;
                     MessageBox.Show(e.Message);
@@ -97,12 +97,12 @@ namespace FacebookSmartView
         {
             LoginResult result = null;
 
-            string lastAccessToken = m_llFunctions.getSavedAccessToken();
+            string lastAccessToken = m_llFunctions.GetSavedAccessToken();
 
             //first login attemt
             if (String.IsNullOrEmpty(lastAccessToken))
             {
-                result = m_llFunctions.loginToFacbookAndSaveToken();
+                result = m_llFunctions.LoginToFacbookAndSaveToken();
             }
             //quicklogin using saved settings
             else
@@ -119,7 +119,7 @@ namespace FacebookSmartView
                     {
                         try
                         {
-                            result = m_llFunctions.connectToFacebook(lastAccessToken);
+                            result = m_llFunctions.ConnectToFacebook(lastAccessToken);
                         }
                         catch (Exception e)
                         {
@@ -129,7 +129,7 @@ namespace FacebookSmartView
                     //login as a new user
                     else
                     {
-                        result = m_llFunctions.loginToFacbookAndSaveToken();
+                        result = m_llFunctions.LoginToFacbookAndSaveToken();
                     }
                 }
                 
@@ -148,7 +148,7 @@ namespace FacebookSmartView
             if (Properties.Settings.Default.RememberMe == GeneralVars.k_TRUE)
             {
                 LoginFunction(GeneralVars.k_TRUE);
-                this.Opacity = 0;
+                this.Opacity = GeneralVars.k_Zero;
             }
         }
 

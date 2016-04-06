@@ -14,10 +14,6 @@ namespace FacebookSmartView
         private SortedDictionary<string, PictureObjectBasic> m_SortedDicAllPhotosByObjectID;
         private List<SpecialPictureBox> m_PictureObejctsOnForm;
 
-        private int intLastIndexInDic = 0;
-        private int intLastIndexInDicList = 0;
-        private int intCurrentIndex = 0;
-
         public TopPhotosFeature(AppUser i_AppUser, ref List<SpecialPictureBox> i_PictureBoxArray)
         {
             m_PictureObejctsOnForm = i_PictureBoxArray;
@@ -28,13 +24,13 @@ namespace FacebookSmartView
 
         public void rankUserPhotos()
         {
-            FacebookObjectCollection<Album> focUserAlbums = m_AppUser.getUserAlbums();
+            FacebookObjectCollection<Album> focUserAlbums = m_AppUser.GetUserAlbums();
             Dictionary<string, int> sdSortedScoreDic = new Dictionary<string, int>();
-            int likesCount = 0;
-            int commentCount = 0;
-            int currentScore = 0;
+            int likesCount = GeneralVars.k_Zero;
+            int commentCount = GeneralVars.k_Zero;
+            int currentScore = GeneralVars.k_Zero;
             int coun = 0;
-            int nIndexForOutoutDic = 0;
+            int nIndexForOutoutDic = GeneralVars.k_Zero;
 
             foreach(Album albCurrent in focUserAlbums)
             {
@@ -71,9 +67,9 @@ namespace FacebookSmartView
 
        public void loadTopPhotos()
         {
-            int indexForDictionary = 0;
+            int indexForDictionary = GeneralVars.k_Zero;
             PictureObjectBasic pobCurrentObj;
-            string strCurrentIndex = "";
+            string strCurrentIndex = GeneralVars.k_EmptyString;
 
             foreach (SpecialPictureBox poCurrPicObj in m_PictureObejctsOnForm)
             {
@@ -88,7 +84,7 @@ namespace FacebookSmartView
                 poCurrPicObj.PictureObject.PictureUrl = pobCurrentObj.PictureUrl;
                 poCurrPicObj.PictureObject.PostedDate = pobCurrentObj.PostedDate;
 
-                poCurrPicObj.PictureObject.loadInformation();
+                poCurrPicObj.PictureObject.LoadInformation();
                 ;
             }
         }

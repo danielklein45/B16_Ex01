@@ -29,32 +29,62 @@ namespace FacebookSmartView
         // Public Prop
         public int NumberOfLikes
         {
-            get { return m_NummberOfLikes; }
-            set { m_NummberOfLikes = value; }
+            get 
+            { 
+                return m_NummberOfLikes; 
+            }
+            set 
+            { 
+                m_NummberOfLikes = value; 
+            }
         }
 
         public string PostedDate
         {
-            get { return m_PostedDate; }
-            set { m_PostedDate = value; }
+            get
+            { 
+                return m_PostedDate;
+            }
+            set
+            { 
+                m_PostedDate = value;
+            }
         }
 
         public int NumberOfComment
         {
-            get { return m_NumberOfComments; }
-            set { m_NumberOfComments = value; }
+            get
+            { 
+                return m_NumberOfComments;
+            }
+            set 
+            { 
+                m_NumberOfComments = value;
+            }
         }
 
         public string PictureUrl
         {
-            get { return m_PictureUrl; }
-            set { m_PictureUrl = value; }
+            get
+            {
+                return m_PictureUrl;
+            }
+            set 
+            { 
+                m_PictureUrl = value;
+            }
         }
         
         public int Score
         {
-            get { return m_Score; }
-            set { m_Score = value; }
+            get
+            { 
+                return m_Score;
+            }
+            set
+            {
+                m_Score = value;
+            }
         }
 
         public string ObjectId

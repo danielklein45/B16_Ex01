@@ -14,34 +14,34 @@ namespace FacebookSmartView
         private Label m_botLabel;
         private PictureObject m_poPictureObjectID;
 
-        private static readonly Size sr_PictureBoxTopPhotosSize = new Size(175, 165);
+        private static readonly Size k_PictureBoxTopPhotosSize = new Size(175, 165);
+
         private const int k_LabelHeight = 20;
         private const int k_LabelSpacer = 3;
 
-        private readonly Size k_PictureSize = new Size(sr_PictureBoxTopPhotosSize.Width, sr_PictureBoxTopPhotosSize.Height - k_LabelHeight);
-        private readonly Point k_PictureStartLoc = new Point(0, 0);
-        private readonly String k_PictureName = "_PicBox";
+        private const String k_PictureName = "_PicBox";
+        private const String k_GeneralPanelName = "_Panel";
+        private const String k_PanelName = "_Label";
 
+        private readonly Size r_PanelSize = new Size(k_PictureBoxTopPhotosSize.Width, k_LabelHeight);
+        private readonly Point r_PanelStartLoc = new Point(0, k_PictureBoxTopPhotosSize.Height - k_LabelHeight);
+        private readonly Size r_PictureSize = new Size(k_PictureBoxTopPhotosSize.Width, k_PictureBoxTopPhotosSize.Height - k_LabelHeight);
+        private readonly Point r_PictureStartLoc = new Point(0, 0);
 
-        private readonly String k_GeneralPanelName = "_Panel";
-
-        private readonly Size k_PanelSize = new Size(sr_PictureBoxTopPhotosSize.Width, k_LabelHeight);
-        private readonly String k_PanelName = "_Label";
-        private readonly Point k_PanelStartLoc = new Point(0, sr_PictureBoxTopPhotosSize.Height - k_LabelHeight);
 
         public SpecialPictureBox(Panel i_FatherPanel)
         {
             m_FatherPanel = i_FatherPanel;
 
             this.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.Size = k_PictureSize;
+            this.Size = r_PictureSize;
             this.Location = new Point(0, 0);
-            this.Click += SpecialPictureBox_Click;
+            this.Click += SpecialPictureBoxOnClick;
 
 
             m_botLabel = new Label();
-            m_botLabel.Size = k_PanelSize;
-            m_botLabel.Location = k_PanelStartLoc;
+            m_botLabel.Size = r_PanelSize;
+            m_botLabel.Location = r_PanelStartLoc;
             m_botLabel.AutoSize = GeneralVars.k_FALSE;
             m_botLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
@@ -49,7 +49,7 @@ namespace FacebookSmartView
 
             m_boxPanel = new Panel();
             m_boxPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            m_boxPanel.Size = sr_PictureBoxTopPhotosSize;
+            m_boxPanel.Size = k_PictureBoxTopPhotosSize;
 
 
             m_boxPanel.Controls.Add(this);
@@ -58,10 +58,11 @@ namespace FacebookSmartView
             m_FatherPanel.Controls.Add(m_boxPanel);
         }
 
-        void SpecialPictureBox_Click(object sender, EventArgs e)
+        void SpecialPictureBoxOnClick(object sender, EventArgs e)
         {
             string strSelectedObjectId;
             SpecialPictureBox spbCurrent;
+
             try
             {
                 spbCurrent = (sender as SpecialPictureBox);
@@ -71,7 +72,7 @@ namespace FacebookSmartView
             catch (Exception)
             {
                 spbCurrent = null;
-                PopularPanelMgt.Instance.CurrentObjectID = "";
+                PopularPanelMgt.Instance.CurrentObjectID = GeneralVars.k_EmptyString;
             }
 
             if (spbCurrent != null)
@@ -86,30 +87,24 @@ namespace FacebookSmartView
 
         }
 
-
-        public Point ObjectLocation { get { return this.Location; } set { this.m_boxPanel.Location = value; } }
-        public static Size PictureBoxTopPhotosSize { get { return sr_PictureBoxTopPhotosSize; } }
-        public PictureObject PictureObject { get { return this.m_poPictureObjectID; } set { this.m_poPictureObjectID = value; } }
-        public Panel FatherPanel { get { return m_FatherPanel; } }
-        public Label PicLabel { get { return m_botLabel; } }
-
-
-        public void updateNames(int i_id)
+        public void UpdateNames(int i_Id)
         {
-            this.Name = m_FatherPanel.Name.ToString() + k_PictureName.ToString() + "_" + i_id.ToString();
-            m_botLabel.Name = m_FatherPanel.Name.ToString() + k_PanelName.ToString() + "_" + i_id.ToString();
-            m_boxPanel.Name = m_FatherPanel.Name.ToString() + k_GeneralPanelName.ToString() + "_" + i_id.ToString();
+            this.Name = m_FatherPanel.Name.ToString() + k_PictureName.ToString() + "_" + i_Id.ToString();
+            m_botLabel.Name = m_FatherPanel.Name.ToString() + k_PanelName.ToString() + "_" + i_Id.ToString();
+            m_boxPanel.Name = m_FatherPanel.Name.ToString() + k_GeneralPanelName.ToString() + "_" + i_Id.ToString();
         }
 
-        public void removeObjectFromPanel()
+        public void RemoveObjectFromPanel()
         {
             foreach (Control currControl in m_boxPanel.Controls)
             {
                 m_boxPanel.Controls.Remove(currControl);
             }
+
             m_FatherPanel.Controls.Remove(m_boxPanel);
 
         }
+       
         protected override void OnMouseHover(EventArgs e)
         {
             m_botLabel.BackColor = Color.LightSkyBlue;
@@ -122,5 +117,52 @@ namespace FacebookSmartView
             base.OnMouseLeave(e);
         }
 
+        public Point ObjectLocation 
+        { 
+            get 
+            { 
+                return this.Location;
+            } 
+            set 
+            { 
+                this.m_boxPanel.Location = value;
+            } 
+        }
+
+        public static Size PictureBoxTopPhotosSize
+        {
+            get
+            { 
+                return k_PictureBoxTopPhotosSize;
+            } 
+        }
+
+        public PictureObject PictureObject 
+        { 
+            get
+            { 
+                return this.m_poPictureObjectID;
+            } 
+            set 
+            { 
+                this.m_poPictureObjectID = value;
+            } 
+        }
+
+        public Panel FatherPanel
+        {
+            get 
+            { 
+                return m_FatherPanel;
+            } 
+        }
+
+        public Label PicLabel 
+        { 
+            get 
+            { 
+                return m_botLabel;
+            } 
+        }
     }
 }
