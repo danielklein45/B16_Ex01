@@ -59,9 +59,9 @@ namespace FacebookSmartView
 			return FacebookService.Connect(i_LastAccToken);
 		}
 
-		public void SaveRememberBox(bool i_bCheckBoxValue)
+		public void SaveRememberBox(bool i_CheckBoxValue)
 		{
-			Properties.Settings.Default.RememberMe = i_bCheckBoxValue;
+			Properties.Settings.Default.RememberMe = i_CheckBoxValue;
 			Properties.Settings.Default.Save();
 		}
 
@@ -70,5 +70,4 @@ namespace FacebookSmartView
 			return Properties.Settings.Default.RememberMe;
 		}
 	}
-
 }

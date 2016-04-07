@@ -15,24 +15,23 @@ using System.Threading;
 
 namespace FacebookSmartView
 {
-    public partial class LoginForm : Form
+    public partial class FormLogin : Form
     {
-
         // Private variables
-        private LoginLogic m_llFunctions; // Class To handle login form 
-        private MainForm m_MainForm;
+        private LoginLogic m_LoginLoginFunctions; // Class To handle login form 
+        private FormMain m_MainForm;
         private FormLoader m_FormLoader;
-        private static Boolean m_RememberMe = GeneralVars.k_FALSE;
+        private static bool m_RememberMe = GeneralVars.k_FALSE;
 
-        public static Boolean RememberMe { get { return m_RememberMe; } set { m_RememberMe = value; } }
+        public static bool RememberMe { get { return m_RememberMe; } set { m_RememberMe = value; } }
 
-        public LoginForm()
+        public FormLogin()
         {
             InitializeComponent();
-            m_llFunctions = new LoginLogic();
+            m_LoginLoginFunctions = new LoginLogic();
             m_FormLoader = new FormLoader();
 
-            cbRememberMe.Checked = m_llFunctions.GetRememberBoxCheckedValue();
+            cbRememberMe.Checked = m_LoginLoginFunctions.GetRememberBoxCheckedValue();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
@@ -42,39 +41,35 @@ namespace FacebookSmartView
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            LoginFunction(GeneralVars.k_FALSE);
+            loginFunction(GeneralVars.k_FALSE);
         }
 
-        private void LoginFunction(Boolean i_bAutoLogin)
+        private void loginFunction(bool i_AutoLogin)
         {
-            LoginResult result = login(i_bAutoLogin);
+            LoginResult result = login(i_AutoLogin);
 
             if ((result != GeneralVars.k_NULL) && (result.AccessToken != GeneralVars.k_NULL))
             {
-                m_llFunctions.SaveRememberBox(cbRememberMe.Checked);
+                m_LoginLoginFunctions.SaveRememberBox(cbRememberMe.Checked);
                 m_RememberMe = cbRememberMe.Checked;
-                
-                this.Hide();
-
-                m_MainForm = new MainForm();
-                
+        
+                m_MainForm = new FormMain();
                 m_MainForm.LoginUser = result.LoggedInUser;
                 m_MainForm.Closed += (s, args) => this.Close();
-
                 m_MainForm.ehMainFormLoad += new EventHandler<MainFormLoadEventArgs>(mainForm_ehMainFormLoad);
+                
+                m_FormLoader.Shown += (s, args) => this.Hide();
                 m_FormLoader.Shown += new EventHandler(initiateForm);
                 m_FormLoader.Show();
-                
-
             }
         }
 
         private void initiateForm(object sender, EventArgs e)
         {
-            m_MainForm.initiateForm();
+            m_MainForm.InitiateForm();
         }
 
-        void mainForm_ehMainFormLoad(object sender, MainFormLoadEventArgs e)
+        private void mainForm_ehMainFormLoad(object sender, MainFormLoadEventArgs e)
         {
             if (e != GeneralVars.k_NULL )
             {
@@ -88,52 +83,49 @@ namespace FacebookSmartView
                 {
                     m_FormLoader.Close();
                     m_MainForm.Show();
-                  
                 }
             }
         }
 
-        private LoginResult login(Boolean i_bautoLogin)
+        private LoginResult login(bool i_AutoLogin)
         {
             LoginResult result = null;
 
-            string lastAccessToken = m_llFunctions.GetSavedAccessToken();
+            string lastAccessToken = m_LoginLoginFunctions.GetSavedAccessToken();
 
-            //first login attemt
+            //first login attempt
             if (String.IsNullOrEmpty(lastAccessToken))
             {
-                result = m_llFunctions.LoginToFacbookAndSaveToken();
+                result = m_LoginLoginFunctions.LoginToFacbookAndSaveToken();
             }
             //quicklogin using saved settings
             else
             {
                  DialogResult loginDialogResult = DialogResult.None;
-                if (!i_bautoLogin)
+                 if (!i_AutoLogin)
                 {
                     loginDialogResult = MessageBox.Show
                        ("The Application noticed that you have logged in before.\nWould you like to use the same user?", "Quick Login",
                        MessageBoxButtons.YesNo);
                 }
-                 //login as a last used user
-                 if (loginDialogResult == DialogResult.Yes || i_bautoLogin)
+                //login as a last used user
+                 if (loginDialogResult == DialogResult.Yes || i_AutoLogin)
+                {
+                    try
                     {
-                        try
-                        {
-                            result = m_llFunctions.ConnectToFacebook(lastAccessToken);
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        result = m_LoginLoginFunctions.ConnectToFacebook(lastAccessToken);
                     }
-                    //login as a new user
-                    else
+                    catch (Exception e)
                     {
-                        result = m_llFunctions.LoginToFacbookAndSaveToken();
+                        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                
-
+                //login as a new user
+                else
+                {
+                    result = m_LoginLoginFunctions.LoginToFacbookAndSaveToken();
+                }
+            }
             if ((result != GeneralVars.k_NULL) && (string.IsNullOrEmpty(result.AccessToken)))
             {
                 MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -142,28 +134,24 @@ namespace FacebookSmartView
             return result;
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
+        private void loginForm_Load(object sender, EventArgs e)
         {
-            MessageBox.Show(Properties.Settings.Default.RememberMe.ToString());
             if (Properties.Settings.Default.RememberMe == GeneralVars.k_TRUE)
             {
-                LoginFunction(GeneralVars.k_TRUE);
+                loginFunction(GeneralVars.k_TRUE);
                 this.Opacity = GeneralVars.k_Zero;
             }
         }
 
-        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void loginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (cbRememberMe.Checked == GeneralVars.k_TRUE && m_RememberMe == GeneralVars.k_FALSE)
+            {
                 m_RememberMe = GeneralVars.k_FALSE;
-
+            }
+                
             Properties.Settings.Default.RememberMe = m_RememberMe;
             Properties.Settings.Default.Save();
         }
-
-       
-       
-        
-        
     }
 }

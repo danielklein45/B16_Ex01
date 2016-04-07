@@ -13,10 +13,11 @@ namespace FacebookSmartView
         private int m_UserAge;
         private string m_UserLastEduStudyPlace;
         private string m_UserLivesIn;
+        private int k_FacebookWrapperCollectionLimit = 500;
 
         public AppUser(User i_FacebookUser)
         {
-            FacebookWrapper.FacebookService.s_CollectionLimit = 500;
+            FacebookWrapper.FacebookService.s_CollectionLimit = k_FacebookWrapperCollectionLimit;
             m_FacebookUser = i_FacebookUser;
 
             m_UserAge = calcUserAge(m_FacebookUser.Birthday);
@@ -46,16 +47,15 @@ namespace FacebookSmartView
             }
 
             return postToDisplay;
-
         }
        
-        private string getLastEdu(Education[] i_eduForUser)
+        private string getLastEdu(Education[] i_EducationForUser)
         {
             string strSchool;
 
             try
             {
-                strSchool = i_eduForUser.Last<Education>().School.Name;
+                strSchool = i_EducationForUser.Last<Education>().School.Name;
             }
             catch
             {
@@ -65,19 +65,19 @@ namespace FacebookSmartView
             return strSchool;
         }
 
-        private string getUserLivePlace(City i_userLoc)
+        private string getUserLivePlace(City i_UserLocation)
         {
-            string strLocation;
+            string location;
             try
             {
-                strLocation = m_FacebookUser.Location.Name;
+                location = m_FacebookUser.Location.Name;
             }
             catch
             {
-                strLocation = GeneralVars.k_EmptyString;
+                location = GeneralVars.k_EmptyString;
             }
 
-            return strLocation;
+            return location;
         }
 
         public FacebookObjectCollection<Album> GetUserAlbums()
@@ -85,19 +85,18 @@ namespace FacebookSmartView
             return m_FacebookUser.Albums;
         }
 
-        private int calcUserAge(string i_strBirthday)
+        private int calcUserAge(string i_Birthday)
         {
             DateTime dtCurrentDay = DateTime.Today;
             DateTime dtUserBirthday;
             try
             {
-                dtUserBirthday = Convert.ToDateTime(i_strBirthday);
+                dtUserBirthday = Convert.ToDateTime(i_Birthday);
             }
             catch 
             { 
                 dtUserBirthday = dtCurrentDay;
             }
-
 
             return (dtCurrentDay.Year - dtUserBirthday.Year);
         }
@@ -140,11 +139,13 @@ namespace FacebookSmartView
                     return phTargetPhoto.Like();
                 }
             }
+
             return GeneralVars.k_FALSE;
         }
 
         public bool CommentPhoto(string i_ObjectId, string i_CommentText)
         {
+            bool retValue = GeneralVars.k_FALSE;
             Photo phTargetPhoto;
 
             if (i_ObjectId != GeneralVars.k_EmptyString && i_ObjectId.Length > GeneralVars.k_Zero)
@@ -163,13 +164,12 @@ namespace FacebookSmartView
                     if (phTargetPhoto != GeneralVars.k_NULL)
                     {
                         Comment cmmToPost = phTargetPhoto.Comment(i_CommentText);
-                        return (cmmToPost.Id.Length > GeneralVars.k_Zero ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
+                        retValue = (cmmToPost.Id.Length > GeneralVars.k_Zero ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
                     }
-
                 }
             }
 
-            return GeneralVars.k_FALSE;
+            return retValue;
         }
 
         public string Name
@@ -208,7 +208,6 @@ namespace FacebookSmartView
         {
             get
             {
-
                 return (m_FacebookUser.Location.Name != GeneralVars.k_NULL) ? m_FacebookUser.Location.Name : GeneralVars.k_EmptyString;
             }
         }
@@ -219,7 +218,6 @@ namespace FacebookSmartView
             {
                 return m_UserLastEduStudyPlace;
             }
-
         }
     }
 }

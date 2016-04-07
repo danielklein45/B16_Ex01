@@ -17,7 +17,6 @@ namespace FacebookSmartView
         private static readonly string sr_GroupNameAttribute = "Name";
         private static readonly string sr_FilterItemElement = "FilterItem";
 
-
         public string Name { get; set; }
 
         public FilterGroup()
