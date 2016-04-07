@@ -1,6 +1,6 @@
 ﻿namespace FacebookSmartView
 {
-    partial class MainForm
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.listBoxNewsFeed = new System.Windows.Forms.ListBox();
             this.textBoxPostMessage = new System.Windows.Forms.TextBox();
             this.pbUserPicture = new System.Windows.Forms.PictureBox();
@@ -365,7 +366,7 @@
             this.buttonSignOff.UseVisualStyleBackColor = true;
             this.buttonSignOff.Click += new System.EventHandler(this.buttonSignOff_Click);
             // 
-            // MainForm
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -383,9 +384,10 @@
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.lblHello);
             this.Controls.Add(this.pbUserPicture);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MainForm";
+            this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facebook Smart View";
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).EndInit();

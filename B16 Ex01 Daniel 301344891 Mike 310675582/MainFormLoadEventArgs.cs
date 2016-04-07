@@ -7,31 +7,7 @@ namespace FacebookSmartView
 {
     public class MainFormLoadEventArgs : EventArgs
     {
-        private bool m_bfinishedLoading;
-        private string m_strMessage;
-
-        public bool FinishedLoading 
-        { 
-            get 
-            { 
-                return m_bfinishedLoading;
-            } 
-            set 
-            { 
-                m_bfinishedLoading = value; 
-            } 
-        }
-        
-        public string Message 
-        { 
-            get
-            { 
-                return m_strMessage;
-            }
-            set 
-            { 
-                m_strMessage = value; 
-            } 
-        }
+        public bool FinishedLoading { get; set; }
+        public string Message { get; set; }
     }
 }

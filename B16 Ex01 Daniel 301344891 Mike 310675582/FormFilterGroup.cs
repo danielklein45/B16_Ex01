@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace FacebookSmartView
 {
-    public partial class FilterGroupForm : Form
+    public partial class FormFilterGroup : Form
     {
 
         public FilterGroup GroupFilter { get; set; }
-        public FilterGroupForm()
+        public FormFilterGroup()
         {
             InitializeComponent();
         }

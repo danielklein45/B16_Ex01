@@ -9,13 +9,13 @@ namespace FacebookSmartView
 {
     class PopularPanelMgt
     {
-        private const int k_MAX_PANEL = 4;
-        private static Point m_NextFreePoint;
+        private const int k_MaxPanel = 4;
+        private static Point s_NextFreePoint;
         private Size m_Surface;
         private List<SpecialPictureBox> m_LstPictureBoxFromForm;
         
         private static PopularPanelMgt s_CurrentInstance;
-        private static Object s_LockOnMgt;
+        private static Object s_LockOnMgt = new object();
 
         private string m_CurrentSelectedObjectId;
         private Label m_InformationLabel;
@@ -65,7 +65,7 @@ namespace FacebookSmartView
         private PopularPanelMgt()
         {
             m_LstPictureBoxFromForm = new List<SpecialPictureBox>();
-            m_NextFreePoint = new Point(GeneralVars.k_SPACER, GeneralVars.k_SPACER);
+            s_NextFreePoint = new Point(GeneralVars.k_SPACER, GeneralVars.k_SPACER);
             m_CurrentSelectedObjectId = GeneralVars.k_EmptyString;
             s_LockOnMgt = new Object();
         }
@@ -99,7 +99,7 @@ namespace FacebookSmartView
         {
             Point pNewPointForPicture;
 
-            if (m_LstPictureBoxFromForm.Count < k_MAX_PANEL)
+            if (m_LstPictureBoxFromForm.Count < k_MaxPanel)
             {
                 if (getNextFreeLocationInContainer(SpecialPictureBox.PictureBoxTopPhotosSize, out pNewPointForPicture))
                 {
@@ -122,11 +122,11 @@ namespace FacebookSmartView
 
         private bool getNextFreeLocationInContainer(Size i_PanelSize, out Point o_NewPoint)
         {
-            if (m_NextFreePoint.X + i_PanelSize.Width < m_Surface.Width &&
-                m_NextFreePoint.Y + i_PanelSize.Height < m_Surface.Height )
+            if (s_NextFreePoint.X + i_PanelSize.Width < m_Surface.Width &&
+                s_NextFreePoint.Y + i_PanelSize.Height < m_Surface.Height )
             {
-                o_NewPoint = m_NextFreePoint;
-                m_NextFreePoint = new Point(m_NextFreePoint.X + i_PanelSize.Width + GeneralVars.k_SPACER, m_NextFreePoint.Y);
+                o_NewPoint = s_NextFreePoint;
+                s_NextFreePoint = new Point(s_NextFreePoint.X + i_PanelSize.Width + GeneralVars.k_SPACER, s_NextFreePoint.Y);
 
                 return GeneralVars.k_TRUE;
             }

@@ -1,6 +1,6 @@
 ﻿namespace FacebookSmartView
 {
-    partial class FilterGroupForm
+    partial class FormFilterGroup
     {
         /// <summary>
         /// Required designer variable.

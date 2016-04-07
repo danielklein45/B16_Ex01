@@ -10,7 +10,6 @@ namespace FacebookSmartView
     class PictureObject : PictureObjectBasic
     {
         // Private Properties
-
         private PictureBox m_PictureBox;
         private Label m_BottomLable;
 
@@ -27,8 +26,8 @@ namespace FacebookSmartView
         public void LoadInformation()
         {
             this.m_PictureBox.LoadAsync(this.PictureUrl);
-            this.m_BottomLable.Text = String.Format("{0} Likes + {1} Comments = {2} Score", this.NumberOfLikes, this.NumberOfComment, this.Score);
+            this.m_BottomLable.Text = String.Format("{0} Likes + {1} Comments = {2} Score", 
+                this.NumberOfLikes, this.NumberOfComments, this.Score);
         }
-        
     }
 }

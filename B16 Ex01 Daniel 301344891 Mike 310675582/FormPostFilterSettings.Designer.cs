@@ -1,6 +1,6 @@
 ﻿namespace FacebookSmartView
 {
-    partial class PostFilterSettingsForm
+    partial class FormPostFilterSettings
     {
         /// <summary>
         /// Required designer variable.

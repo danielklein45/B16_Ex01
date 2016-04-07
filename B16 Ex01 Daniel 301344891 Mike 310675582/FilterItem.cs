@@ -16,7 +16,6 @@ namespace FacebookSmartView
         private Regex m_Regex;
         private static readonly string sr_FilterTextAttribute = "TextToFilter";
 
-
         public FilterItem() : this(string.Empty) { } 
         
         public FilterItem(string i_Item)

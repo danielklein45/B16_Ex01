@@ -8,8 +8,8 @@ namespace FacebookSmartView
 {
     static class GeneralVars
     {
-        public const Boolean k_TRUE = true;
-        public const Boolean k_FALSE = false;
+        public const bool k_TRUE = true;
+        public const bool k_FALSE = false;
         public const Object k_NULL = null;
 
         public const int k_SPACER = 5;

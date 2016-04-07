@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace FacebookSmartView
 {
-    public partial class PostFilterSettingsForm : Form
+    public partial class FormPostFilterSettings : Form
     {
         public PostFilter PostFilter { get; set; }
 
-        public PostFilterSettingsForm()
+        public FormPostFilterSettings()
         {
             InitializeComponent();
         }
@@ -35,7 +35,7 @@ namespace FacebookSmartView
         private void buttonCreateNewGroup_Click(object sender, EventArgs e)
         {
             FilterGroup newGroup = new FilterGroup();
-            FilterGroupForm filterGroupDialog = new FilterGroupForm();
+            FormFilterGroup filterGroupDialog = new FormFilterGroup();
 
             filterGroupDialog.GroupFilter = newGroup;
             filterGroupDialog.ShowDialog();
@@ -53,7 +53,7 @@ namespace FacebookSmartView
 
             if (filterGroup != null)
             {
-                FilterGroupForm filterGroupDialog = new FilterGroupForm();
+                FormFilterGroup filterGroupDialog = new FormFilterGroup();
 
                 filterGroupDialog.GroupFilter = filterGroup;
                 filterGroupDialog.ShowDialog();
