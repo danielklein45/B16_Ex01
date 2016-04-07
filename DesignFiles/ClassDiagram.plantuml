@@ -1,7 +1,5 @@
 @startuml
-
-
-title Facebook App -  Class Diagram
+title Facebook Smart View App -  Class Diagram
 
 interface IXmlSerializable {
     +ReadXml(XmlReader reader): void
@@ -58,8 +56,15 @@ FormMain<-down-FormLoader
 AppUser "1" o-up- "1" User
 AppUser "1" o-up- "*" Post
 
+
 FormLogin *-down-LoginLogic
 FormLogin ->FormLoader
+FormLogin ->FormMain
+
+class GeneralVars <<static>> {
+}
+
+
 
 package "Post Filtering Feature" <<Frame>> {
 
@@ -103,6 +108,27 @@ package "Post Filtering Feature" <<Frame>> {
     
 }
 
+package "Top Photos Feature" <<Frame>> {
+
+class PopularPanelMgt{
+    +CurrentObjectID: string {getter, setter}
+    +InformationLabel: Label {getter, setter}
+    +InformationTextbox: TextBox {getter, setter}
+    +PictureObjectList: List<SpecialPictureBox> {getter}
+    +Instance: static PopularPanelMgt {getter}
+    -constructor()
+    +SetPanels(Panel, Panel)
+    +TryAddToPanel(SpecialPictureBox): bool
+    -getNextFreeLocationInContainer(Size, out Point): bool
+}
+PopularPanelMgt "1"*-down- "*" SpecialPictureBox
+FormMain *-up-PopularPanelMgt
+}
+
+package "Top Photos Feature" <<Frame>> {
+
+
+
 class MainFormLoadEventArgs{
     +constructor()
     +FinishedLoading: bool {getter, setter}
@@ -129,17 +155,7 @@ class PictureObject{
 class PictureObject extends PictureObjectBasic {
 }
 
-class PopularPanelMgt{
-    +CurrentObjectID: string {getter, setter}
-    +InformationLabel: Label {getter, setter}
-    +InformationTextbox: TextBox {getter, setter}
-    +PictureObjectList: List<SpecialPictureBox> {getter}
-    +Instance: static PopularPanelMgt {getter}
-    -constructor()
-    +SetPanels(Panel, Panel)
-    +TryAddToPanel(SpecialPictureBox): bool
-    -getNextFreeLocationInContainer(Size, out Point): bool
-}
+
 
 class SpecialPictureBox{
     +constructor(Panell)
@@ -163,5 +179,18 @@ class TopPhotosFeature{
     +RankUserPhotos()
     +LoadTopPhotos()
 }
+
+
+PictureObjectBasic "*" *-down- "1" FormMain
+PictureObject "1" *-down- "1" SpecialPictureBox
+
+TopPhotosFeature "1"*-up- "*" SpecialPictureBox
+TopPhotosFeature "1"*-up- "*" PictureObjectBasic
+AppUser *-down-TopPhotosFeature
+
+}
+
+
+
 
 @enduml
