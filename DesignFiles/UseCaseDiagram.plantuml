@@ -1,0 +1,44 @@
+@startuml
+
+title Facebook App - Use Case Diagram
+
+:User: 
+
+rectangle "Facebook Client"{
+    rectangle "Basic Features"{
+   }
+   rectangle "Post Filtering Feature"{
+   }
+}
+
+rectangle "Basic Features" {
+    (Display News Feed)
+    (Display User Info)
+    (Post)
+}
+
+rectangle "Post Filtering Feature" {
+    (Create Post Filter Group)
+    (Delete Post Filter Group)
+    (Edit Post Filter Group)
+    (Add Filter Group Item)
+    (Remove Filter Group Item)
+    (Enable Post Filter Group)
+    (Disable Post Filter Group)
+}
+
+
+User ..> (Create Post Filter Group)
+User ..> (Delete Post Filter Group)
+User ..> (Edit Post Filter Group)
+User ..> (Enable Post Filter Group)
+User ..> (Disable Post Filter Group)
+
+(Edit Post Filter Group) <-- (Add Filter Group Item): <<extends>>
+(Edit Post Filter Group) <-- (Remove Filter Group Item): <<extends>>
+
+User ..> (Post)
+User ..> (Display News Feed)
+User ..> (Display User Info)
+
+@enduml

@@ -1,0 +1,104 @@
+@startuml
+
+
+title Facebook App -  Class Diagram
+
+interface IXmlSerializable {
+    +ReadXml(XmlReader reader): void
+    +WriteXml(XmlWriter writer): void
+}
+
+interface IEnumerable {
+    +GetEnumerator(): IEnumerator
+}
+
+class FormMain extends Form {
+}
+
+class FormLogin extends Form {
+}
+
+class FormLoader extends Form {
+}
+
+class AppUser {
+    +constructor()
+    +GetNewsFeed(PostFilter): FacebookObjectCollection<Post>
+    +GetUserAlbums(r): FacebookObjectCollection<Album>
+    +GetUserProfilePicture(): string
+    +PostToUserWall(string): string
+    +LikePhoto(string): bool
+    +CommentPhoto(string): bool
+    +Name: string {getter}
+    +Birthday: string {getter}
+    +Gender: string {getter}
+    +Age: int {getter}
+    +UserLivesIn: string {getter}
+    +LastEducationStudyPlace: string {getter}
+    -getLastEdu(Education[]): string
+    -getUserLivePlace(City): string
+}
+
+class LoginLogic{
+    +constructor()
+    +GetSavedAccessToken(): string
+    +SaveAccessToken(string)
+    +LoginToFacebook(): LoginResult
+    +LoginToFacebookAndSaveToken(): LiginResult
+    +ConnectToFacebook(string): LoginResult
+    +SaveRememberBox(bool)
+    +GetRememberBoxCheckedValue(): bool
+}
+
+FormMain *-down-AppUser
+FormMain<-down-FormLoader
+
+AppUser "1" o-up- "1" User
+AppUser "1" o-up- "*" Post
+
+FormLogin *-down-LoginLogic
+FormLogin ->FormLoader
+
+package "Post Filtering Feature" <<Frame>> {
+
+    class PostFilter{
+        +constructor()
+        +AddGroup(FilterGroup)
+        +RemoveGroup(FilterGroup)
+        +Save()
+        +FilterGroups: IList<FilterGroup> {getter, setter}
+        -load()
+    }
+
+    class FilterGroup implements IXmlSerializable, IEnumerable{
+        +constructor()
+        +AddItem(FilterItem)
+        +RemoveItem(FilterItem)
+        +IsMatch(Post): bool
+        +Name: string {getter, setter}
+    }
+
+    class FilterItem  implements IXmlSerializable{
+        +constructor()
+        +constructor(Regex)
+        +IsMatch(Post): bool
+     }
+
+     class FormPostFilterSettings extends Form{
+        +PostFilter: PostFilter {getter, setter}
+     }
+
+     class FormFilterGroup extends Form{
+        +GroupFilter: FilterGroup {getter, setter}
+     }
+
+    FilterGroup *- FilterItem
+    PostFilter *-up- FilterGroup
+    FormPostFilterSettings *-left- PostFilter
+    FormFilterGroup  *-down- FilterGroup
+    FormPostFilterSettings-left->FormFilterGroup 
+    FormMain->FormPostFilterSettings
+    
+}
+
+@enduml
