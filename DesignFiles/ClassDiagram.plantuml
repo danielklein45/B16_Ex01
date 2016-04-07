@@ -22,21 +22,23 @@ class FormLoader extends Form {
 }
 
 class AppUser {
-    +constructor()
+    -getLastEdu(Education[]): string
+    -getUserLivePlace(City): string
+    -calcUserAge(string): int
+    +constructor(User)
     +GetNewsFeed(PostFilter): FacebookObjectCollection<Post>
-    +GetUserAlbums(r): FacebookObjectCollection<Album>
+    +GetUserAlbums(): FacebookObjectCollection<Album>
     +GetUserProfilePicture(): string
     +PostToUserWall(string): string
     +LikePhoto(string): bool
-    +CommentPhoto(string): bool
+    +CommentPhoto(string, string): bool
     +Name: string {getter}
     +Birthday: string {getter}
     +Gender: string {getter}
     +Age: int {getter}
     +UserLivesIn: string {getter}
     +LastEducationStudyPlace: string {getter}
-    -getLastEdu(Education[]): string
-    -getUserLivePlace(City): string
+
 }
 
 class LoginLogic{
@@ -99,6 +101,67 @@ package "Post Filtering Feature" <<Frame>> {
     FormPostFilterSettings-left->FormFilterGroup 
     FormMain->FormPostFilterSettings
     
+}
+
+class MainFormLoadEventArgs{
+    +constructor()
+    +FinishedLoading: bool {getter, setter}
+    +Message: string {getter, setter}
+}
+
+class MainFormLoadEventArgs extends EventArgs {
+}
+
+class PictureObjectBasic{
+    +constructor(string , int , int , int , string , string)
+    +NumberOfLikes: int {getter, setter}
+    +NumberOfComment: int {getter, setter}
+    +PictureUrl: string {getter, setter}
+    +Score: int {getter, setter}
+    +ObjectId: string {getter, setter}
+}
+
+class PictureObject{
+    +constructor(string, int , int , int , string , string,  PictureBox , Label)
+    +LoadInformation()
+}
+
+class PictureObject extends PictureObjectBasic {
+}
+
+class PopularPanelMgt{
+    +CurrentObjectID: string {getter, setter}
+    +InformationLabel: Label {getter, setter}
+    +InformationTextbox: TextBox {getter, setter}
+    +PictureObjectList: List<SpecialPictureBox> {getter}
+    +Instance: static PopularPanelMgt {getter}
+    -constructor()
+    +SetPanels(Panel, Panel)
+    +TryAddToPanel(SpecialPictureBox): bool
+    -getNextFreeLocationInContainer(Size, out Point): bool
+}
+
+class SpecialPictureBox{
+    +constructor(Panell)
+    +SpecialPictureBoxOnClick(object, EventArgs)
+    +UpdateNames(int)
+    +RemoveObjectFromPanel()
+    +OnMouseHover(EventArgs)
+    +OnMouseLeave(EventArgs)
+    +ObjectLocation: Point {getter, setter}
+    +PictureBoxTopPhotosSize: static Size {getter}
+    +PictureObject: PictureObject {getter, setter}
+    +FatherPanel: Panel {getter}
+    +PicLabel: Label {getter}
+}
+
+class SpecialPictureBox extends PictureBox {
+}
+
+class TopPhotosFeature{
+    +constructor(AppUser , ref List<SpecialPictureBox>)
+    +RankUserPhotos()
+    +LoadTopPhotos()
 }
 
 @enduml
