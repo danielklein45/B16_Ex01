@@ -1,0 +1,45 @@
+@startuml
+
+title "SmartViewFacebook - Edit Filter Group - Sequence Diagram"
+
+actor User
+boundary FormMain
+
+User -> FormMain: buttonFilterPostSettings_Click()
+activate User
+activate FormMain
+
+create boundary FormPostFilterSettings
+FormMain -> FormPostFilterSettings: new()
+FormMain -> FormPostFilterSettings: Set PostFilter
+FormMain -> FormPostFilterSettings: ShowDialog()
+activate FormPostFilterSettings
+
+User -> FormPostFilterSettings: buttonEditGroup_Click()
+
+create boundary FormFilterGroup
+
+FormPostFilterSettings -> FormFilterGroup: new()
+FormPostFilterSettings -> FormFilterGroup: Set GroupFilter
+FormPostFilterSettings -> FormFilterGroup: ShowDialog()
+activate FormFilterGroup
+
+
+activate FilterGroup
+loop while adding filters
+    User -> FormFilterGroup: buttonAddItem_Click()
+    FormFilterGroup -> FilterItem: new()
+    activate FilterItem
+    FilterItem --> FormFilterGroup
+    deactivate FilterItem
+    FormFilterGroup -> FilterGroup: Add(FilterItem)
+end
+User -> FormFilterGroup: buttonSaveAndClose_Click()
+deactivate FilterGroup
+destroy FormFilterGroup
+User -> FormPostFilterSettings: buttonSaveAndClose_Click()
+destroy FormPostFilterSettings
+deactivate FormMain
+deactivate User
+
+@enduml
