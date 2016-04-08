@@ -108,7 +108,7 @@
             this.textBoxGroupName.Size = new System.Drawing.Size(145, 20);
             this.textBoxGroupName.TabIndex = 7;
             // 
-            // FilterGroupForm
+            // FormFilterGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -121,7 +121,8 @@
             this.Controls.Add(this.labelFilterItem);
             this.Controls.Add(this.textBoxFilterItem);
             this.Controls.Add(this.buttonAddItem);
-            this.Name = "FilterGroupForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Name = "FormFilterGroup";
             this.Text = "Edit Filter Group";
             this.ResumeLayout(false);
             this.PerformLayout();

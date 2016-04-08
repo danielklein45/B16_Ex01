@@ -83,7 +83,7 @@
             this.buttonEditGroup.UseVisualStyleBackColor = true;
             this.buttonEditGroup.Click += new System.EventHandler(this.buttonEditGroup_Click);
             // 
-            // PostFilterSettingsForm
+            // FormPostFilterSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -93,7 +93,8 @@
             this.Controls.Add(this.buttonSaveAndClose);
             this.Controls.Add(this.buttonDeleteGroup);
             this.Controls.Add(this.buttonCreateGroup);
-            this.Name = "PostFilterSettingsForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Name = "FormPostFilterSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Filter Settings";
             this.ResumeLayout(false);
