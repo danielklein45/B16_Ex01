@@ -1,0 +1,120 @@
+@startuml
+
+title "FacebookSmartView - Top Photos Feature - Sequence Diagram"
+
+actor User
+boundary FormLogin
+boundary FormMain
+boundary PopularPanelMgt
+boundary AppUser
+
+activate FormLogin
+activate FormMain
+
+FormLogin -> FormMain: new()
+  note right
+The Following will build the Top Photos Feature
+   end note
+
+
+create boundary PopularPanelMgt
+
+FormMain -> PopularPanelMgt: PopularPanelMgt.Instance
+FormLogin -> FormMain: InitiateForm()
+create boundary SpecialPictureBox
+
+
+  note right
+Add 4 SpeacialPicturebox's on
+the MainFrom Panel
+   end note
+
+activate PopularPanelMgt
+loop add 4 photos
+    PopularPanelMgt -> SpecialPictureBox: new()
+    activate SpecialPictureBox
+    SpecialPictureBox --> PopularPanelMgt
+    deactivate SpecialPictureBox
+ 
+end
+
+deactivate PopularPanelMgt
+
+
+create boundary TopPhotosFeature
+FormMain -> TopPhotosFeature: new()
+
+FormMain -> TopPhotosFeature: RankUserPhotos()
+activate TopPhotosFeature
+
+
+
+
+  note right
+Score all user photos, in all user albums.
+   end note
+
+
+TopPhotosFeature -> AppUser: GetUserAlbums()
+AppUser -> TopPhotosFeature: Returns User Albums with Photos
+
+loop while there are albums to check
+ loop while there photos to rank
+create boundary PictureObjectBasic
+    TopPhotosFeature -> PictureObjectBasic: new()
+    PictureObjectBasic -> TopPhotosFeature
+ end 
+end
+deactivate TopPhotosFeature
+
+TopPhotosFeature -> FormMain
+
+
+FormMain -> TopPhotosFeature: LoadTopPhotos()
+activate TopPhotosFeature
+ loop while there are SpecialPictureBox's to fill
+    activate SpecialPictureBox
+
+   note right
+Fill the SpecialPictureBox with information
+from the ranked photos
+   end note
+    SpecialPictureBox->SpecialPictureBox: LoadInformation()
+    deactivate SpecialPictureBox
+ end 
+
+deactivate TopPhotosFeature
+
+
+
+FormMain -> FormLogin: End InitiateForm()
+
+
+activate User
+   note right
+The user clicks directly the SpecialPictureBox 
+but it is under FromMain from the ranked photos
+   end note
+
+
+User -> FormMain: Initiate a Click on User Photo
+FormMain -> SpecialPictureBox: SpecialPictureBoxOnClick()
+SpecialPictureBox ->PopularPanelMgt: set Instance.CurrentObjectID
+
+SpecialPictureBox -> FormMain
+
+
+
+FormMain -> FormMain: buttonCommentPicture_Click()
+
+FormMain -> AppUser: CommentPhoto()
+activate AppUser
+create boundary FacebookWrapper.FacebookService
+AppUser ->  FacebookWrapper.FacebookService: GetObject()
+AppUser ->  FacebookWrapper.FacebookService: Comment()
+
+AppUser -> FormMain: CommentPhoto()
+deactivate FormMain
+deactivate FormMain
+deactivate User
+@enduml
