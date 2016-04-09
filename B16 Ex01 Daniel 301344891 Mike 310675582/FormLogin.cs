@@ -60,29 +60,34 @@ namespace FacebookSmartView
                 
                 m_FormLoader.Shown += (s, args) => this.Hide();
                 m_FormLoader.Shown += new EventHandler(initiateForm);
+                m_FormLoader.FormClosed += m_FormLoader_FormClosed;
                 m_FormLoader.Show();
             }
         }
 
+        void m_FormLoader_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_MainForm.ShowDialog();
+        }
+
         private void initiateForm(object sender, EventArgs e)
         {
-            m_MainForm.InitiateForm();
+            Thread thread = new Thread(m_MainForm.InitiateForm);
+            thread.Start();
         }
 
         private void mainForm_ehMainFormLoad(object sender, MainFormLoadEventArgs e)
         {
             if (e != GeneralVars.k_NULL )
             {
-                if (e.Message.Length > GeneralVars.k_Zero)
+                if ((e.Message != null) && (e.Message.Length > GeneralVars.k_Zero))
                 {
                     m_FormLoader.LoadingLabel = e.Message;
-                    MessageBox.Show(e.Message);
                 }
 
                 if (e.FinishedLoading == GeneralVars.k_TRUE)
                 {
-                    m_FormLoader.Close();
-                    m_MainForm.Show();
+                    m_FormLoader.FinishLoading();
                 }
             }
         }

@@ -41,10 +41,19 @@ namespace FacebookSmartView
 			}
 		}
 
+		private void updateFormLoader(bool i_IsFinishedLoading, string i_Message)
+		{
+			MainFormLoadEventArgs e = new MainFormLoadEventArgs();
+
+			e.FinishedLoading = i_IsFinishedLoading;
+			e.Message = i_Message;
+			OnMainFormUpdateStatus(e);
+		}
+
 		public void InitiateForm()
 		{
 			MainFormLoadEventArgs mflEs = new MainFormLoadEventArgs();
-			
+
 			m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
 			m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
 			m_PopPanelMgt.TryAddToPanel(new SpecialPictureBox(panelMostPopular));
@@ -52,25 +61,17 @@ namespace FacebookSmartView
 
 			List<SpecialPictureBox> lstSpBoxFromPopPanel = m_PopPanelMgt.PictureObjectList;
 			m_TopPhotosFeature = new TopPhotosFeature(m_AppUser, ref lstSpBoxFromPopPanel);
-
 			
-			mflEs.FinishedLoading = GeneralVars.k_FALSE;
-			mflEs.Message = "Loading User info.";
-			OnMainFormUpdateStatus(mflEs);
+			updateFormLoader(GeneralVars.k_FALSE, "Loading User info...");
 			fetchUserInfo();
 
-			mflEs.FinishedLoading = GeneralVars.k_FALSE;
-			mflEs.Message = "Ranking User Photos.";
-			OnMainFormUpdateStatus(mflEs);
+			updateFormLoader(GeneralVars.k_FALSE, "Ranking User Photos...");
 			m_TopPhotosFeature.RankUserPhotos();
-			
-			mflEs.FinishedLoading = GeneralVars.k_FALSE;
-			mflEs.Message = "Loading User Photos.";
-			OnMainFormUpdateStatus(mflEs);
+
+			updateFormLoader(GeneralVars.k_FALSE, "Loading User Photos...");
 			m_TopPhotosFeature.LoadTopPhotos();
 
-			mflEs.FinishedLoading = GeneralVars.k_TRUE;
-			mflEs.Message = GeneralVars.k_EmptyString;
+			updateFormLoader(GeneralVars.k_TRUE,GeneralVars.k_EmptyString );
 			OnMainFormUpdateStatus(mflEs);
 		}
 
@@ -98,7 +99,7 @@ namespace FacebookSmartView
 		{
 			lblUserName.Text = m_AppUser.Name + "!";
 			lblPersonalInfo.Text = buildUserPrivateAbout();
-			pbUserPicture.LoadAsync(m_AppUser.GetUserProfilePicture());
+			pbUserPicture.Load(m_AppUser.GetUserProfilePicture());
 		}
 
 		private string buildUserPrivateAbout()
@@ -176,7 +177,7 @@ namespace FacebookSmartView
 
 				if (selectedPost != GeneralVars.k_NULL)
 				{
-					pictureBoxPostImage.LoadAsync(selectedPost.PictureURL);
+					pictureBoxPostImage.Load(selectedPost.PictureURL);
 					string postDetails = string.Format("Posted by: {0}\nOn Date: {1}", selectedPost.From.Name, selectedPost.CreatedTime.ToString());
 					lblPostDetails.Text = postDetails;
 				}
