@@ -21,9 +21,9 @@ namespace FacebookSmartView
         private LoginLogic m_LoginLoginFunctions; // Class To handle login form 
         private FormMain m_MainForm;
         private FormLoader m_FormLoader;
-        private static bool m_RememberMe = GeneralVars.k_FALSE;
+        private static bool s_RememberMe = false;
 
-        public static bool RememberMe { get { return m_RememberMe; } set { m_RememberMe = value; } }
+        public static bool RememberMe { get { return s_RememberMe; } set { s_RememberMe = value; } }
 
         public FormLogin()
         {
@@ -41,17 +41,18 @@ namespace FacebookSmartView
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            loginFunction(GeneralVars.k_FALSE);
+            bool v_Autologin = true;
+            loginFunction(!v_Autologin);
         }
 
         private void loginFunction(bool i_AutoLogin)
         {
             LoginResult result = login(i_AutoLogin);
 
-            if ((result != GeneralVars.k_NULL) && (result.AccessToken != GeneralVars.k_NULL))
+            if ((result != null) && (result.AccessToken != null))
             {
                 m_LoginLoginFunctions.SaveRememberBox(cbRememberMe.Checked);
-                m_RememberMe = cbRememberMe.Checked;
+                s_RememberMe = cbRememberMe.Checked;
         
                 m_MainForm = new FormMain();
                 m_MainForm.LoginUser = result.LoggedInUser;
@@ -78,14 +79,14 @@ namespace FacebookSmartView
 
         private void mainForm_ehMainFormLoad(object sender, MainFormLoadEventArgs e)
         {
-            if (e != GeneralVars.k_NULL )
+            if (e != null)
             {
-                if ((e.Message != null) && (e.Message.Length > GeneralVars.k_Zero))
+                if ((e.Message != null) && (e.Message.Length > 0))
                 {
                     m_FormLoader.LoadingLabel = e.Message;
                 }
 
-                if (e.FinishedLoading == GeneralVars.k_TRUE)
+                if (e.FinishedLoading)
                 {
                     m_FormLoader.FinishLoading();
                 }
@@ -131,7 +132,7 @@ namespace FacebookSmartView
                     result = m_LoginLoginFunctions.LoginToFacbookAndSaveToken();
                 }
             }
-            if ((result != GeneralVars.k_NULL) && (string.IsNullOrEmpty(result.AccessToken)))
+            if ((result != null) && (string.IsNullOrEmpty(result.AccessToken)))
             {
                 MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -141,21 +142,22 @@ namespace FacebookSmartView
 
         private void loginForm_Load(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.RememberMe == GeneralVars.k_TRUE)
+            if (Properties.Settings.Default.RememberMe)
             {
-                loginFunction(GeneralVars.k_TRUE);
-                this.Opacity = GeneralVars.k_Zero;
+                bool v_AutoLogin = true;
+                loginFunction(v_AutoLogin);
+                this.Opacity = 0;
             }
         }
 
         private void loginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (cbRememberMe.Checked == GeneralVars.k_TRUE && m_RememberMe == GeneralVars.k_FALSE)
+            if ((cbRememberMe.Checked) && (!s_RememberMe))
             {
-                m_RememberMe = GeneralVars.k_FALSE;
+                s_RememberMe = false;
             }
                 
-            Properties.Settings.Default.RememberMe = m_RememberMe;
+            Properties.Settings.Default.RememberMe = s_RememberMe;
             Properties.Settings.Default.Save();
         }
     }

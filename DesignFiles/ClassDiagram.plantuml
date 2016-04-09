@@ -1,5 +1,5 @@
 @startuml
-title Facebook Smart View App -  Class Diagram
+title "FacebookSmartView -  Class Diagram"
 
 interface IXmlSerializable {
     +ReadXml(XmlReader reader): void
@@ -11,6 +11,7 @@ interface IEnumerable {
 }
 
 class FormMain extends Form {
+    +event MainFormLoadEventArgs
 }
 
 class FormLogin extends Form {
@@ -20,9 +21,6 @@ class FormLoader extends Form {
 }
 
 class AppUser {
-    -getLastEdu(Education[]): string
-    -getUserLivePlace(City): string
-    -calcUserAge(string): int
     +constructor(User)
     +GetNewsFeed(PostFilter): FacebookObjectCollection<Post>
     +GetUserAlbums(): FacebookObjectCollection<Album>
@@ -51,20 +49,15 @@ class LoginLogic{
 }
 
 FormMain *-down-AppUser
-FormMain<-down-FormLoader
 
-AppUser "1" o-up- "1" User
-AppUser "1" o-up- "*" Post
+AppUser "1" o-down- "1" User: Holds the facebook user
+AppUser "1" o-down- "*" Post
+AppUser "1" o-down- "*" Album
 
 
 FormLogin *-down-LoginLogic
-FormLogin ->FormLoader
-FormLogin ->FormMain
-
-class GeneralVars <<static>> {
-}
-
-
+FormLogin "1" -> "1" FormLoader
+FormLogin "1" -down-> "1" FormMain
 
 package "Post Filtering Feature" <<Frame>> {
 
@@ -74,10 +67,10 @@ package "Post Filtering Feature" <<Frame>> {
         +RemoveGroup(FilterGroup)
         +Save()
         +FilterGroups: IList<FilterGroup> {getter, setter}
-        -load()
     }
 
     class FilterGroup implements IXmlSerializable, IEnumerable{
+         -IList<FilterItem>
         +constructor()
         +AddItem(FilterItem)
         +RemoveItem(FilterItem)
@@ -99,12 +92,12 @@ package "Post Filtering Feature" <<Frame>> {
         +GroupFilter: FilterGroup {getter, setter}
      }
 
-    FilterGroup *- FilterItem
-    PostFilter *-up- FilterGroup
+    FilterGroup *- "*"FilterItem
+    PostFilter *-up-"*" FilterGroup
     FormPostFilterSettings *-left- PostFilter
     FormFilterGroup  *-down- FilterGroup
     FormPostFilterSettings-left->FormFilterGroup 
-    FormMain->FormPostFilterSettings
+    FormMain->"1"FormPostFilterSettings
     
 }
 
@@ -125,18 +118,15 @@ PopularPanelMgt "1"*-down- "*" SpecialPictureBox
 FormMain *-up-PopularPanelMgt
 }
 
-package "Top Photos Feature" <<Frame>> {
-
-
-
-class MainFormLoadEventArgs{
+class MainFormLoadEventArgs extends EventArgs {
     +constructor()
     +FinishedLoading: bool {getter, setter}
     +Message: string {getter, setter}
 }
 
-class MainFormLoadEventArgs extends EventArgs {
-}
+FormMain *-down-MainFormLoadEventArgs
+
+package "Top Photos Feature" <<Frame>> {
 
 class PictureObjectBasic{
     +constructor(string , int , int , int , string , string)
@@ -147,17 +137,13 @@ class PictureObjectBasic{
     +ObjectId: string {getter, setter}
 }
 
-class PictureObject{
-    +constructor(string, int , int , int , string , string,  PictureBox , Label)
+class PictureObject extends PictureObjectBasic {
+    +constructor(string, int , int , int , string , string,  PictureBox , Label) 
     +LoadInformation()
 }
 
-class PictureObject extends PictureObjectBasic {
-}
 
-
-
-class SpecialPictureBox{
+class SpecialPictureBox extends PictureBox{
     +constructor(Panell)
     +SpecialPictureBoxOnClick(object, EventArgs)
     +UpdateNames(int)
@@ -171,8 +157,6 @@ class SpecialPictureBox{
     +PicLabel: Label {getter}
 }
 
-class SpecialPictureBox extends PictureBox {
-}
 
 class TopPhotosFeature{
     +constructor(AppUser , ref List<SpecialPictureBox>)
@@ -189,8 +173,5 @@ TopPhotosFeature "1"*-up- "*" PictureObjectBasic
 AppUser *-down-TopPhotosFeature
 
 }
-
-
-
 
 @enduml

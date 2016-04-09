@@ -40,10 +40,10 @@ namespace FacebookSmartView
             m_BotLabel = new Label();
             m_BotLabel.Size = r_PanelSize;
             m_BotLabel.Location = r_PanelStartLoc;
-            m_BotLabel.AutoSize = GeneralVars.k_FALSE;
+            m_BotLabel.AutoSize = false;
             m_BotLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
-            this.Visible = GeneralVars.k_TRUE;
+            this.Visible = true;
 
             m_BoxPanel = new Panel();
             m_BoxPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -68,7 +68,7 @@ namespace FacebookSmartView
             catch (Exception)
             {
                 spbCurrent = null;
-                PopularPanelMgt.Instance.CurrentObjectID = GeneralVars.k_EmptyString;
+                PopularPanelMgt.Instance.CurrentObjectID = string.Empty;
             }
 
             if (spbCurrent != null)

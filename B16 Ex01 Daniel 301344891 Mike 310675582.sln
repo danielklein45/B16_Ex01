@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
+# Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B16 Ex01 Daniel 301344891 Mike 310675582", "B16 Ex01 Daniel 301344891 Mike 310675582\B16 Ex01 Daniel 301344891 Mike 310675582.csproj", "{23944378-835B-4C87-B13C-F154056514AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{123C7BF3-DFC9-48BC-BA2E-1849070C0519}"
+	ProjectSection(SolutionItems) = preProject
+		B16 Ex01 Daniel 301344891 Mike 310675582.docx = B16 Ex01 Daniel 301344891 Mike 310675582.docx
+		Submission.txt = Submission.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

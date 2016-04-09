@@ -28,11 +28,11 @@ namespace FacebookSmartView
         {
             FacebookObjectCollection<Album> focUserAlbums = m_AppUser.GetUserAlbums();
             Dictionary<string, int> sdSortedScoreDic = new Dictionary<string, int>();
-            int likesCount = GeneralVars.k_Zero;
-            int commentCount = GeneralVars.k_Zero;
-            int currentScore = GeneralVars.k_Zero;
+            int likesCount = 0;
+            int commentCount = 0;
+            int currentScore = 0;
             int count = 0;
-            int indexForOutoutDic = GeneralVars.k_Zero;
+            int indexForOutoutDic = 0;
 
             foreach(Album albCurrent in focUserAlbums)
             {
@@ -68,9 +68,9 @@ namespace FacebookSmartView
 
        public void LoadTopPhotos()
         {
-            int indexForDictionary = GeneralVars.k_Zero;
+            int indexForDictionary = 0;
             PictureObjectBasic pobCurrentObj;
-            string currentIndex = GeneralVars.k_EmptyString;
+            string currentIndex = string.Empty;
 
             foreach (SpecialPictureBox poCurrPicObj in m_PictureObejctsOnForm)
             {
