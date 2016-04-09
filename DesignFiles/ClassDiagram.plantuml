@@ -1,5 +1,5 @@
 @startuml
-title "FacebookSmartView -  Class Diagram"
+title Facebook Smart View -  Class Diagram
 
 interface IXmlSerializable {
     +ReadXml(XmlReader reader): void

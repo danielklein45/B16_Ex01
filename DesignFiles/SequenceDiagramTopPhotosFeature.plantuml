@@ -1,6 +1,6 @@
 @startuml
 
-title "FacebookSmartView - Top Photos Feature - Sequence Diagram"
+title Facebook Smart View - Top Photos Feature - Sequence Diagram
 
 actor User
 boundary FormLogin

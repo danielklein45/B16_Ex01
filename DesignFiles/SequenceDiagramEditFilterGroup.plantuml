@@ -1,6 +1,6 @@
 @startuml
 
-title "SmartViewFacebook - Edit Filter Group - Sequence Diagram"
+title Facebook Smart View - Edit Filter Group - Sequence Diagram
 
 actor User
 boundary FormMain
