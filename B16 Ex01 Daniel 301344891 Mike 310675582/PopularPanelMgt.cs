@@ -20,6 +20,7 @@ namespace FacebookSmartView
         private string m_CurrentSelectedObjectId;
         private Label m_InformationLabel;
         private TextBox m_InformationCommentTextbox;
+        private const int k_Spacer = 5;
 
         public string CurrentObjectID         
         {            
@@ -65,8 +66,8 @@ namespace FacebookSmartView
         private PopularPanelMgt()
         {
             m_LstPictureBoxFromForm = new List<SpecialPictureBox>();
-            s_NextFreePoint = new Point(GeneralVars.k_SPACER, GeneralVars.k_SPACER);
-            m_CurrentSelectedObjectId = GeneralVars.k_EmptyString;
+            s_NextFreePoint = new Point(k_Spacer, k_Spacer);
+            m_CurrentSelectedObjectId = string.Empty;
             s_LockOnMgt = new Object();
         }
 
@@ -91,49 +92,55 @@ namespace FacebookSmartView
 
         public void SetPanels(Panel i_OuterPanel, Panel i_InnerPanel)
         {
-            m_Surface = new Size(i_OuterPanel.Size.Width - GeneralVars.k_SPACER,
-                                 i_OuterPanel.Size.Height - i_InnerPanel.Size.Height - GeneralVars.k_SPACER );
+            m_Surface = new Size(i_OuterPanel.Size.Width - k_Spacer,
+                                 i_OuterPanel.Size.Height - i_InnerPanel.Size.Height - k_Spacer );
         }
 
         public bool TryAddToPanel(SpecialPictureBox i_NewPicObject)
         {
+            bool isAdded = false;
             Point pNewPointForPicture;
 
             if (m_LstPictureBoxFromForm.Count < k_MaxPanel)
             {
                 if (getNextFreeLocationInContainer(SpecialPictureBox.PictureBoxTopPhotosSize, out pNewPointForPicture))
                 {
-                    i_NewPicObject.PictureObject = new PictureObject(GeneralVars.k_EmptyString, GeneralVars.k_Zero,
-                                                                     GeneralVars.k_Zero, GeneralVars.k_Zero, GeneralVars.k_EmptyString,
-                                                                     GeneralVars.k_EmptyString, i_NewPicObject, i_NewPicObject.PicLabel);
+                    i_NewPicObject.PictureObject = new PictureObject(string.Empty, 0,
+                                                                     0, 0, string.Empty,
+                                                                     string.Empty, i_NewPicObject, i_NewPicObject.PicLabel);
                     i_NewPicObject.ObjectLocation = pNewPointForPicture;
                     i_NewPicObject.UpdateNames(m_LstPictureBoxFromForm.Count);
                     m_LstPictureBoxFromForm.Add(i_NewPicObject);
-            
-                    return GeneralVars.k_TRUE;
+
+                    isAdded = true;
                 }
             }
-
-            i_NewPicObject.RemoveObjectFromPanel();
-            i_NewPicObject = null;
-
-            return GeneralVars.k_FALSE;
+            if (!isAdded)
+            {
+                i_NewPicObject.RemoveObjectFromPanel();
+                i_NewPicObject = null;
+            }
+            
+            return isAdded;
         }
 
         private bool getNextFreeLocationInContainer(Size i_PanelSize, out Point o_NewPoint)
         {
+            bool isFree = false;
+
             if (s_NextFreePoint.X + i_PanelSize.Width < m_Surface.Width &&
                 s_NextFreePoint.Y + i_PanelSize.Height < m_Surface.Height )
             {
                 o_NewPoint = s_NextFreePoint;
-                s_NextFreePoint = new Point(s_NextFreePoint.X + i_PanelSize.Width + GeneralVars.k_SPACER, s_NextFreePoint.Y);
+                s_NextFreePoint = new Point(s_NextFreePoint.X + i_PanelSize.Width + k_Spacer, s_NextFreePoint.Y);
 
-                return GeneralVars.k_TRUE;
+                isFree = true;
+                return isFree;
             }
 
-            o_NewPoint = new Point(GeneralVars.k_Zero, GeneralVars.k_Zero);
+            o_NewPoint = new Point(0, 0);
 
-            return GeneralVars.k_FALSE;
+            return isFree;
                 
         }
 

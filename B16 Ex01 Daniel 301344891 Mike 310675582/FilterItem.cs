@@ -30,7 +30,7 @@ namespace FacebookSmartView
 
         public bool IsMatch(Post i_Post)
         {
-            bool isMatched = GeneralVars.k_FALSE;
+            bool isMatched = false;
 
             if (i_Post.Message != null)
             {

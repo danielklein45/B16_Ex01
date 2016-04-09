@@ -1,6 +1,6 @@
 @startuml
 
-title Facebook App - Use Case Diagram
+title "FacebokSmartView - Use Case Diagram"
 
 :User: 
 
@@ -28,27 +28,25 @@ rectangle "Post Filtering Feature" {
 }
 
 rectangle "Top Photos Feature" {
-    (Show Top 4 Photos)
-    (Show Photo Information)
+    (Display Top 4 Photos)
+    (Display Photo Information)
     (Comment Photo)
     (Like Photo)
 }
-
 
 User ..> (Create Post Filter Group)
 User ..> (Delete Post Filter Group)
 User ..> (Edit Post Filter Group)
 User ..> (Enable Post Filter Group)
 User ..> (Disable Post Filter Group)
-User ..> (Show Top 4 Photos)
+User ..> (Display Top 4 Photos)
 
 (Edit Post Filter Group) <-- (Add Filter Group Item): <<extends>>
 (Edit Post Filter Group) <-- (Remove Filter Group Item): <<extends>>
 
-(Show Top 4 Photos) <-- (Comment Photo): <<extends>>
-(Show Top 4 Photos) <-- (Show Photo Information): <<includes>>
-(Show Top 4 Photos) <-- (Like Photo): <<extends>>
-
+(Display Top 4 Photos) <-- (Comment Photo): <<extends>>
+(Display Top 4 Photos) <-- (Display Photo Information): <<includes>>
+(Display Top 4 Photos) <-- (Like Photo): <<extends>>
 
 User ..> (Post)
 User ..> (Display News Feed)

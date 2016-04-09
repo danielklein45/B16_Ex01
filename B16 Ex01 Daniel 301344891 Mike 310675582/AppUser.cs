@@ -31,13 +31,13 @@ namespace FacebookSmartView
 
             IEnumerable<Post> queryPostToDisplay;
 
-            if (i_PostFilter != GeneralVars.k_NULL)
+            if (i_PostFilter != null)
             {
                 queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => !i_PostFilter.IsMatch(post) && post.Message != null);
             }
             else
             {
-                queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => post.Message != GeneralVars.k_NULL);
+                queryPostToDisplay = m_FacebookUser.NewsFeed.Where(post => post.Message != null);
             }
             
 
@@ -59,7 +59,7 @@ namespace FacebookSmartView
             }
             catch
             {
-                strSchool = GeneralVars.k_EmptyString;
+                strSchool = string.Empty;
             }
 
             return strSchool;
@@ -74,7 +74,7 @@ namespace FacebookSmartView
             }
             catch
             {
-                location = GeneralVars.k_EmptyString;
+                location = string.Empty;
             }
 
             return location;
@@ -121,9 +121,10 @@ namespace FacebookSmartView
 
         public bool LikePhoto(string i_ObjectId)
         {
+            bool isLike = false;
             Photo phTargetPhoto;
 
-            if (i_ObjectId != GeneralVars.k_EmptyString && i_ObjectId.Length > GeneralVars.k_Zero)
+            if (i_ObjectId != string.Empty && i_ObjectId.Length > 0)
             {
                 try
                 {
@@ -134,23 +135,23 @@ namespace FacebookSmartView
                     phTargetPhoto = null;
                 }
 
-                if (phTargetPhoto != GeneralVars.k_NULL)
+                if (phTargetPhoto != null)
                 {
-                    return phTargetPhoto.Like();
+                    isLike =  phTargetPhoto.Like();
                 }
             }
 
-            return GeneralVars.k_FALSE;
+            return isLike;
         }
 
         public bool CommentPhoto(string i_ObjectId, string i_CommentText)
         {
-            bool retValue = GeneralVars.k_FALSE;
+            bool retValue = false;
             Photo phTargetPhoto;
 
-            if (i_ObjectId != GeneralVars.k_EmptyString && i_ObjectId.Length > GeneralVars.k_Zero)
+            if (i_ObjectId != string.Empty && i_ObjectId.Length > 0)
             {
-                if (i_CommentText != GeneralVars.k_EmptyString && i_CommentText.Length > GeneralVars.k_Zero)
+                if (i_CommentText != string.Empty && i_CommentText.Length > 0)
                 {
                     try
                     {
@@ -161,10 +162,10 @@ namespace FacebookSmartView
                         phTargetPhoto = null;
                     }
 
-                    if (phTargetPhoto != GeneralVars.k_NULL)
+                    if (phTargetPhoto != null)
                     {
                         Comment cmmToPost = phTargetPhoto.Comment(i_CommentText);
-                        retValue = (cmmToPost.Id.Length > GeneralVars.k_Zero ? GeneralVars.k_TRUE : GeneralVars.k_FALSE);
+                        retValue = (cmmToPost.Id.Length > 0 ? true : false);
                     }
                 }
             }
@@ -208,7 +209,7 @@ namespace FacebookSmartView
         {
             get
             {
-                return (m_FacebookUser.Location.Name != GeneralVars.k_NULL) ? m_FacebookUser.Location.Name : GeneralVars.k_EmptyString;
+                return (m_FacebookUser.Location.Name != null) ? m_FacebookUser.Location.Name : string.Empty;
             }
         }
 
