@@ -17,9 +17,9 @@ namespace FacebookSmartView
         private const double k_PhotoCommentScore = 0.4;
         private const int k_MaxPhotos = 50;
 
-        public TopPhotosFeature(AppUser i_AppUser, ref List<SpecialPictureBox> i_PictureBoxArray)
+        public TopPhotosFeature(AppUser i_AppUser, ref List<SpecialPictureBox> io_PictureBoxArray)
         {
-            m_PictureObejctsOnForm = i_PictureBoxArray;
+            m_PictureObejctsOnForm = io_PictureBoxArray;
             m_ListOfObjectIDSortedByFromTopScore = new List<string>();
             m_SortedDicAllPhotosByObjectID = new SortedDictionary<string, PictureObjectBasic>();
             m_AppUser = i_AppUser;
