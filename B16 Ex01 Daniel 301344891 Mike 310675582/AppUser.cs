@@ -22,7 +22,7 @@ namespace FacebookSmartView
 
             m_UserAge = calcUserAge(m_FacebookUser.Birthday);
             m_UserLastEduStudyPlace = getLastEdu(m_FacebookUser.Educations);
-            m_UserLivesIn = getUserLivePlace(m_FacebookUser.Location);
+            m_UserLivesIn = getUserLivePlace();
         }
 
         public FacebookObjectCollection<Post> GetNewsFeed(PostFilter i_PostFilter)
@@ -65,7 +65,7 @@ namespace FacebookSmartView
             return strSchool;
         }
 
-        private string getUserLivePlace(City i_UserLocation)
+        private string getUserLivePlace()
         {
             string location;
             try
@@ -209,7 +209,7 @@ namespace FacebookSmartView
         {
             get
             {
-                return (m_FacebookUser.Location.Name != null) ? m_FacebookUser.Location.Name : string.Empty;
+                return m_UserLivesIn;
             }
         }
 

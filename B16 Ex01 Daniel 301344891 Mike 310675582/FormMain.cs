@@ -108,11 +108,11 @@ namespace FacebookSmartView
 			string firstPart;
 			if (m_AppUser.Age > 0)
 			{
-				firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender + ".";
+				firstPart = "You are a " + m_AppUser.Age + " years old " + m_AppUser.Gender + ".\n";
 			}
 			else
 			{
-				firstPart = "You are a " + m_AppUser.Gender + " and were born in " + m_AppUser.Birthday + ".";
+				firstPart = "You are a " + m_AppUser.Gender + " and were born in " + m_AppUser.Birthday + ".\n";
 			}
 
 			string secondPart = string.Empty;
@@ -120,7 +120,7 @@ namespace FacebookSmartView
 
 			if (m_AppUser.UserLivesIn != string.Empty)
 			{
-				secondPart = "You live in " + m_AppUser.UserLivesIn + ".";
+				secondPart = "You live in " + m_AppUser.UserLivesIn + ".\n";
 			}
 			else
 			{
@@ -129,11 +129,11 @@ namespace FacebookSmartView
 
 			if (m_AppUser.LastEducationStudyPlace != string.Empty)
 			{
-				thirdPart += "You studied at " + m_AppUser.LastEducationStudyPlace + ".";
+				thirdPart += "You studied at " + m_AppUser.LastEducationStudyPlace + ".\n";
 			}
 			else
 			{
-				thirdPart += "You should add more information about yourself...";
+				thirdPart += "You should add more information about yourself...\n";
 			}
 				
 			return firstPart + secondPart + thirdPart;
@@ -175,13 +175,23 @@ namespace FacebookSmartView
 			if (listBoxNewsFeed.SelectedItems.Count == 1)
 			{
 				Post selectedPost = listBoxNewsFeed.SelectedItem as Post;
+				string postDetails = string.Empty;
 
 				if (selectedPost != null)
 				{
-					pictureBoxPostImage.Load(selectedPost.PictureURL);
-					string postDetails = string.Format("Posted by: {0}\nOn Date: {1}", selectedPost.From.Name, selectedPost.CreatedTime.ToString());
-					lblPostDetails.Text = postDetails;
+					if (selectedPost.PictureURL != null)
+					{
+						pictureBoxPostImage.Load(selectedPost.PictureURL);
+						postDetails = string.Format("Posted by: {0}\nOn Date: {1}", selectedPost.From.Name, selectedPost.CreatedTime.ToString());
+					}
+					else
+					{
+						pictureBoxPostImage.Image = null;
+						postDetails = "No picture available";
+					}
 				}
+
+				lblPostDetails.Text = postDetails;
 			}
 		}
 
@@ -195,7 +205,7 @@ namespace FacebookSmartView
 				}
 				else
 				{
-					MessageBox.Show("Oops, something went wrong trying to like that photo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Can't Like again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 			else

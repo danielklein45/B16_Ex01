@@ -42,6 +42,7 @@ namespace FacebookSmartView
             }
             else
             {
+                this.Visible = false;
                 this.Close();
             }
         }

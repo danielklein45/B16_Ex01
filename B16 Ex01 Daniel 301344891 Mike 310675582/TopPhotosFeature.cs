@@ -15,6 +15,7 @@ namespace FacebookSmartView
         private List<SpecialPictureBox> m_PictureObejctsOnForm;
         private const double k_PhotoLikeScore = 0.6;
         private const double k_PhotoCommentScore = 0.4;
+        private const int k_MaxPhotos = 50;
 
         public TopPhotosFeature(AppUser i_AppUser, ref List<SpecialPictureBox> i_PictureBoxArray)
         {
@@ -47,13 +48,13 @@ namespace FacebookSmartView
 
                     sdSortedScoreDic.Add(phCurrentPhoto.Id, currentScore);
 
-                    if (++count > 3)
+                    if (++count > k_MaxPhotos)
                     {
                         break;
                     }
                 }
 
-                if (count > 3)
+                if (count > k_MaxPhotos)
                 {
                     break;
                 }
